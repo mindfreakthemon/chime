@@ -1,0 +1,10 @@
+{
+  "name": "com.chime.hotkeys",
+  "description": "Chime Hotkey Server",
+  "path": "chime-hs.exe",
+  "type": "stdio",
+  "allowed_origins": [
+    "chrome-extension://bmphlkhlcnpmfcjaghlfldojphkjijnp/",
+	"chrome-extension://ogdpmmimhibedpodeohgifmjgalhfmej/"
+  ]
+}

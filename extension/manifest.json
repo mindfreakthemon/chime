@@ -1,0 +1,73 @@
+{
+	"manifest_version": 2,
+	"name": "Chime",
+	"version": "0.0.1",
+	"author": "Monday Freelem <mfthemon@gmail.com>",
+	"description": "Adds new features to Google Music Web Player",
+	"icons": {
+		"128": "images/icon.png"
+	},
+
+	"browser_action": {
+		"default_icon": "images/icon.png",
+		"default_title": "Chime"
+	},
+
+	"permissions": [
+		"tabs",
+		"notifications",
+		"nativeMessaging",
+		"background",
+		"*://play.google.com/music/*"
+	],
+
+	"options_page": "options.html",
+
+	"background": {
+		"scripts": [
+			"scripts/utils.js",
+			"scripts/settings.js",
+			"scripts/music_tab.js",
+			"scripts/listeners.js",
+			"scripts/background.js"
+		],
+		"persistent": true
+	},
+
+	"content_scripts": [
+		{
+			"matches": ["*://play.google.com/music/*"],
+			"js": ["scripts/content.js"]
+		}
+	],
+
+	"commands": {
+		"play-pause": {
+			"suggested_key": {
+				"windows": "Ctrl+Y",
+				"mac": "Command+Y",
+				"chromeos": "Ctrl+Y",
+				"linux": "Ctrl+Y"
+			},
+			"description": "Toggle Play/Pause state"
+		},
+		"next-track": {
+			"suggested_key": {
+				"windows": "Ctrl+J",
+				"mac": "Command+J",
+				"chromeos": "Ctrl+J",
+				"linux": "Ctrl+J"
+			},
+			"description": "Select next track"
+		},
+		"prev-track": {
+			"suggested_key": {
+				"windows": "Ctrl+U",
+				"mac": "Command+U",
+				"chromeos": "Ctrl+U",
+				"linux": "Ctrl+U"
+			},
+			"description": "Select previous track"
+		}
+	}
+}

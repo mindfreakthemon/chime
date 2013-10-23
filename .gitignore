@@ -1,0 +1,16 @@
+lib-cov
+*.seed
+*.log
+*.csv
+*.dat
+*.out
+*.pid
+*.gz
+*.rdb
+*.crx
+.env
+
+pids
+logs
+node_modules/
+build/

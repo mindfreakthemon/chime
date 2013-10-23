@@ -1,0 +1,10 @@
+{
+  "name": "chime",
+  "private": true,
+  "version": "0.0.1",
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-jshint": "~0.6.4",
+    "grunt-zip": "~0.9.2"
+  }
+}

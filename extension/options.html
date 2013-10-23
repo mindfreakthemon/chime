@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Chime Options</title>
+	<link rel="stylesheet" type="text/css" href="lib/bootstrap/css/bootstrap-theme.min.css" />
+	<link rel="stylesheet" type="text/css" href="lib/bootstrap/css/bootstrap.min.css" />
+</head>
+<body>
+<div class="container">
+	<div class="row">
+		<div class="col-lg-10">
+			<form class="form-horizontal" id="form">
+				<h3>Behaviour</h3>
+				<hr />
+				<div class="form-group">
+					<label for="input-1" class="col-lg-4 control-label">Click on chime icon:</label>
+					<div class="col-lg-8">
+						<select class="form-control" id="input-1" name="click_action">
+							<option value="popup">Show little popup with controls</option>
+							<option value="focus">Activate Google Music tab</option>
+						</select>
+						<span class="help-block">Configures what happens if you click onto the chime icon in chrome's toolbar.</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-lg-4 control-label">If no Google Music tab was found:</label>
+					<div class="col-lg-8">
+						<label class="form-control-static"><input type="checkbox" name="open_new" /> Open new tab</label>
+						<br />
+						<label class="form-control-static"><input type="checkbox" name="open_active" /> Make it active</label>
+						<br />
+						<label class="form-control-static"><input type="checkbox" name="open_pinned" /> Make it pinned</label>
+						<span class="help-block">If no tab was found while pressing any hotkey or clicking on chime icon.</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="input-3" class="col-lg-4 control-label">Default playlist:</label>
+					<div class="col-lg-8">
+						<select class="form-control" id="input-3" name="default_playlist">
+							<option value="all">All</option>
+							<optgroup label="Auto playlists">
+								<option value="ap/auto-playlist-thumbs-up">Highly rated</option>
+								<option value="ap/auto-playlist-recent">Last added</option>
+								<option value="ap/auto-playlist-promo">Free & Purchased</option>
+								<option value="ap/shared-with-me">Shared with me</option>
+							</optgroup>
+							<optgroup label="Personal playlists">
+								<option disabled="disabled">Will be available soon!</option>
+							</optgroup>
+							<option selected="selected">Other</option>
+						</select>
+						<span class="help-block">Default playlist to open when creating new Google Music tab.</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="input-4" class="col-lg-4 control-label">Reload on shuffle:</label>
+					<div class="col-lg-8">
+						<label class="form-control-static"><input type="checkbox" name="reload_shuffle" id="input-4" disabled /></label>
+						<span class="help-block">Re-double-click on current song to restart it in order to change shuffle preferences.
+							Works without hotkeys too.</span>
+					</div>
+				</div>
+				<h3>Notifications</h3>
+				<hr />
+				<div class="form-group">
+					<label class="col-lg-4 control-label">Enable notifications:</label>
+					<div class="col-lg-8">
+						<label class="form-control-static"><input type="checkbox" name="notify_play_pause" disabled /> Notify on play/pause</label>
+						<br />
+						<label class="form-control-static"><input type="checkbox" name="notify_next_prev" disabled /> Notify on next/previous</label>
+						<br />
+						<label class="form-control-static"><input type="checkbox" name="notify_shuffle" disabled /> Notify on shuffle</label>
+						<br />
+						<label class="form-control-static"><input type="checkbox" name="notify_shuffle" disabled /> Notify on repeat</label>
+						<br />
+						<span class="help-block">Under development.</span>
+					</div>
+				</div>
+				<h3>Features</h3>
+				<hr />
+				<div class="form-group">
+					<label for="input-native_hot_keys" class="col-lg-4 control-label">Enable native hotkeys:</label>
+					<div class="col-lg-8">
+						<label class="form-control-static"><input type="checkbox" name="native_hot_keys" id="input-native_hot_keys" /></label>
+						<span class="help-block">Enables native hotkeys support. You must have chime hotkey server installed. <a href="javascript://">Link to download</a>.</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="input-last_fm" class="col-lg-4 control-label">Enable last.fm scrolling:</label>
+					<div class="col-lg-8">
+						<label class="form-control-static"><input type="checkbox" name="last_fm" id="input-last_fm" disabled /></label>
+						<span class="help-block">Under development.</span>
+					</div>
+				</div>
+				<h3>Hotkeys</h3>
+				<hr />
+				<div class="panel panel-default">
+					<div class="panel-heading">Windows</div>
+					<div class="panel-body">
+						<dl>
+							<dt>WinKey + F3</dt>
+							<dt>MediaKeyPlayPause</dt>
+							<dd>Toggles between play and pause</dd>
+						</dl>
+						<dl>
+							<dt>WinKey + F2</dt>
+							<dt>MediaKeyPreviousTrack</dt>
+							<dd>Switches to previous track</dd>
+						</dl>
+						<dl>
+							<dt>WinKey + F4</dt>
+							<dt>MediaKeyNextTrack</dt>
+							<dd>Switches to next track</dd>
+						</dl>
+						<dl>
+							<dt>WinKey + F5</dt>
+							<dt>MediaKeyLaunch</dt>
+							<dd>Activates Google Music tab (despite settings).</dd>
+						</dl>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+</body>
+<script src="scripts/utils.js"></script>
+<script src="scripts/settings.js"></script>
+<script src="scripts/options.js"></script>
+</html>

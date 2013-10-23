@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="lib/bootstrap/css/bootstrap-theme.min.css" />
+	<link rel="stylesheet" type="text/css" href="lib/bootstrap/css/bootstrap.min.css" />
+	<style>
+		body {
+			margin: 20px;
+			max-width: 400px;
+			min-width: 400px;
+		}
+
+		.glyphicon.disabled {
+			opacity: .8;
+		}
+
+		.text-overflow {
+			overflow: hidden;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+		}
+
+		#track {
+			margin: 5px 0 0;
+		}
+
+		#controls {
+			margin: 10px 0 0;
+		}
+	</style>
+	<script src="scripts/utils.js"></script>
+	<script src="scripts/popup.js"></script>
+</head>
+<body>
+	<div id="loading" class="text-center">
+		<span class="glyphicon glyphicon-cloud-download"></span>
+	</div>
+	<div id="widget" class="media hidden">
+		<span class="pull-left">
+			<img class="media-object" id="track-cover" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAACDUlEQVR4Xu2Yz6/BQBDHpxoEcfTjVBVx4yjEv+/EQdwa14pTE04OBO+92WSavqoXOuFp+u1JY3d29rvfmQ9r7Xa7L8rxY0EAOAAlgB6Q4x5IaIKgACgACoACoECOFQAGgUFgEBgEBnMMAfwZAgaBQWAQGAQGgcEcK6DG4Pl8ptlsRpfLxcjYarVoOBz+knSz2dB6vU78Lkn7V8S8d8YqAa7XK83ncyoUCjQej2m5XNIPVmkwGFC73TZrypjD4fCQAK+I+ZfBVQLwZlerFXU6Her1eonreJ5HQRAQn2qj0TDukHm1Ws0Ix2O2260RrlQqpYqZtopVAoi1y+UyHY9Hk0O32w3FkI06jkO+74cC8Dh2y36/p8lkQovFgqrVqhFDEzONCCoB5OSk7qMl0Gw2w/Lo9/vmVMUBnGi0zi3Loul0SpVKJXRDmphvF0BOS049+n46nW5sHRVAXMAuiTZObcxnRVA5IN4DJHnXdU3dc+OLP/V63Vhd5haLRVM+0jg1MZ/dPI9XCZDUsbmuxc6SkGxKHCDzGJ2j0cj0A/7Mwti2fUOWR2Km2bxagHgt83sUgfcEkN4RLx0phfjvgEdi/psAaRf+lHmqEviUTWjygAC4EcKNEG6EcCOk6aJZnwsKgAKgACgACmS9k2vyBwVAAVAAFAAFNF0063NBAVAAFAAFQIGsd3JN/qBA3inwDTUHcp+19ttaAAAAAElFTkSuQmCC" style="width: 64px; height: 64px;">
+		</span>
+		<div class="media-body" id="track">
+			<h3 class="media-heading text-overflow"><span id="track-title"></span></h3>
+			<h4 class="text-overflow"><span id="track-artist"></span></h4>
+		</div>
+	</div>
+	<div id="controls" class="text-center">
+		<div class="btn-group">
+			<button type="button" title="Rewind" data-command="prev-track" class="btn btn-default"><span id="rewind-icon" class="glyphicon glyphicon-backward"></span></button>
+			<button type="button" title="Play" data-command="play-pause" class="btn btn-default"><span id="play-icon" class="glyphicon"></span></button>
+			<button type="button" title="Forward" data-command="next-track" class="btn btn-default"><span id="forward-icon" class="glyphicon glyphicon-forward"></span></button>
+		</div>
+
+		<div class="btn-group">
+			<button type="button" title="Shuffle" data-command="shuffle" class="btn btn-default"><span id="shuffle-icon" class="glyphicon glyphicon-random disabled"></span></button>
+			<button type="button" title="Repeat" data-command="repeat" class="btn btn-default"><span id="repeat-icon" class="glyphicon glyphicon-retweet disabled"></span></button>
+		</div>
+	</div>
+</body>
+</html>
