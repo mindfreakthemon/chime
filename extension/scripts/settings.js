@@ -5,7 +5,7 @@ var settings = {
 	open_active: false,
 	open_pinned: true,
 	default_playlist: 'all',
-	native_hot_keys: true
+	native_hot_keys: false
 };
 
 (function () {
