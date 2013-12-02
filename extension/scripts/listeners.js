@@ -58,6 +58,10 @@ var actions = {
 		musicTab(function (tab) {
 			callback(tab.id);
 		});
+	},
+
+	'notify': function (msg, callback) {
+		notify(msg.title, msg.body);
 	}
 };
 
@@ -98,7 +102,7 @@ function nativeHotkeysDisconnect() {
 }
 
 /**
- * commands api (looks like broken), only argument-less commands
+ * commands api, only argument-less commands
  */
 function commandsHandler(command) {
 	if (actions[command]) {

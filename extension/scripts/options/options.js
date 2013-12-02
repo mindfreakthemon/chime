@@ -3,7 +3,22 @@
 var form = document.querySelector('#form');
 
 document.addEventListener('DOMContentLoaded', function () {
+	// set inputs according to current settings
 	deobjectify(form, settings);
+
+	// insert custom browser hotkeys
+	chrome.commands.getAll(function (hotkeys) {
+		hotkeys.forEach(function (hotkey) {
+			var dl = document.querySelector('#command-' + hotkey.name);
+
+			if (dl) {
+				var dt = document.createElement('dt');
+				dt.innerText = hotkey.shortcut;
+
+				dl.insertBefore(dt, dl.firstChild);
+			}
+		});
+	});
 });
 
 form.addEventListener('change', function (e) {

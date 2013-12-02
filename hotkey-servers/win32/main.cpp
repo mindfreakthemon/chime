@@ -34,11 +34,7 @@ size_t main(int argc, char *argv[]) {
 		{ VK_MEDIA_PREV_TRACK, 0, "prev-track" }, 
 		{ VK_MEDIA_NEXT_TRACK, 0, "next-track" },
 		{ VK_MEDIA_PLAY_PAUSE, 0, "play-pause" },
-		{ VK_LAUNCH_MEDIA_SELECT, 0, "launch" },
-		{ VK_F2, MOD_WIN, "prev-track" },
-		{ VK_F3, MOD_WIN, "play-pause" }, 
-		{ VK_F4, MOD_WIN, "next-track" },
-		{ VK_F5, MOD_WIN, "launch" }
+		{ VK_LAUNCH_MEDIA_SELECT, 0, "launch" }
 	};
 	HK *htptr = NULL;
 

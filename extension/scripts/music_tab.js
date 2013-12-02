@@ -1,8 +1,25 @@
 var music_tabs = [];
 
+function _powerTab(callback, tab) {
+	if (!tab._powered) {
+		tab._powered = true;
+
+		chrome.tabs.executeScript(tab.id, {
+			file: 'scripts/utils.js'
+		}, function () {
+			chrome.tabs.executeScript(tab.id, {
+				file: 'scripts/content/content.js'
+			}, callback.bind(null, tab));
+		});
+
+	} else {
+		callback(tab);
+	}
+}
+
 function musicTab(callback) {
 	if (music_tabs.length) {
-		callback(music_tabs[0]);
+		_powerTab(callback, music_tabs[0]);
 		return;
 	}
 
@@ -12,7 +29,7 @@ function musicTab(callback) {
 			active: settings.open_active,
 			pinned: settings.open_pinned,
 			url: 'https://play.google.com/music/listen#/' + settings.default_playlist
-		}, callback);
+		}, _powerTab.bind(null, callback));
 	}
 }
 

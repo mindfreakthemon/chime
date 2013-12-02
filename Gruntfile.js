@@ -23,19 +23,27 @@ module.exports = function(grunt) {
 				dest: 'build/chime.zip'
 			}
 		},
+		clean: ['build/'],
 
-		build_path: path.join(__dirname, 'build')
+		build_dir: 'build/',
+		build_path: path.join(__dirname, 'build/')
 	});
 
 	grunt.loadNpmTasks('grunt-zip');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
+	grunt.loadNpmTasks('grunt-contrib-clean');
 
-	grunt.registerTask('clean', function () {
-		grunt.file.delete(grunt.config('build_path'));
+	grunt.registerTask('check', function () {
+		if (grunt.file.exists('key.pem')) {
+			grunt.log.ok();
+		} else {
+			grunt.log.fatal('File key.pem not found. ');
+		}
 	});
 
 	grunt.registerTask('prepare', function () {
 		grunt.file.mkdir(grunt.config('build_path'));
+		grunt.log.ok();
 	});
 
 	grunt.registerTask('compile-hotkeys-win32-cl', function () {
@@ -98,5 +106,12 @@ module.exports = function(grunt) {
 			});
 	});
 
-	grunt.registerTask('default', ['clean', 'prepare', 'compile-hotkeys', 'pack-extension', 'zip:chrome'])
+	grunt.registerTask('default', [
+		'clean',
+		'jshint',
+		'check',
+		'prepare',
+		'compile-hotkeys',
+		'pack-extension',
+		'zip:chrome']);
 };

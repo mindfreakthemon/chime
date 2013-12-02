@@ -34,6 +34,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 	// @TODO make this as event receiver, not an emitter
 	function update_widget(status) {
+		console.log(status)
 		if (!status) {
 			// looks like we need to reload the tab
 			return;

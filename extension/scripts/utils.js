@@ -59,6 +59,26 @@ function closest(elem, selector) {
 }
 
 /**
+ *
+ * @param target
+ * @returns {*}
+ */
+function extend(target) {
+	Array.prototype.splice.call(arguments, 1)
+		.forEach(function (object) {
+			if (!object) {
+				return;
+			}
+
+			for (var i = 0, k = Object.keys(object), l = k.length; i < l; ++i) {
+				target[k[i]] = object[k[i]];
+			}
+		});
+
+	return target;
+}
+
+/**
  * https://code.google.com/p/form-serialize/
  * @param form
  * @returns {object}

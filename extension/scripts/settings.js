@@ -1,11 +1,18 @@
 // default settings will be here
 var settings = {
-	click_action: 'focus',
+	click_action: 'focus', // or 'popup'
+
 	open_new: true,
 	open_active: false,
 	open_pinned: true,
+
 	default_playlist: 'all',
-	native_hot_keys: false
+	native_hot_keys: false,
+
+	notify_play_pause: false,
+	notify_next_prev: false,
+	notify_shuffle: false,
+	notify_repeat: false
 };
 
 (function () {
