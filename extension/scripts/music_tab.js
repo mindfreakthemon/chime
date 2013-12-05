@@ -16,7 +16,7 @@ function _powerTab(callback, tab) {
 		callback(tab);
 	}
 }
-
+//@todo add closing popup if there is no music tab
 function musicTab(callback) {
 	if (music_tabs.length) {
 		_powerTab(callback, music_tabs[0]);
@@ -46,9 +46,21 @@ chrome.tabs.onUpdated.addListener(updateTabs);
 chrome.tabs.onRemoved.addListener(updateTabs);
 
 function updateTabs() {
+	var old_tabs = music_tabs,
+		new_tabs = [];
 	chrome.tabs.query({
 		url: 'https://play.google.com/music/listen*'
 	}, function (tabs) {
-		music_tabs = tabs;
+		tabs.forEach(function (tab) {
+			var found = old_tabs.some(function (old_tab) {
+				return old_tab.id === tab.id && new_tabs.push(old_tab);
+			});
+
+			if (!found) {
+				new_tabs.push(tab);
+			}
+		});
+
+		music_tabs = new_tabs;
 	});
 }

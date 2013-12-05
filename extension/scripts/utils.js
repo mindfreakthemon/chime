@@ -118,6 +118,10 @@ function objectify(form) {
 							}
 
 							o[name] = form.elements[i].value;
+						} else {
+							if (!o[name]) {
+								o[name] = false;
+							}
 						}
 						break;
 					case 'radio':
@@ -167,7 +171,7 @@ function objectify(form) {
 
 function deobjectify(form, data) {
 	if (!form || form.nodeName !== 'FORM') {
-		return {};
+		return;
 	}
 
 	var i, j;

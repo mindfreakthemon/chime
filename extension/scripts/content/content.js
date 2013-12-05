@@ -1,6 +1,4 @@
 (function () {
-	console.log(window);
-
 	var player = document.querySelector('#player');
 
 	function _info_status() {
@@ -36,7 +34,7 @@
 		};
 	}
 
-	chrome.extension.onMessage.addListener(
+	chrome.runtime.onMessage.addListener(
 		function (request, sender, sendResponse) {
 			switch (request.command) {
 				case 'status':
@@ -72,14 +70,14 @@
 		});
 
 	// Observing changes
-	var element = player.querySelector('div.player-middle');
-
-	var observer = new WebKitMutationObserver(function (mutations) {
-		mutations.forEach(attrModified);
-	});
+	var element = player.querySelector('div.player-middle'),
+		observer = new WebKitMutationObserver(function (mutations) {
+			mutations.forEach(attrModified);
+		});
 
 	observer.observe(element, {
 		attributes: true,
+		attributeOldValue: true,
 		subtree: true,
 		attributeFilter: ['class', 'disabled', 'value']
 	});
@@ -90,10 +88,29 @@
 			newValue = self.getAttribute(name),
 			oldValue = mutation.oldValue;
 
-	//	chrome.runtime.sendMessage({
-	//		command: 'notify',
-	//		title: name,
-	//		body: oldValue + ' => ' + newValue
-	//	});
+		switch (self.dataset.id) {
+			case 'repeat':
+				break;
+			case 'shuffle':
+				break;
+			case 'play-pause':
+				if (name === 'class'
+					&& self.classList.contains('flat-button')
+					&& oldValue !== newValue
+					&& /flat-button/.test(self.className)
+					&& self.classList.contains('playing')) {
+
+					var track = _info_track();
+
+					chrome.runtime.sendMessage({
+						command: 'notify',
+						type: 'playing',
+						track: track
+					});
+				}
+				break;
+			case 'forward':
+				break;
+		}
 	}
 })();

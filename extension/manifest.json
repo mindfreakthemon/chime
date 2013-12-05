@@ -29,6 +29,7 @@
 			"scripts/utils.js",
 			"scripts/settings.js",
 			"scripts/music_tab.js",
+			"scripts/notifies.js",
 			"scripts/listeners.js",
 			"scripts/background.js"
 		],

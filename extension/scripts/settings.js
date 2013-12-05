@@ -9,10 +9,7 @@ var settings = {
 	default_playlist: 'all',
 	native_hot_keys: false,
 
-	notify_play_pause: false,
-	notify_next_prev: false,
-	notify_shuffle: false,
-	notify_repeat: false
+	notify_playing: false
 };
 
 (function () {

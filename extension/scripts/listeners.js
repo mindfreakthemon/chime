@@ -61,7 +61,7 @@ var actions = {
 	},
 
 	'notify': function (msg, callback) {
-		notify(msg.title, msg.body);
+		runNotify(msg);
 	}
 };
 
