@@ -54,13 +54,6 @@
 								<span class="help-block">Default playlist to open when creating new Google Music tab.</span>
 							</div>
 						</div>
-						<div class="form-group">
-							<label for="input-4" class="col-lg-4 control-label">Reload on shuffle:</label>
-							<div class="col-lg-8">
-								<label class="form-control-static"><input type="checkbox" name="reload_shuffle" id="input-4" disabled /></label>
-								<span class="help-block">Reload current track to actually turn off shuffle.	Works without hotkeys too. Under development.</span>
-							</div>
-						</div>
 					</div>
 				</div>
 				<h3>Notifications</h3>
@@ -70,7 +63,13 @@
 						<div class="form-group">
 							<label class="col-lg-4 control-label">Enable playing notifications:</label>
 							<div class="col-lg-8">
-								<label class="form-control-static"><input type="checkbox" name="notify_playing" /></label>
+								<label class="form-control-static"><input type="checkbox" name="notify_playing" /> On every resume / start</label>
+								<br />
+								<label class="form-control-static"><input type="checkbox" name="notify_playing_once" /> Once per track start</label>
+								<br />
+								<label class="form-control-static"><input type="checkbox" name="notify_paused" /> On every pause</label>
+								<br />
+								<label class="form-control-static"><input type="checkbox" name="notify_stopped" /> Once stopped</label>
 								<span class="help-block">Notification popup shows when a new track starts playing.</span>
 							</div>
 						</div>
@@ -88,10 +87,13 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="input-last_fm" class="col-lg-4 control-label">Enable last.fm scrolling:</label>
+							<label for="input-last_fm" class="col-lg-4 control-label">Enable last.fm scrobbling:</label>
 							<div class="col-lg-8">
-								<label class="form-control-static"><input type="checkbox" name="last_fm" id="input-last_fm" disabled /></label>
-								<span class="help-block">Under development.</span>
+								<label class="form-control-static"><input type="checkbox" name="last_fm" id="input-last_fm" /> Scrobbling</label>
+								<br />
+								<label class="form-control-static"><input type="checkbox" name="last_fm_now_playing" id="input-last_fm_now_playing" /> Now playing update</label>
+								<br />
+								<label class="form-control-static"><input type="checkbox" name="last_fm_notify" id="input-last_fm_notify" /> Notify when scrobbled</label>
 							</div>
 						</div>
 					</div>
@@ -102,15 +104,15 @@
 					<div class="panel-body">
 						<div class="row">
 							<div class="col-lg-8">
-								<dl id="command-play-pause">
+								<dl id="command-click-play-pause">
 									<dt>MediaKeyPlayPause <span class="label label-default">native</span></dt>
 									<dd>Toggles between play and pause</dd>
 								</dl>
-								<dl id="command-prev-track">
+								<dl id="command-click-rewind">
 									<dt>MediaKeyPreviousTrack <span class="label label-default">native</span></dt>
 									<dd>Switches to previous track</dd>
 								</dl>
-								<dl id="command-next-track">
+								<dl id="command-click-forward">
 									<dt>MediaKeyNextTrack <span class="label label-default">native</span></dt>
 									<dd>Switches to next track</dd>
 								</dl>

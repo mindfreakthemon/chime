@@ -1,6 +1,6 @@
 // default settings will be here
 var settings = {
-	click_action: 'focus', // or 'popup'
+	click_action: 'popup', // or 'focus'
 
 	open_new: true,
 	open_active: false,
@@ -9,7 +9,14 @@ var settings = {
 	default_playlist: 'all',
 	native_hot_keys: false,
 
-	notify_playing: false
+	notify_playing: true,
+	notify_playing_once: false,
+	notify_paused: false,
+	notify_stopped: false,
+
+	last_fm: true,
+	last_fm_now_playing: true,
+	last_fm_notify: false
 };
 
 (function () {
@@ -45,4 +52,7 @@ function applySettings() {
 	} else {
 		nativeHotkeysDisconnect();
 	}
+
+	commandsConnect();
+	runtimeMessagesConnect();
 }

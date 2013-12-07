@@ -9,7 +9,13 @@ document.addEventListener('DOMContentLoaded', function () {
 	// insert custom browser hotkeys
 	chrome.commands.getAll(function (hotkeys) {
 		hotkeys.forEach(function (hotkey) {
-			var dl = document.querySelector('#command-' + hotkey.name);
+			var command = hotkey.name
+					.split(':')
+					.filter(function (v) {
+						return v;
+					})
+					.join('-'),
+				dl = document.querySelector('#command-' + command);
 
 			if (dl) {
 				var dt = document.createElement('dt');

@@ -19,37 +19,41 @@
 		"notifications",
 		"nativeMessaging",
 		"background",
-		"*://play.google.com/music/*"
+		"*://play.google.com/music/*",
+		"*://www.last.fm/api/*",
+		"*://ws.audioscrobbler.com/2.0/"
 	],
 
 	"options_page": "options.html",
 
 	"background": {
 		"scripts": [
+			"lib/md5.js",
 			"scripts/utils.js",
 			"scripts/settings.js",
-			"scripts/music_tab.js",
-			"scripts/notifies.js",
-			"scripts/listeners.js",
-			"scripts/background.js"
+			"scripts/background/music_tab.js",
+			"scripts/background/notifies.js",
+			"scripts/background/scrobbling.js",
+			"scripts/background/listeners.js",
+			"scripts/background/background.js"
 		],
 		"persistent": true
 	},
 
 	"commands": {
-		"play-pause": {
+		"click:play-pause": {
 			"suggested_key": {
 				"default": "Ctrl+Shift+I"
 			},
 			"description": "Toggle Play/Pause state"
 		},
-		"next-track": {
+		"click:forward": {
 			"suggested_key": {
 				"default": "Ctrl+Shift+U"
 			},
 			"description": "Select next track"
 		},
-		"prev-track": {
+		"click:rewind": {
 			"suggested_key": {
 				"default": "Ctrl+Shift+Y"
 			},

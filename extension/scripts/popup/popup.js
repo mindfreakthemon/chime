@@ -1,11 +1,8 @@
-// popup.html
-
 document.addEventListener('DOMContentLoaded', function () {
 	var controls = document.getElementById('controls'),
 		widget = document.getElementById('widget'),
 		loading = document.getElementById('loading');
 
-	// handle click events, sends command to extension
 	controls.addEventListener('click', function (e) {
 		e.stopPropagation();
 
@@ -13,15 +10,23 @@ document.addEventListener('DOMContentLoaded', function () {
 			command = self.dataset.command;
 
 		if (command) {
+			/**
+			 * @sendCommand to background
+			 */
 			chrome.runtime.sendMessage({
-				command: command
+				command: 'tabId'
+			}, function (id) {
+				chrome.tabs.sendMessage(id, {
+					command: 'click',
+					id: command
+				});
 			});
 		}
 	});
 
-	var initial = true;
+	var initial = true,
 
-	var track = document.getElementById('track'),
+		track = document.getElementById('track'),
 		track_title = document.getElementById('track-title'),
 		track_artist = document.getElementById('track-artist'),
 		track_cover = document.getElementById('track-cover'),
@@ -32,10 +37,8 @@ document.addEventListener('DOMContentLoaded', function () {
 		shuffle_icon = document.getElementById('shuffle-icon'),
 		repeat_icon = document.getElementById('repeat-icon');
 
-	// @TODO make this as event receiver, not an emitter
 	function update_widget(status) {
 		if (!status) {
-			// looks like we need to reload the tab
 			return;
 		}
 
@@ -95,14 +98,23 @@ document.addEventListener('DOMContentLoaded', function () {
 		if (initial) {
 			loading.classList.add('hidden');
 			widget.classList.remove('hidden');
+			controls.classList.remove('hidden');
 		}
 	}
 
+	/**
+	 * @sendCommand to background
+	 */
 	chrome.runtime.sendMessage({
-		command: 'tab-id'
+		command: 'tabId'
 	}, function (id) {
 		function updater() {
-			chrome.tabs.sendMessage(id, { command: 'status' }, update_widget);
+			/**
+			 * @sendCommand to tab
+			 */
+			chrome.tabs.sendMessage(id, {
+				command: 'status'
+			}, update_widget);
 		}
 
 		updater();

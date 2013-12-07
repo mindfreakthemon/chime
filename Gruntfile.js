@@ -37,7 +37,7 @@ module.exports = function(grunt) {
 		if (grunt.file.exists('key.pem')) {
 			grunt.log.ok();
 		} else {
-			grunt.log.fatal('File key.pem not found. ');
+			grunt.fail.fatal('File key.pem not found. ');
 		}
 	});
 
@@ -55,6 +55,7 @@ module.exports = function(grunt) {
 			{ cwd: local_dir },
 			function (error, stdout, stderr) {
 				if (error) {
+					grunt.log.write(stdout, 2);
 					grunt.fail.fatal(stderr, 2);
 				} else {
 					grunt.log.write(stdout).ok();

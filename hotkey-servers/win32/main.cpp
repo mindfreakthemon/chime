@@ -1,5 +1,6 @@
 #include <windows.h>
 #include <string.h>
+#include <sstream>
 #include <iostream>
 #include <conio.h>
 
@@ -8,7 +9,8 @@ using namespace std;
 struct HK {
 	size_t key;
 	size_t modifier;
-	string event;
+	string command;
+	string id;
 };
 
 inline void output_mess(const char *str, size_t len) {
@@ -30,11 +32,11 @@ size_t main(int argc, char *argv[]) {
 	fflush(stdin);
 
 	HK hotkeys[] = {
-		{ VK_MEDIA_STOP, 0, "play-pause" },
-		{ VK_MEDIA_PREV_TRACK, 0, "prev-track" }, 
-		{ VK_MEDIA_NEXT_TRACK, 0, "next-track" },
-		{ VK_MEDIA_PLAY_PAUSE, 0, "play-pause" },
-		{ VK_LAUNCH_MEDIA_SELECT, 0, "launch" }
+		{ VK_MEDIA_STOP, 0, "click", "play-pause" },
+		{ VK_MEDIA_PREV_TRACK, 0, "click", "rewind" },
+		{ VK_MEDIA_NEXT_TRACK, 0, "click", "forward" },
+		{ VK_MEDIA_PLAY_PAUSE, 0, "click", "play-pause" },
+		{ VK_LAUNCH_MEDIA_SELECT, 0, "launch", "" }
 	};
 	HK *htptr = NULL;
 
@@ -58,10 +60,12 @@ size_t main(int argc, char *argv[]) {
 
 		if (msg.message == WM_HOTKEY) {
 			htptr = &hotkeys[msg.wParam - 1];
-			auto str = htptr->event.c_str();
-			unsigned int len = htptr->event.length();
 
-			output_mess(str, len);
+			ostringstream os;
+			os << htptr->command << ":" << htptr->id;
+			string str = os.str();
+
+			output_mess(str.c_str(), str.length());
 		} else {
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
