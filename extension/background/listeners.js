@@ -28,8 +28,8 @@ var _actions = {
 	notification: function (msg) {
 		notificationHandler(msg);
 	},
-	scrobbling: function (msg) {
-		scrobblingHandler(msg);
+	scrobbling: function (msg, callback) {
+		scrobblingHandler(msg, callback);
 	}
 };
 
@@ -97,6 +97,8 @@ function runtimeMessagesHangler(msg, sender, callback) {
 	if (_actions[command]) {
 		_actions[command](msg, callback);
 	}
+
+	return true;
 }
 
 function runtimeMessagesConnect() {

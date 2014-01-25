@@ -7,7 +7,7 @@ function _powerTab(tab) {
 	});
 
 	chrome.tabs.executeScript(tab.id, {
-		file: 'scripts/content/content.js'
+		file: 'content/content.js'
 	});
 }
 

@@ -17,3 +17,4 @@ pids
 logs
 node_modules/
 build/
+extension/css/

@@ -240,3 +240,23 @@ function deobjectify(form, data) {
 		}
 	}
 }
+
+/**
+ *
+ * @param str
+ * @param len
+ * @param ph
+ * @returns {string}
+ */
+function strpad(str, len, ph) {
+	str = str.toString();
+
+	if (str.length < len) {
+		len -= str.length;
+		while (len--) {
+			str = (ph || ' ') + str;
+		}
+	}
+
+	return str;
+}

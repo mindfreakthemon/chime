@@ -28,22 +28,39 @@ function _queryString(params) {
 	return parts.join('&');
 }
 
-function _authorize() {
+var _authInterval;
+
+function _authorize(callback) {
+	clearInterval(_authInterval);
+
 	var xhr = new XMLHttpRequest();
 
-	xhr.open('GET', apiURL + 'method=auth.getToken&api_key=' + apiKey);
-	xhr.setRequestHeader('Content-Type', 'application/xml');
+	xhr.open('GET', apiURL + 'method=auth.getToken&api_key=' + apiKey + '&format=json');
+	xhr.setRequestHeader('Content-Type', 'application/json');
 
 	xhr.onload = function () {
-		var responseXML = xhr.responseXML,
-			status = responseXML.querySelector('lfm').getAttribute('status');
+		var json = JSON.parse(xhr.responseText);
 
-		if (status === 'ok') {
-			localStorage.token = responseXML.querySelector('token').firstChild.nodeValue;
-
-			window.open('https://www.last.fm/api/auth/?api_key=' + apiKey + '&token=' + localStorage.token);
+		if (json.error) {
+			localStorage.removeItem('token');
 		} else {
-			localStorage.token = '';
+			localStorage.setItem('token', json.token);
+
+			var win = window.open('https://www.last.fm/api/auth/?api_key=' + apiKey + '&token=' + json.token, 'lastfm_popup', 'width=1024,height=475');
+
+			if (callback) {
+				win.onunload = function () {
+					console.log('uload');
+				}
+
+				console.log(win.closed);
+				_authInterval = setInterval(function () {
+					console.log(win.closed);
+					if (win.closed) {
+						callback(null, json.token);
+					}
+				}, 100);
+			}
 		}
 	};
 
@@ -52,11 +69,13 @@ function _authorize() {
 
 function _sessionID(callback) {
 	if (!localStorage.token) {
-		_authorize();
+		// do nothing
+		callback(true);
 		return;
 	}
 
 	if (localStorage.sessionID) {
+		// already got session key
 		callback(null, localStorage.sessionID);
 		return;
 	}
@@ -64,30 +83,65 @@ function _sessionID(callback) {
 	var params = {
 			method: 'auth.getsession',
 			api_key: apiKey,
-			token: localStorage.token
+			token: localStorage.token,
+			format: 'json'
 		},
 		url = apiURL + _queryString(params) + '&api_sig=' + _apiSign(params);
 
 	var xhr = new XMLHttpRequest();
 
 	xhr.open('GET', url);
-	xhr.setRequestHeader('Content-Type', 'application/xml');
+	xhr.setRequestHeader('Content-Type', 'application/json');
 	xhr.onload = function () {
-		var responseXML = xhr.responseXML,
-			status = responseXML.querySelector('lfm').getAttribute('status');
+		var json = JSON.parse(xhr.responseText);
 
-		if (status === 'ok') {
-			localStorage.sessionID = responseXML.querySelector('key').firstChild.nodeValue;
-
-			callback(null, localStorage.sessionID);
-		} else {
-			localStorage.sessionID = '';
-
+		if (json.error) {
+			localStorage.removeItem('sessionID');
 			_authorize();
+		} else {
+			localStorage.sessionID = json.session.key;
+			callback(null, localStorage.sessionID);
 		}
 	};
 
 	xhr.send();
+}
+
+function _userProfile(callback) {
+	// if there's no token
+	// there's no user
+	if (!localStorage.token) {
+		callback(null);
+		return;
+	}
+
+	_sessionID(function (error, sessionID) {
+		if (error) {
+			callback(null);
+			return;
+		}
+
+		var params = {
+				method: 'user.getInfo',
+				api_key: apiKey,
+				sk: sessionID,
+				format: 'json'
+			},
+			api_sig = _apiSign(params),
+			url = apiURL + _queryString(params) + '&api_sig=' + api_sig;
+
+		var xhr = new XMLHttpRequest();
+
+		xhr.open('GET', url);
+		xhr.setRequestHeader('Content-Type', 'application/json');
+		xhr.onload = function () {
+			var json = JSON.parse(xhr.responseText);
+
+			callback(json.user);
+		};
+
+		xhr.send();
+	});
 }
 
 function _nowPlaying(track) {
@@ -96,6 +150,10 @@ function _nowPlaying(track) {
 	}
 
 	_sessionID(function (error, sessionID) {
+		if (error) {
+			return;
+		}
+
 		var params = {
 			method: 'track.updateNowPlaying',
 			track: track.title,
@@ -134,6 +192,10 @@ function _scrobble(track, timestamp) {
 	}
 
 	_sessionID(function (error, sessionID) {
+		if (error) {
+			return;
+		}
+
 		var params = {
 			method: 'track.scrobble',
 			timestamp: Math.floor(timestamp / 1000),
@@ -174,13 +236,19 @@ function _scrobble(track, timestamp) {
 	});
 }
 
-function scrobblingHandler(command) {
+function scrobblingHandler(command, callback) {
 	switch (command.type) {
 		case 'playing':
 			_nowPlaying(command.track);
 			break;
 		case 'scrobble':
 			_scrobble(command.track, command.timestamp);
+			break;
+		case 'profile':
+			_userProfile(callback);
+			break;
+		case 'authorize':
+			_authorize(callback);
 			break;
 	}
 }

@@ -43,7 +43,7 @@ function updateSettings(data) {
 function applySettings() {
 	// click_action
 	chrome.browserAction.setPopup({
-		popup: settings.click_action == 'focus' ? '' : 'popup.html'
+		popup: settings.click_action == 'focus' ? '' : chrome.runtime.getManifest().browser_action.default_popup
 	});
 
 	// native_hot_keys

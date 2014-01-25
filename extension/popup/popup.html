@@ -1,35 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<link rel="stylesheet" type="text/css" href="lib/bootstrap/css/bootstrap-theme.min.css" />
-	<link rel="stylesheet" type="text/css" href="lib/bootstrap/css/bootstrap.min.css" />
-	<style>
-		body {
-			margin: 20px;
-			max-width: 400px;
-			min-width: 400px;
-		}
-
-		.glyphicon.disabled {
-			opacity: .8;
-		}
-
-		.text-overflow {
-			overflow: hidden;
-			white-space: nowrap;
-			text-overflow: ellipsis;
-		}
-
-		#track {
-			margin: 5px 0 0;
-		}
-
-		#controls {
-			margin: 10px 0 0;
-		}
-	</style>
-	<script src="scripts/utils.js"></script>
-	<script src="scripts/popup/popup.js"></script>
+	<link rel="stylesheet" type="text/css" href="../lib/bootstrap/css/bootstrap-theme.min.css" />
+	<link rel="stylesheet" type="text/css" href="../lib/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="css/popup.css" />
+	<script src="../scripts/utils.js"></script>
+	<script src="../popup/popup.js"></script>
 </head>
 <body>
 	<div id="loading" class="text-center">
@@ -44,7 +20,11 @@
 			<h4 class="text-overflow"><span id="track-artist"></span></h4>
 		</div>
 	</div>
-	<div id="controls" class="text-center hidden">
+	<div id="controls" class="well hidden">
+		<input id="range-control" type="range" min="0" value="0" max="100" step="1" />
+
+		<div id="length-screen" class="well well-sm"><span id="position-value">0:00</span> / <span id="duration-value">0:00</span></div>
+
 		<div class="btn-group">
 			<button type="button" title="Rewind" data-command="rewind" class="btn btn-default"><span id="rewind-icon" class="glyphicon glyphicon-backward"></span></button>
 			<button type="button" title="Play" data-command="play-pause" class="btn btn-default"><span id="play-icon" class="glyphicon"></span></button>
