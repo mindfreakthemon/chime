@@ -45,11 +45,11 @@
 							<section>
 								<h3>If no Google Music tab was found:</h3>
 								<article>
-									<label class="form-control-static"><input type="checkbox" name="open_new" /> Open new tab</label>
+									<label class="form-control-static"><input type="checkbox" name="open_new" /> open new tab</label>
 									<br />
-									<label class="form-control-static"><input type="checkbox" name="open_active" /> Make it active</label>
+									<label class="form-control-static"><input type="checkbox" name="open_active" /> make it active</label>
 									<br />
-									<label class="form-control-static"><input type="checkbox" name="open_pinned" /> Make it pinned</label>
+									<label class="form-control-static"><input type="checkbox" name="open_pinned" /> make it pinned</label>
 									<p>If no tab was found while pressing any hotkey or clicking on chime icon.</p>
 								</article>
 							</section>
@@ -80,16 +80,17 @@
 					</header>
 					<div class="content">
 						<section>
-							<h3>Enable playing notifications:</h3>
+							<h3>Enable playing notifications on:</h3>
 							<article>
-								<label class="form-control-static"><input type="checkbox" name="notify_playing" /> On every resume / start</label>
+								<label class="form-control-static"><input type="checkbox" name="notify_resumed" /> track resume</label>
 								<br />
-								<label class="form-control-static"><input type="checkbox" name="notify_playing_once" /> Once per track start</label>
+								<label class="form-control-static"><input type="checkbox" name="notify_playing" /> track start</label>
 								<br />
-								<label class="form-control-static"><input type="checkbox" name="notify_paused" /> On every pause</label>
+								<label class="form-control-static"><input type="checkbox" name="notify_paused" /> track pause</label>
 								<br />
-								<label class="form-control-static"><input type="checkbox" name="notify_stopped" /> Once stopped</label>
-								<p>Notification popup shows when a new track starts playing.</p>
+								<label class="form-control-static"><input type="checkbox" name="notify_stopped" /> track finish</label>
+								<br />
+								<label class="form-control-static"><input type="checkbox" name="notify_finished" /> playlist finish</label>
 							</article>
 						</section>
 					</div>
@@ -103,17 +104,17 @@
 							<h3>Enable native hotkeys:</h3>
 							<article>
 								<label class="form-control-static"><input type="checkbox" name="native_hot_keys" id="input-native_hot_keys" />
-								Enables native hotkeys support. You must have chime hotkey server installed. <a href="https://github.com/mindfreakthemon/chime/releases">Link to download</a>.</label>
+								enables native hotkeys support. You must have chime hotkey server installed (<a href="https://github.com/mindfreakthemon/chime/releases">link to download</a>)</label>
 							</article>
 						</section>
 						<section>
 							<h3>Enable last.fm scrobbling:</h3>
 							<article>
-								<label class="form-control-static"><input type="checkbox" name="last_fm" id="input-last_fm" /> Scrobbling</label>
+								<label class="form-control-static"><input type="checkbox" name="scrobbling_enabled" id="input-last_fm" /> scrobbling</label>
 								<br />
-								<label class="form-control-static"><input type="checkbox" name="last_fm_now_playing" id="input-last_fm_now_playing" /> Now playing update</label>
+								<label class="form-control-static"><input type="checkbox" name="scrobbling_now_playing" id="input-last_fm_now_playing" /> now playing update</label>
 								<br />
-								<label class="form-control-static"><input type="checkbox" name="last_fm_notify" id="input-last_fm_notify" /> Notify when scrobbled</label>
+								<label class="form-control-static"><input type="checkbox" name="scrobbling_notify" id="input-last_fm_notify" /> notify when scrobbled</label>
 							</article>
 							<article hidden id="last-fm-profile">
 								<h4 id="last-fm-user-name"></h4>
@@ -122,10 +123,17 @@
 									<button type="button" id="last-fm-disconnect">Disconnect</button>
 								</p>
 							</article>
-							<article hidden id="last-fm-not-connected">
+							<article id="last-fm-not-connected">
 								<p>
 									<button type="button" id="last-fm-connect">Connect</button>
 								</p>
+							</article>
+						</section>
+						<section>
+							<h3>Enable lyrics fetching: <sup>beta</sup></h3>
+							<article>
+								<label class="form-control-static"><input type="checkbox" name="lyrics_enabled" id="input-lyrics_enabled" />
+									enables lyrics fetching in web player (look for orange button in web player's toolbox)</label>
 							</article>
 						</section>
 					</div>
@@ -164,12 +172,22 @@
 								<a href="javascript:">
 									<dl id="command-launch">
 										<dt>MediaKeyLaunch <span class="label label-default">native</span></dt>
-										<dd>Activates Google Music tab (despite settings).</dd>
+										<dd>Activates Google Music tab (despite Settings).</dd>
 									</dl>
 								</a>
 							</li>
 						</ul>
 						<p>You can change browser hotkeys from extensions page (at the bottom).</p>
+						<section>
+							<h3>Debug:</h3>
+							<article>
+								<label class="form-control-static"><input type="checkbox" name="debug" /> enable log outputs in console</label>
+								<br />
+								<p>
+									<button type="button" id="debug-reset">Reset settings to defaults</button>
+								</p>
+							</article>
+						</section>
 					</div>
 				</div>
 			</div>
@@ -178,5 +196,10 @@
 </body>
 <script src="../scripts/utils.js"></script>
 <script src="../scripts/settings.js"></script>
-<script src="../options/options.js"></script>
+<script src="../scripts/scrobbling.js"></script>
+<script src="../options/js/settings.js"></script>
+<script src="../options/js/hotkeys.js"></script>
+<script src="../options/js/navigation.js"></script>
+<script src="../options/js/playlists.js"></script>
+<script src="../options/js/scrobbling.js"></script>
 </html>

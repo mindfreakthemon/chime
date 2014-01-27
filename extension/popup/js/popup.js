@@ -1,13 +1,13 @@
-function _convertToTime(msec) {
-	var secf = msec / 1000,
-		sec = Math.floor(secf % 60),
-		minf = secf / 60,
-		min = Math.floor(minf);
+Settings.promise.then(function () {
+	function _convertToTime(msec) {
+		var secf = msec / 1000,
+			sec = Math.floor(secf % 60),
+			minf = secf / 60,
+			min = Math.floor(minf);
 
-	return min + ':' + strpad(sec, 2, '0');
-}
+		return min + ':' + strpad(sec, 2, '0');
+	}
 
-document.addEventListener('DOMContentLoaded', function () {
 	var controls = document.getElementById('controls'),
 		widget = document.getElementById('widget'),
 		loading = document.getElementById('loading');
@@ -19,10 +19,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
 		if (self &&
 			self.dataset.command) {
-			chrome.runtime.sendMessage({
-				command: 'tabId'
-			}, function (id) {
-				chrome.tabs.sendMessage(id, {
+			Tab.open(function (tab) {
+				chrome.tabs.sendMessage(tab.id, {
 					command: 'click',
 					id: self.dataset.command
 				});
@@ -117,11 +115,9 @@ document.addEventListener('DOMContentLoaded', function () {
 		position_value.innerText = _convertToTime(status.position);
 	}
 
-	chrome.runtime.sendMessage({
-		command: 'tabId'
-	}, function (id) {
+	Tab.open(function (tab) {
 		function updater() {
-			chrome.tabs.sendMessage(id, {
+			chrome.tabs.sendMessage(tab.id, {
 				command: 'status'
 			}, update_widget);
 		}
@@ -130,10 +126,11 @@ document.addEventListener('DOMContentLoaded', function () {
 		setInterval(updater, 500);
 
 		range_control.addEventListener('change', function (e) {
-			chrome.tabs.sendMessage(id, {
+			chrome.tabs.sendMessage(tab.id, {
 				command: 'setPosition',
 				position: range_control.value
 			});
 		});
 	});
 });
+

@@ -2136,7 +2136,7 @@ chrome.proxy = {};
 
 
 /** @type {!Object.<string,!ChromeSetting>} */
-chrome.proxy.settings;
+chrome.proxy.Settings;
 
 
 /** @type {ChromeEvent} */

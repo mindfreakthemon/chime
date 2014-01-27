@@ -57,6 +57,13 @@ module.exports = function(grunt) {
 						dest: 'extension/popup/css',
 						cwd: 'extension/popup/less',
 						ext: '.css'
+					},
+					{
+						expand: true,
+						src: '**/*.less',
+						dest: 'extension/content/css',
+						cwd: 'extension/content/less',
+						ext: '.css'
 					}
 				]
 			}
@@ -64,7 +71,7 @@ module.exports = function(grunt) {
 		clean: ['build/', 'dest/'],
 		watch: {
 			less: {
-				files: ['extension/options/less/**/*.less', 'extension/popup/less/**/*.less'],
+				files: ['extension/*/less/**/*.less'],
 				tasks: ['less:extension']
 			}
 		}

@@ -15,30 +15,53 @@
 	},
 
 	"permissions": [
+		"storage",
 		"tabs",
 		"notifications",
 		"nativeMessaging",
 		"background",
 		"*://play.google.com/music/*",
 		"*://www.last.fm/api/*",
-		"*://ws.audioscrobbler.com/2.0/"
+		"*://ws.audioscrobbler.com/2.0/*",
+		"*://*.google.com/*",
+		"*://*.songlyrics.com/*"
 	],
 
 	"options_page": "options/options.html",
 
 	"background": {
 		"scripts": [
-			"lib/md5.js",
 			"scripts/utils.js",
 			"scripts/settings.js",
-			"background/music_tab.js",
-			"background/notifies.js",
-			"background/scrobbling.js",
-			"background/listeners.js",
-			"background/background.js"
+			"scripts/tab.js",
+			"background/js/listeners.js",
+			"background/js/background.js"
 		],
 		"persistent": true
 	},
+
+	"content_scripts": [
+		{
+			"matches": ["*://play.google.com/music/listen*"],
+			"css": [
+				"content/css/content.css"
+			],
+			"js": [
+				"scripts/utils.js",
+				"scripts/settings.js",
+				"scripts/scrobbling.js",
+				"content/js/events.js",
+				"content/js/content.js",
+				"content/js/notifications.js",
+				"content/js/scrobbling.js",
+				"content/js/lyrics.js"
+			]
+		}
+	],
+
+	"web_accessible_resources": [
+		"content/html/lyrics.html"
+	],
 
 	"commands": {
 		"click:play-pause": {

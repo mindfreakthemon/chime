@@ -3,7 +3,7 @@
  */
 var _actions = {
 	click: function (id) {
-		musicTab(function (tab) {
+		Tab.open(function (tab) {
 			/**
 			 * @sendCommand to tab
 			 */
@@ -14,22 +14,11 @@ var _actions = {
 		});
 	},
 	launch: function () {
-		musicTab(function (tab) {
+		Tab.open(function (tab) {
 			chrome.tabs.update(tab.id, {
 				selected: true
 			});
 		});
-	},
-	tabId: function (msg, callback) {
-		musicTab(function (tab) {
-			callback(tab.id);
-		});
-	},
-	notification: function (msg) {
-		notificationHandler(msg);
-	},
-	scrobbling: function (msg, callback) {
-		scrobblingHandler(msg, callback);
 	}
 };
 
@@ -88,25 +77,4 @@ function commandsDisconnect() {
 	chrome.commands.onCommand.removeListener(_splitRun);
 }
 
-/**
- * content scripts and popup page messages api, all commands
- */
-function runtimeMessagesHangler(msg, sender, callback) {
-	var command = msg.command;
-
-	if (_actions[command]) {
-		_actions[command](msg, callback);
-	}
-
-	return true;
-}
-
-function runtimeMessagesConnect() {
-	runtimeMessagesDisconnect();
-
-	chrome.runtime.onMessage.addListener(runtimeMessagesHangler);
-}
-
-function runtimeMessagesDisconnect() {
-	chrome.runtime.onMessage.removeListener(runtimeMessagesHangler);
-}
+commandsConnect();
