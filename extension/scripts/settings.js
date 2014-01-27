@@ -49,7 +49,7 @@
 			chrome.storage.sync.set(save);
 		},
 		getItems: function () {
-			return settings
+			return settings;
 		},
 		promise: new Promise(function (fulfill) {
 			chrome.storage.sync.get(defaults, function (overrided) {
@@ -57,5 +57,5 @@
 				fulfill();
 			});
 		})
-	}
+	};
 })(window);
