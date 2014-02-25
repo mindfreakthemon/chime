@@ -131,6 +131,25 @@ Settings.promise.then(function () {
 				position: range_control.value
 			});
 		});
+
+		var album_art_action = Settings.getItem('popup_album_art_action');
+
+		track_cover.addEventListener('click', function () {
+			switch (album_art_action) {
+				case 'navigate':
+					chrome.tabs.update(tab.id, {
+						active: true
+					});
+				// intentionally omitted break
+				case 'close':
+					window.close();
+				break;
+			}
+		});
+
+		if (album_art_action !== 'nothing') {
+			track_cover.classList.add('clickable');
+		}
 	});
 });
 

@@ -1,4 +1,6 @@
 Settings.promise.then(function () {
+	var logger = getLogger('lyrics');
+
 	var buttons = document.getElementById('action_bar_container'),
 		container = document.getElementById('nav-content-container'),
 		button = document.createElement('button'),
@@ -42,25 +44,53 @@ Settings.promise.then(function () {
 		}
 	}
 
+	// @TODO make this configurable
+	var lyricsProviders = {
+			'songlyrics.com': function (response) {
+				var div = document.createElement('div');
+				div.innerHTML = response.split('id="songLyricsDiv-outer">')[1].split('</div>')[0].trim();
+
+				return div.firstChild.innerHTML;
+			},
+			'metrolyrics.com': function (response) {
+				return response.split('id="lyrics-body-text">')[1].split('</div>')[0];
+			}
+		},
+		lyricsProvidersQuery = Object.keys(lyricsProviders)
+			.map(function (key) {
+				return 'site:' + key;
+			})
+			.join(' OR ');
+
 	function loadLyrics() {
 		var chimeLyrics = document.getElementById('chime-lyrics'),
 			chimeError = document.getElementById('chime-error'),
 			chimeLoading = document.getElementById('chime-loading'),
+			chimeSource = document.getElementById('chime-source'),
+			chimeSourceLink = document.getElementById('chime-source-link'),
 			track = currentTrack();
 
 		function showLoading() {
-			chimeError.classList.remove('visible');
+			hideAll();
 			chimeLoading.classList.add('visible');
 		}
 
 		function showError() {
-			chimeLoading.classList.remove('visible');
+			hideAll();
 			chimeError.classList.add('visible');
 		}
 
+		function showLyrics() {
+			hideAll();
+			chimeLyrics.classList.add('visible');
+			chimeSource.classList.add('visible');
+		}
+
 		function hideAll() {
+			chimeLyrics.classList.remove('visible');
 			chimeLoading.classList.remove('visible');
 			chimeError.classList.remove('visible');
+			chimeSource.classList.remove('visible');
 		}
 
 		if (!track.title || !track.artist) {
@@ -72,14 +102,18 @@ Settings.promise.then(function () {
 		chimeLyrics.innerHTML = '';
 
 		var xhr = new XMLHttpRequest();
-		xhr.open('GET', 'https://www.google.com/search?q=' + encodeURIComponent(track.title + ' ' + track.artist + ' site:songlyrics.com'));
+		xhr.open('GET', 'https://www.google.com/search?q=' +
+			encodeURIComponent(track.title + ' ' + track.artist + ' Lyrics AND (' + lyricsProvidersQuery + ')'));
 		xhr.onload = function () {
 			var response = xhr.responseText,
-				url;
+				url,
+				host;
 
 			try {
 				url = response.split(' id="search"')[1].split('<a href="')[1].split('"')[0];
+				host = url.match(/^https?:\/\/(?:www\.)?([^\/]+)/i)[1];
 			} catch (e) {
+				logger('error parsing query results: %s', e.message);
 				showError();
 				return;
 			}
@@ -90,14 +124,17 @@ Settings.promise.then(function () {
 					text;
 
 				try {
-					text = response.split('id="songLyricsDiv-outer">')[1].split('</div>')[0]
+					text = lyricsProviders[host](response);
 				} catch (e) {
+					logger('error parsing lyrics on %s: %s', host, e.message);
 					showError();
 					return;
 				}
 
-				hideAll();
+				chimeSourceLink.href = url;
+				chimeSourceLink.innerText = host;
 				chimeLyrics.innerHTML = text;
+				showLyrics();
 			};
 			xhr2.open('GET', url, true);
 			xhr2.send();

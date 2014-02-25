@@ -17,6 +17,8 @@
 		notify_stopped: false,
 		notify_finished: false,
 
+		popup_album_art_action: 'navigate',
+
 		scrobbling_enabled: false,
 		scrobbling_now_playing: true,
 		scrobbling_notify: false,

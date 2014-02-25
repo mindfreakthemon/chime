@@ -31,47 +31,59 @@
 						<h1>Behaviour</h1>
 					</header>
 					<div class="content">
-							<section>
-								<h3>Click on chime icon:</h3>
-								<article>
-									<select class="form-control" id="input-1" name="click_action">
-										<option value="popup">Show little popup with controls</option>
-										<option value="focus">Activate Google Music tab</option>
-									</select>
-									<p>Configures what happens if you click onto the chime icon in chrome's toolbar.</p>
-								</article>
-							</section>
+						<section>
+							<h3>Click on chime icon:</h3>
+							<article>
+								<select class="form-control" id="input-1" name="click_action">
+									<option value="popup">Show popup with controls</option>
+									<option value="focus">Activate Google Music tab</option>
+								</select>
+								<p>Configures what happens if you click onto the chime icon in chrome's toolbar.</p>
+							</article>
+						</section>
 
-							<section>
-								<h3>If no Google Music tab was found:</h3>
-								<article>
-									<label class="form-control-static"><input type="checkbox" name="open_new" /> open new tab</label>
-									<br />
-									<label class="form-control-static"><input type="checkbox" name="open_active" /> make it active</label>
-									<br />
-									<label class="form-control-static"><input type="checkbox" name="open_pinned" /> make it pinned</label>
-									<p>If no tab was found while pressing any hotkey or clicking on chime icon.</p>
-								</article>
-							</section>
+						<section>
+							<h3>Popup's album art click action:</h3>
+							<article>
+								<select class="form-control" id="input-4" name="popup_album_art_action">
+									<option value="nothing">Do nothing</option>
+									<option value="close">Close popup</option>
+									<option value="navigate">Close popup and navigate to music tab</option>
+								</select>
+								<p>What happens when you click on album art in the popup.</p>
+							</article>
+						</section>
 
-							<section>
-								<h3>Default playlist:</h3>
-								<article>
-									<select class="form-control" id="input-3" name="default_playlist">
-										<option value="all">All</option>
-										<optgroup label="Auto playlists">
-											<option value="ap/auto-playlist-thumbs-up">Highly rated</option>
-											<option value="ap/auto-playlist-recent">Last added</option>
-											<option value="ap/auto-playlist-promo">Free & Purchased</option>
-											<option value="ap/shared-with-me">Shared with me</option>
-										</optgroup>
-										<optgroup label="Personal playlists" id="personal-playlists">
-											<option disabled>Loading...</option>
-										</optgroup>
-									</select>
-									<p>Default playlist to open when creating new Google Music tab.</p>
-								</article>
-							</section>
+						<section>
+							<h3>If no Google Music tab was found:</h3>
+							<article>
+								<label class="form-control-static"><input type="checkbox" name="open_new" /> open new tab</label>
+								<br />
+								<label class="form-control-static"><input type="checkbox" name="open_active" /> make it active</label>
+								<br />
+								<label class="form-control-static"><input type="checkbox" name="open_pinned" /> make it pinned</label>
+								<p>If no tab was found while pressing any hotkey or clicking on chime icon.</p>
+							</article>
+						</section>
+
+						<section>
+							<h3>Default playlist:</h3>
+							<article>
+								<select class="form-control" id="input-3" name="default_playlist">
+									<option value="all">All</option>
+									<optgroup label="Auto playlists">
+										<option value="ap/auto-playlist-thumbs-up">Highly rated</option>
+										<option value="ap/auto-playlist-recent">Last added</option>
+										<option value="ap/auto-playlist-promo">Free & Purchased</option>
+										<option value="ap/shared-with-me">Shared with me</option>
+									</optgroup>
+									<optgroup label="Personal playlists" id="personal-playlists">
+										<option disabled>Loading...</option>
+									</optgroup>
+								</select>
+								<p>Default playlist to open when creating new Google Music tab.</p>
+							</article>
+						</section>
 					</div>
 				</div>
 				<div id="notifications">

@@ -1,11 +1,15 @@
 Settings.promise.then(function () {
+	var logger = getLogger('content');
+
 	var playingTimestamp = +new Date(),
 		playingLastTimestamp = +new Date(),
 		playedTime = 0, // how much time played
-		playingTrack; // currently playing track
+		playingTrack, // currently playing track
+		playingTrackId; // G-id
 
-	var player = document.querySelector('#player'),
-		slider = document.querySelector('#slider'),
+	var player = document.getElementById('player'),
+		slider = document.getElementById('slider'),
+		main = document.getElementById('main'),
 		buttons = player.querySelector('div.player-middle'),
 		observer = new WebKitMutationObserver(function (mutations) {
 			mutations.forEach(attrModified);
@@ -15,7 +19,9 @@ Settings.promise.then(function () {
 		// if track was playing while
 		// script was injected
 		playingTrack = currentTrack();
-	} catch (e) {}
+	} catch (e) {
+		logger('no initial track was playing');
+	}
 
 	function currentStatus() {
 		var play = document.querySelector('button[data-id=play-pause]'),
@@ -44,7 +50,8 @@ Settings.promise.then(function () {
 			album: album ? album.innerText : null,
 			cover: cover ? cover.src : cover,
 			duration: slider.getAttribute('aria-valuemax'),
-			position: slider.getAttribute('aria-valuenow')
+			position: slider.getAttribute('aria-valuenow'),
+			id: playingTrackId
 		};
 	}
 
@@ -56,6 +63,7 @@ Settings.promise.then(function () {
 	function playingParams() {
 		return {
 			playingTrack: playingTrack,
+			playingTrackId: playingTrackId,
 			playingTimestamp: playingTimestamp,
 			playedTime: playedTime
 		};
@@ -68,6 +76,8 @@ Settings.promise.then(function () {
 			}),
 			el = player.querySelector('[data-id=' + id + ']');
 		el.dispatchEvent(event);
+
+		logger('executed click on %s', id);
 	}
 
 	function setPosition(position) {
@@ -76,6 +86,8 @@ Settings.promise.then(function () {
 				Math.ceil(slider.clientWidth * position / slider.getAttribute('aria-valuemax'))
 		});
 		slider.dispatchEvent(event);
+
+		logger('executed setPosition on %d', position);
 	}
 
 	function receiver(request, sender, sendResponse) {
@@ -125,6 +137,12 @@ Settings.promise.then(function () {
 			playedTime = 0;
 			playingTrack = track;
 
+			try {
+				playingTrackId = main.querySelector('.song-row.currently-playing').dataset.id;
+			} catch (e) {
+				logger('couldn\'t get track id on play start');
+			}
+
 			// track was started
 			runEvent('chime-playing', playingParams());
 		}
@@ -155,6 +173,7 @@ Settings.promise.then(function () {
 			runEvent('chime-finished', playingParams());
 
 			playingTrack = null;
+			playingTrackId = null;
 			playingTimestamp = null;
 			playingLastTimestamp = null;
 			playedTime = 0;

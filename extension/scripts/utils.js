@@ -26,11 +26,11 @@ function notify(title, body, img, timeout) {
 	notification.show();
 
 	if (timeout > 0) {
-		notification.onshow = function () {
+		notification.addEventListener('show', function () {
 			setTimeout(function () {
-				notification.close();
+				notification.cancel();
 			}, timeout || 3000);
-		};
+		});
 	}
 }
 
@@ -293,7 +293,9 @@ function queryString(params) {
 function getLogger(label) {
 	return function () {
 		if (Settings.getItem('debug')) {
-			var args = [label + ':'].concat(arguments);
+			var argv = Array.prototype.slice.call(arguments),
+				arg0 = argv.shift() || '',
+				args = [label + ':' + (arg0 ? ' ' + arg0 : '')].concat(argv);
 			return console.log.apply(console, args);
 		}
 	};
