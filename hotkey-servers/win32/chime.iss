@@ -1,5 +1,5 @@
 #define MyAppName "Chime Hotkey Server"
-#define MyAppVersion "0.0.5"
+#define MyAppVersion "0.0.6"
 #define MyAppPublisher "Handmade, Inc."
 #define MyAppURL "http://middle-of-nowhere.info/"
 
