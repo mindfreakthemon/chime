@@ -8,6 +8,8 @@
 		"128": "images/icon.png"
 	},
 
+	"minimum_chrome_version": "35.0.1916.114",
+
 	"browser_action": {
 		"default_icon": "images/icon.png",
 		"default_title": "Chime",
@@ -41,24 +43,22 @@
 		"persistent": true
 	},
 
-	"content_scripts": [
-		{
-			"matches": ["*://play.google.com/music/listen*"],
-			"css": [
-				"content/css/content.css"
-			],
-			"js": [
-				"scripts/utils.js",
-				"scripts/settings.js",
-				"scripts/scrobbling.js",
-				"content/js/events.js",
-				"content/js/content.js",
-				"content/js/notifications.js",
-				"content/js/scrobbling.js",
-				"content/js/lyrics.js"
-			]
-		}
-	],
+	"content_scripts": [{
+		"matches": ["*://play.google.com/music/listen*"],
+		"css": [
+			"content/css/content.css"
+		],
+		"js": [
+			"scripts/utils.js",
+			"scripts/settings.js",
+			"scripts/scrobbling.js",
+			"content/js/events.js",
+			"content/js/content.js",
+			"content/js/notifications.js",
+			"content/js/scrobbling.js",
+			"content/js/lyrics.js"
+		]
+	}],
 
 	"web_accessible_resources": [
 		"content/html/lyrics.html"
@@ -69,24 +69,28 @@
 			"suggested_key": {
 				"default": "Ctrl+Shift+I"
 			},
-			"description": "Toggle Play/Pause state"
+			"description": "Toggle Play/Pause state",
+			"global": true
 		},
 		"click:forward": {
 			"suggested_key": {
 				"default": "Ctrl+Shift+U"
 			},
-			"description": "Select next track"
+			"description": "Select next track",
+			"global": true
 		},
 		"click:rewind": {
 			"suggested_key": {
 				"default": "Ctrl+Shift+Y"
 			},
-			"description": "Select previous track"
+			"description": "Select previous track",
+			"global": true
 		},
 		"_execute_browser_action": {
 			"suggested_key": {
 				"default": "Ctrl+Shift+F"
-			}
+			},
+			"global": true
 		}
 	}
 }
