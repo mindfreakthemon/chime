@@ -39,7 +39,7 @@ Settings.promise.then(function () {
 
 	document.getElementById('last-fm-disconnect')
 		.addEventListener('click', function () {
-			localStorage.removeItem('token');
+			chrome.storage.sync.remove(['scrobbling_token', 'scrobbling_sessionID']);
 			location.reload();
 		});
 
