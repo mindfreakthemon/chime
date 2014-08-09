@@ -9,11 +9,17 @@ module.exports = function(grunt) {
 		jshint: {
 			extension: [
 				'Gruntfile.js',
-				'extension/scripts/**/*.js'
+				'extension/**/*.js'
 			]
 		},
 
-		clean: ['build'],
+		clean: [
+			'build',
+			'extension/pages',
+			'extension/templates',
+			'extension/styles',
+			'extension/vendor'
+		],
 
 		zip: {
 			// zip for uploading to Google Web Store Dashboard
@@ -27,6 +33,7 @@ module.exports = function(grunt) {
 				src: ['extension/**', 'key.pem'],
 				dest: 'build/chime.zip'
 			},
+
 			extension: {
 				cwd: 'extension/',
 				src: ['extension/**'],
@@ -41,48 +48,92 @@ module.exports = function(grunt) {
 			}
 		},
 
-		less: {
-			extension: {
+		stylus: {
+			styles: {
 				options: {
 					cleancss: false,
 					compress: false
 				},
 				files: [{
 					expand: true,
-					src: '**/*.less',
-					dest: 'extension/options/css',
-					cwd: 'extension/options/less',
-					ext: '.css'
-				}, {
-					expand: true,
-					src: '**/*.less',
-					dest: 'extension/popup/css',
-					cwd: 'extension/popup/less',
-					ext: '.css'
-				}, {
-					expand: true,
-					src: '**/*.less',
-					dest: 'extension/content/css',
-					cwd: 'extension/content/less',
+					src: '**/*.styl',
+					dest: 'extension/styles',
+					cwd: 'src/styles',
 					ext: '.css'
 				}]
 			}
 		},
 
+		jade: {
+			pages: {
+				files: [{
+					expand: true,
+					src: '**/*.jade',
+					dest: 'extension/pages',
+					cwd: 'src/pages',
+					ext: '.html'
+				}]
+			},
+
+			templates: {
+				files: {
+					'extension/js/templates.js': 'src/templates/**/*.jade'
+				},
+				options: {
+					amd: true,
+					client: true,
+					processName: function (name) {
+						return path.basename(name, '.jade');
+					}
+				}
+			}
+		},
+
 		watch: {
-			less: {
-				files: ['extension/*/less/**/*.less'],
-				tasks: ['less:extension']
+			stylus: {
+				files: ['src/styles/**/*.styl'],
+				tasks: ['stylus:styles'],
+				options: {
+					atBegin: true
+				}
+			},
+
+			templates: {
+				files: ['src/templates/**/*.jade'],
+				tasks: ['jade:templates'],
+				options: {
+					atBegin: true
+				}
+			},
+
+			pages: {
+				files: ['src/pages/**/*.jade'],
+				tasks: ['jade:pages'],
+				options: {
+					atBegin: true
+				}
+			}
+		},
+
+		concurrent: {
+			watch: {
+				tasks: ['watch:templates', 'watch:stylus', 'watch:pages'],
+				options: {
+					logConcurrentOutput: true
+				}
 			}
 		}
 	});
 
-	grunt.loadNpmTasks('grunt-zip');
-	grunt.loadNpmTasks('grunt-crx');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-clean');
+	grunt.loadNpmTasks('grunt-contrib-stylus');
+	grunt.loadNpmTasks('grunt-contrib-jade');
 	grunt.loadNpmTasks('grunt-contrib-watch');
-	grunt.loadNpmTasks('grunt-contrib-less');
+	grunt.loadNpmTasks('grunt-concurrent');
+	grunt.loadNpmTasks('grunt-preen');
+	grunt.loadNpmTasks('grunt-zip');
+	grunt.loadNpmTasks('grunt-crx');
 
 	grunt.registerTask('check', function () {
 		if (grunt.file.exists('key.pem')) {
@@ -92,12 +143,8 @@ module.exports = function(grunt) {
 		}
 	});
 
-	grunt.registerTask('build-extension', [
-		'jshint',
-		'check',
-		'zip:extension',
-		'crx:extension',
-		'zip:chrome']);
+	grunt.registerTask('extension', ['check', 'zip:extension', 'crx:extension']);
+	grunt.registerTask('build-extension', ['jshint', 'extension','zip:chrome']);
 
 	grunt.registerTask('default', ['clean', 'build-extension']);
 };

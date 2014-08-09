@@ -1,0 +1,13 @@
+{
+  "name": "chime",
+  "version": "0.0.7",
+  "private": true,
+  "dependencies": {
+    "requirejs": "~2.1.14"
+  },
+  "preen": {
+    "requirejs": [
+      "require.js"
+    ]
+  }
+}

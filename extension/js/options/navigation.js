@@ -1,4 +1,4 @@
-(function () {
+define(function () {
 	var _array = Array.prototype,
 		views = _array.slice.call(document.querySelector('.mainview').childNodes),
 		links = _array.slice.call(document.querySelectorAll('.menu li'));
@@ -36,4 +36,9 @@
 			scrollView(hash);
 		}
 	});
-})();
+
+	// if navigated directly or after the refresh
+	if (location.hash.length > 1) {
+		scrollView(location.hash);
+	}
+});

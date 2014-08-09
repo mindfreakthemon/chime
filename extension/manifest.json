@@ -1,7 +1,7 @@
 {
 	"manifest_version": 2,
 	"name": "Chime",
-	"version": "0.0.6",
+	"version": "0.0.7",
 	"author": "Monday Freelem <mfthemon@gmail.com>",
 	"description": "Adds new features to Google Music Web Player",
 	"icons": {
@@ -10,88 +10,32 @@
 
 	"minimum_chrome_version": "35.0.1916.114",
 
-	"browser_action": {
-		"default_icon": "images/icon.png",
-		"default_title": "Chime",
-		"default_popup": "popup/popup.html"
-	},
-
 	"permissions": [
 		"storage",
 		"tabs",
-		"notifications",
-		"nativeMessaging",
-		"background",
-		"*://play.google.com/music/*",
-		"*://www.last.fm/api/*",
-		"*://ws.audioscrobbler.com/2.0/*",
-		"*://*.google.com/*",
-		"*://*.songlyrics.com/*",
-		"*://*.metrolyrics.com/*"
+		"notifications"
 	],
 
-	"options_page": "options/options.html",
+	"optional_permissions": [
+		"http://*/*",
+		"https://*/*"
+	],
 
-	"background": {
-		"scripts": [
-			"scripts/utils.js",
-			"scripts/settings.js",
-			"scripts/tab.js",
-			"background/js/listeners.js",
-			"background/js/background.js"
-		],
-		"persistent": true
-	},
+	"options_page": "pages/options.html",
 
 	"content_scripts": [{
 		"matches": ["*://play.google.com/music/listen*"],
 		"css": [
-			"content/css/content.css"
 		],
 		"js": [
-			"scripts/utils.js",
-			"scripts/settings.js",
-			"scripts/scrobbling.js",
-			"content/js/events.js",
-			"content/js/content.js",
-			"content/js/notifications.js",
-			"content/js/scrobbling.js",
-			"content/js/lyrics.js"
+			"vendor/requirejs/require.js",
+			"js/templates.js",
+			"js/content.js"
 		]
 	}],
 
 	"web_accessible_resources": [
-		"content/html/lyrics.html"
-	],
 
-	"commands": {
-		"click:play-pause": {
-			"suggested_key": {
-				"default": "Ctrl+Shift+I"
-			},
-			"description": "Toggle Play/Pause state",
-			"global": true
-		},
-		"click:forward": {
-			"suggested_key": {
-				"default": "Ctrl+Shift+U"
-			},
-			"description": "Select next track",
-			"global": true
-		},
-		"click:rewind": {
-			"suggested_key": {
-				"default": "Ctrl+Shift+Y"
-			},
-			"description": "Select previous track",
-			"global": true
-		},
-		"_execute_browser_action": {
-			"suggested_key": {
-				"default": "Ctrl+Shift+F"
-			},
-			"global": true
-		}
-	}
+	]
 }
 

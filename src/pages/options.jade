@@ -1,0 +1,152 @@
+doctype html
+html
+head
+	title Chime Options
+	link(rel='stylesheet', type='text/css', href='../styles/chrome.css')
+	link(rel='stylesheet', type='text/css', href='../styles/options.css')
+	body.chrome-bootstrap
+		.frame
+			.navigation
+				h1
+					a(href='javascript:') Chime
+				ul.menu
+					li.selected
+						a(href='#behaviour') Behaviour
+					li
+						a(href='#notifications') Notifications
+					li
+						a(href='#features') Features
+					li
+						a(href='#help') Help
+			form#form.form-horizontal
+				.mainview.view
+					#behaviour.selected
+						header
+							h1 Behaviour
+						.content
+							section
+								h3 Click on chime icon:
+								article
+									select#input-1.form-control(name='click_action')
+										option(value='popup') Show popup with controls
+										option(value='focus') Activate Google Music tab
+									p Configures what happens if you click onto the chime icon in chrome's toolbar.
+							section
+								h3 Popup's album art click action:
+								article
+									select#input-4.form-control(name='popup_album_art_action')
+										option(value='nothing') Do nothing
+										option(value='close') Close popup
+										option(value='navigate') Close popup and navigate to music tab
+									p What happens when you click on album art in the popup.
+							section
+								h3 If no Google Music tab was found:
+								article
+									label.form-control-static
+										input(type='checkbox', name='open_new')
+										| open new tab
+									br
+									label.form-control-static
+										input(type='checkbox', name='open_active')
+										| make it active
+									br
+									label.form-control-static
+										input(type='checkbox', name='open_pinned')
+										| make it pinned
+									p If no tab was found while pressing any hotkey or clicking on chime icon.
+							section
+								h3 Default playlist:
+								article
+									select#input-3.form-control(name='default_playlist')
+										option(value='all') All
+										optgroup(label='Auto playlists')
+											option(value='ap/auto-playlist-thumbs-up') Highly rated
+											option(value='ap/auto-playlist-recent') Last added
+											option(value='ap/auto-playlist-promo') Free & Purchased
+											option(value='ap/shared-with-me') Shared with me
+										optgroup#personal-playlists(label='Personal playlists')
+											option(disabled='disabled') Loading...
+									p Default playlist to open when creating new Google Music tab.
+					#notifications
+						header
+							h1 Notifications
+						.content
+							section
+								h3 Enable playing notifications on:
+								article
+									label.form-control-static
+										input(type='checkbox', name='notify_resumed')
+										| track resume
+									br
+									label.form-control-static
+										input(type='checkbox', name='notify_playing')
+										| track start
+									br
+									label.form-control-static
+										input(type='checkbox', name='notify_paused')
+										| track pause
+									br
+									label.form-control-static
+										input(type='checkbox', name='notify_stopped')
+										| track finish
+									br
+									label.form-control-static
+										input(type='checkbox', name='notify_finished')
+										| playlist finish
+					#features
+						header
+							h1 Features
+						.content
+							section
+								h3 Enable last.fm scrobbling:
+								article
+									label.form-control-static
+										input#input-last_fm(type='checkbox', name='scrobbling_enabled')
+										| scrobbling
+									br
+									label.form-control-static
+										input#input-last_fm_now_playing(type='checkbox', name='scrobbling_now_playing')
+										| now playing update
+									br
+									label.form-control-static
+										input#input-last_fm_notify(type='checkbox', name='scrobbling_notify')
+										| notify when scrobbled
+								article#last-fm-profile(hidden='hidden')
+									h4#last-fm-user-name
+									img#last-fm-user-image(src='about:blank')
+									p
+										button#last-fm-disconnect(type='button') Disconnect
+								article#last-fm-not-connected
+									p
+										button#last-fm-connect(type='button') Connect
+							section
+								h3
+									| Enable lyrics fetching:
+									sup beta
+								article
+									label.form-control-static
+										input#input-lyrics_enabled(type='checkbox', name='lyrics_enabled')
+										| enables lyrics fetching in web player (look for orange button in web player's toolbox)
+					#help
+						header
+							h1 Help
+						.content
+							ul.highlightable.editable
+								li
+									a(href='javascript:')
+										dl#command-launch
+											dt
+												| MediaKeyLaunch
+												span.label.label-default native
+											dd Activates Google Music tab (despite Settings).
+							p You can change browser hotkeys from extensions page (at the bottom).
+							section
+								h3 Debug:
+								article
+									label.form-control-static
+										input(type='checkbox', name='debug')
+										| enable log outputs in console
+									br
+									p
+										button#debug-reset(type='button') Reset settings to defaults
+	script(data-main='../js/options/main.js', src='../vendor/requirejs/require.js')

@@ -1,0 +1,3 @@
+require(['navigation'], function () {
+
+});

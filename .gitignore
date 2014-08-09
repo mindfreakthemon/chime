@@ -25,14 +25,17 @@ build/Release
 # see https://npmjs.org/doc/faq.html#Should-I-check-my-node_modules-folder-into-git
 node_modules
 
-# Grunt generated root
-static/css
-static/js/templates.js
+# Grunt generated
+build
+extension/styles
+extension/pages
+extension/js/templates.js
 
 # Idea workspace
 *.iws
 
-# Generated files
-build/
-dest/
-extension/*/css/
+# Bower
+extension/vendor
+
+# Temp hide
+extension-old
