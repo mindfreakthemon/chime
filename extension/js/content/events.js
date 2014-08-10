@@ -28,5 +28,5 @@ define([], function () {
 		dispatchEvent: runEvent,
 		addEventListener: bindEvent,
 		removeEventListener: unbindEvent
-	}
+	};
 });

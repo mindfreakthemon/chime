@@ -9,7 +9,7 @@ module.exports = function(grunt) {
 		jshint: {
 			extension: [
 				'Gruntfile.js',
-				'extension/**/*.js'
+				'extension/js/**/*.js'
 			]
 		},
 

@@ -37,3 +37,5 @@ extension/pages
 bower_components
 extension/vendor
 
+# Google Web Store key
+key.pem

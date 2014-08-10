@@ -5,6 +5,7 @@ require.load = function (context, moduleName, url) {
 
 	xhr.onreadystatechange = function (e) {
 		if (xhr.readyState === 4 && xhr.status === 200) {
+			/* jshint evil:true */
 			eval(xhr.responseText);
 			context.completeLoad(moduleName);
 		}

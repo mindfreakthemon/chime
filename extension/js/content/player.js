@@ -131,7 +131,7 @@ define(['events'], function (events) {
 				// user has clicked on slider
 				events.dispatchEvent('chime-seeking', playingParams(currentTrack()));
 			}
-		})
+		});
 	});
 
 	return {
