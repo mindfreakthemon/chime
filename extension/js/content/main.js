@@ -23,6 +23,7 @@ require.config({
 		lastfm: '../misc/lastfm'
 	},
 	deps: [
+		'notifications',
 		'observer',
 		'search',
 		'lyrics',

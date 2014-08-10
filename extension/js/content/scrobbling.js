@@ -3,11 +3,16 @@ define(['player', 'events', 'lastfm', 'settings'], function (player, events, las
 
 	var scrobbleTimeout,
 		scrobbledFlag = false,
-		scrobbleMinDuration = 30000, // 30 sec
-		scrobblePercent = 0.5; // on half duration
+		scrobbleMinDuration = settings.get('scrobbling_min_length'),
+		scrobblePercent = settings.get('scrobbling_min_percent');
 
 	function sendScrobble(e) {
 		var track = e.detail.playingTrack;
+
+		if (!settings.get('scrobbling_enabled')) {
+			logger('scrobbling is disabled');
+			return;
+		}
 
 		if (scrobbledFlag) {
 			// if already scrobbled
@@ -16,16 +21,6 @@ define(['player', 'events', 'lastfm', 'settings'], function (player, events, las
 		}
 
 		scrobbledFlag = true;
-
-		if (!settings.get('scrobbling_enabled')) {
-			logger('scrobbling is disabled');
-			return;
-		}
-
-		if (settings.get('scrobbling_notify')) {
-			logger('notifying about scrobbling');
-//			notify('Scrobbled: ' + track.title, track.artist + ' - ' + track.album, track.cover);
-		}
 
 		events.addEventListener('chime-stopped', function _handleStopped() {
 			// only once

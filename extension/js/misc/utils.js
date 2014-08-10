@@ -260,7 +260,7 @@ function getLogger(label) {
 			return val;
 		}
 
-		return JSON.stringify(val);
+		return val.toString();
 	}
 
 	return function () {

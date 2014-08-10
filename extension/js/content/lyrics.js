@@ -1,4 +1,5 @@
 define(['player', 'events', 'settings', 'jade!templates/lyrics'], function (player, events, settings, lyrics_tpl) {
+	// @TODO refine this stuff
 	var button = document.createElement('a'),
 		text = document.createElement('span'),
 		lyrics = document.createElement('div');
@@ -10,7 +11,6 @@ define(['player', 'events', 'settings', 'jade!templates/lyrics'], function (play
 	button.classList.add('nav-item-container', 'tooltip');
 	lyrics.setAttribute('id', 'lyrics-container');
 	lyrics.innerHTML = lyrics_tpl();
-
 
 	// @TODO make this configurable
 	var lyricsProviders = {
@@ -55,7 +55,6 @@ define(['player', 'events', 'settings', 'jade!templates/lyrics'], function (play
 			}
 		});
 	});
-
 
 	function loadLyrics() {
 		var chimeLyrics = document.getElementById('chime-lyrics'),
@@ -143,8 +142,12 @@ define(['player', 'events', 'settings', 'jade!templates/lyrics'], function (play
 	window.addEventListener('load', function () {
 		var container = document.getElementById('nav-content-container');
 
-		document.getElementById('nav_collections').appendChild(button);
-		container.insertBefore(lyrics, container.firstChild);
+		settings.promise.then(function () {
+			if (settings.get('lyrics_enabled')) {
+				document.getElementById('nav_collections').appendChild(button);
+				container.insertBefore(lyrics, container.firstChild);
+			}
+		});
 	});
 
 	events.addEventListener('chime-playing', function () {

@@ -22,5 +22,13 @@ chrome.runtime.onMessage.addListener(
 			chrome.permissions[request.type](request.permissions, callback);
 		}
 
+		if (request.notifications) {
+			chrome.notifications[request.type](request.id, request.notifications, callback);
+		}
+
+		if (request.notification) {
+			chrome.notifications.clear(request.notification, callback);
+		}
+
 		return true;
 	});

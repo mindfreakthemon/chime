@@ -14,7 +14,7 @@
 		"storage",
 		"notifications",
 		"https://play.google.com/music/*",
-		"*://www.last.fm/api/*",
+		"https://*.googleusercontent.com/*",
 		"https://ws.audioscrobbler.com/2.0/*",
 		"https://www.googleapis.com/customsearch/v1"
 	],

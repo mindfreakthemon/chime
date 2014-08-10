@@ -33,10 +33,6 @@ head
 									label.form-control-static
 										input#input-last_fm_now_playing(type='checkbox', name='scrobbling_now_playing')
 										| now playing update
-									br
-									label.form-control-static
-										input#input-last_fm_notify(type='checkbox', name='scrobbling_notify')
-										| notify when scrobbled
 								article#last-fm-profile(hidden='hidden')
 									h4#last-fm-user-name
 									img#last-fm-user-image(src='about:blank')
@@ -66,6 +62,10 @@ head
 									label.form-control-static
 										input(type='checkbox', name='notify_paused')
 										| track pause
+									br
+									label.form-control-static
+										input(type='checkbox', name='notify_seeking')
+										| track seeking
 									br
 									label.form-control-static
 										input(type='checkbox', name='notify_stopped')

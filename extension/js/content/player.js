@@ -13,9 +13,9 @@ define(['events'], function (events) {
 		console.log('no initial track was playing');
 	}
 
-	function playingParams() {
+	function playingParams(track) {
 		return {
-			playingTrack: playingTrack,
+			playingTrack: track || playingTrack,
 			playingTrackId: playingTrackId,
 			playingTimestamp: playingTimestamp,
 			playedTime: playedTime
@@ -51,8 +51,8 @@ define(['events'], function (events) {
 			artist: artist ? artist.innerText : null,
 			album: album ? album.innerText : null,
 			cover: cover ? cover.src : cover,
-			duration: slider.getAttribute('aria-valuemax'),
-			position: slider.getAttribute('aria-valuenow'),
+			duration: +slider.getAttribute('aria-valuemax'),
+			position: +slider.getAttribute('aria-valuenow'),
 			id: playingTrackId
 		};
 	}
@@ -72,7 +72,7 @@ define(['events'], function (events) {
 			playingLastTimestamp = +new Date();
 
 			// track was resumed
-			events.dispatchEvent('chime-resumed', playingParams());
+			events.dispatchEvent('chime-resumed', playingParams(track));
 		} else {
 			// first time setup
 			playingTimestamp = +new Date();
@@ -87,7 +87,7 @@ define(['events'], function (events) {
 			}
 
 			// track was started
-			events.dispatchEvent('chime-playing', playingParams());
+			events.dispatchEvent('chime-playing', playingParams(track));
 		}
 	}
 
@@ -108,7 +108,7 @@ define(['events'], function (events) {
 			}
 
 			// playback was paused
-			events.dispatchEvent('chime-paused', playingParams());
+			events.dispatchEvent('chime-paused', playingParams(track));
 		} catch (e) {
 			// track has just finished
 			events.dispatchEvent('chime-stopped', playingParams());
@@ -122,6 +122,17 @@ define(['events'], function (events) {
 			playedTime = 0;
 		}
 	}
+
+	window.addEventListener('load', function () {
+		var slider = document.getElementById('slider');
+
+		slider.addEventListener('click', function () {
+			if (playingTrack) {
+				// user has clicked on slider
+				events.dispatchEvent('chime-seeking', playingParams(currentTrack()));
+			}
+		})
+	});
 
 	return {
 		currentTrack: currentTrack,
