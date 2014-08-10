@@ -7,15 +7,15 @@
     "require-jade": "~0.0.3",
     "blueimp-md5": "~1.1.0"
   },
-  "preen": {
-    "requirejs": [
-      "require.js"
-    ],
-	"blueimp-md5": [
-      "js/md5.min.js"
-    ],
-    "require-jade": [
-      "jade.js"
-    ]
+  "exportsOverride": {
+    "requirejs": {
+      "js": "require.js"
+    },
+    "blueimp-md5": {
+      "js": "js/md5.min.js"
+    },
+    "require-jade": {
+      "js": "jade.js"
+    }
   }
 }

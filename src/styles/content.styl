@@ -103,7 +103,8 @@ html {
 	display: none;
 
 	&.visible {
-		display: block;
+		display: flex;
+		flex-direction: column;
 	}
 
 	.music-banner {
@@ -112,7 +113,7 @@ html {
 
 	.lyrics-container {
 		overflow: auto;
-		max-height: unquote("calc(100% - 50px)");
+		flex: 1;
 
 		> div {
 			display: none;
@@ -129,7 +130,7 @@ html {
 }
 
 #chime-lyrics {
-	padding: 0 20px;
+	margin: 10px 20px;
 }
 
 #chime-loading {
@@ -137,12 +138,12 @@ html {
 }
 
 #chime-source {
-	padding: 10px;
+	margin: 10px 0;
 	text-align: center;
 }
 
 #chime-loading,
 #chime-error {
 	text-align: center;
-	padding: 20px;
+	margin: 20px 0;
 }

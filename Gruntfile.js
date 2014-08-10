@@ -13,12 +13,14 @@ module.exports = function(grunt) {
 			]
 		},
 
-		clean: [
-			'build',
-			'extension/pages',
-			'extension/styles',
-			'extension/vendor'
-		],
+		clean: {
+			build: ['build'],
+			assets: [
+				'extension/pages',
+				'extension/styles',
+				'extension/vendor'
+			]
+		},
 
 		zip: {
 			// zip for uploading to Google Web Store Dashboard
@@ -49,10 +51,6 @@ module.exports = function(grunt) {
 
 		stylus: {
 			styles: {
-				options: {
-					cleancss: false,
-					compress: false
-				},
 				files: [{
 					expand: true,
 					src: '**/*.styl',
@@ -93,6 +91,18 @@ module.exports = function(grunt) {
 			}
 		},
 
+		bower: {
+			install: {
+				options: {
+					targetDir: './extension/vendor/',
+					layout: 'byComponent',
+					install: true,
+					cleanup: true,
+					bowerOptions: {}
+				}
+			}
+		},
+
 		concurrent: {
 			watch: {
 				tasks: ['watch:stylus', 'watch:pages'],
@@ -108,8 +118,8 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-stylus');
 	grunt.loadNpmTasks('grunt-contrib-jade');
 	grunt.loadNpmTasks('grunt-contrib-watch');
+	grunt.loadNpmTasks('grunt-bower-task');
 	grunt.loadNpmTasks('grunt-concurrent');
-	grunt.loadNpmTasks('grunt-preen');
 	grunt.loadNpmTasks('grunt-zip');
 	grunt.loadNpmTasks('grunt-crx');
 
@@ -121,8 +131,11 @@ module.exports = function(grunt) {
 		}
 	});
 
-	grunt.registerTask('extension', ['check', 'zip:extension', 'crx:extension']);
-	grunt.registerTask('build-extension', ['jshint', 'extension','zip:chrome']);
+	grunt.registerTask('test', ['jshint']);
+	grunt.registerTask('assets', ['clean:assets', 'bower:install', 'jade:pages', 'stylus:styles']);
 
-	grunt.registerTask('default', ['clean', 'build-extension']);
+	grunt.registerTask('crx-extension', ['assets', 'test', 'zip:extension', 'crx:extension']);
+	grunt.registerTask('chrome-extension', ['check', 'assets', 'test', 'zip:chrome']);
+
+	grunt.registerTask('default', ['chrome-extension']);
 };

@@ -1,16 +1,26 @@
+function requestUrl(url, callback) {
+	var xhr = new XMLHttpRequest();
+
+	xhr.onload = function () {
+		callback({
+			response: xhr.responseText
+		});
+	};
+
+	xhr.open('GET', url, true);
+	xhr.send();
+}
+
 chrome.runtime.onMessage.addListener(
-	function(request, sender, sendResponse) {
-		var xhr = new XMLHttpRequest(),
-			url = request.url;
+	function(request, sender, callback) {
 
-		xhr.onload = function () {
-			sendResponse({
-				response: xhr.responseText
-			});
-		};
+		if (request.url) {
+			requestUrl(request.url, callback);
+		}
 
-		xhr.open('GET', url, true);
-		xhr.send();
+		if (request.permissions) {
+			chrome.permissions[request.type](request.permissions, callback);
+		}
 
 		return true;
 	});

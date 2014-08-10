@@ -8,7 +8,7 @@ define(function () {
 		notify_stopped: false,
 		notify_finished: false,
 
-		scrobbling_enabled: false,
+		scrobbling_enabled: true,
 		scrobbling_now_playing: true,
 		scrobbling_notify: false,
 		scrobbling_api_secret: '672707041194c804c5973e54fb4ee520',
@@ -39,8 +39,8 @@ define(function () {
 
 			chrome.storage.sync.set(save);
 		},
-		all: function () {
-			return settings;
+		getAll: function () {
+			return extend({}, defaults, settings);
 		},
 		promise: new Promise(function (fulfill) {
 			chrome.storage.sync.get(defaults, function (overrided) {

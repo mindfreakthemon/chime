@@ -255,10 +255,19 @@ function queryString(params) {
  * @returns {*}
  */
 function getLogger(label) {
+	function converter(val) {
+		if (typeof val === 'string') {
+			return val;
+		}
+
+		return JSON.stringify(val);
+	}
+
 	return function () {
 		var argv = Array.prototype.slice.call(arguments),
 			arg0 = argv.shift() || '',
 			args = [label + ':' + (arg0 ? ' ' + arg0 : '')].concat(argv);
-		return console.log.apply(console, args);
+
+		return console.log.apply(console, args.map(converter));
 	};
 }

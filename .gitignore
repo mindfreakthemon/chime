@@ -34,6 +34,7 @@ extension/pages
 *.iws
 
 # Bower
+bower_components
 extension/vendor
 
 # Temp hide

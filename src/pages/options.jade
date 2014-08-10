@@ -8,12 +8,15 @@ head
 		.frame
 			.navigation
 				h1
-					a(href='') Chime
+					a(href='') Chime #{''}
+						sup beta
 				ul.menu
 					li.selected
 						a(href='#features') Features
 					li
 						a(href='#help') Help
+					li
+						a(href='#about') About
 			form#form.form-horizontal
 				.mainview.view
 					#features.selected
@@ -45,11 +48,10 @@ head
 							section
 								h3
 									| Enable lyrics fetching:
-									sup beta
 								article
 									label.form-control-static
 										input#input-lyrics_enabled(type='checkbox', name='lyrics_enabled')
-										| enables lyrics fetching in web player (look for orange button in web player's toolbox)
+										| enables lyrics fetching in web player
 							section
 								h3 Enable playing notifications on:
 								article
@@ -85,5 +87,14 @@ head
 									br
 									p
 										button#debug-reset(type='button') Reset settings to defaults
+					#about
+						header
+							h1 About
+						.content
+							section
+								h3 Source code
+								article
+									p
+										a(href='https://github.com/mindfreakthemon/chime') Github
 	script(src='../js/misc/utils.js')
-	script(data-main='../js/options/main.js', src='../vendor/requirejs/require.js')
+	script(data-main='../js/options/main.js', src='../vendor/requirejs/js/require.js')

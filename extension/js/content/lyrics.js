@@ -1,4 +1,4 @@
-define(['player', 'events', 'jade!templates/lyrics'], function (player, events, lyrics_tpl) {
+define(['player', 'events', 'settings', 'jade!templates/lyrics'], function (player, events, settings, lyrics_tpl) {
 	var button = document.createElement('a'),
 		text = document.createElement('span'),
 		lyrics = document.createElement('div');
@@ -11,13 +11,6 @@ define(['player', 'events', 'jade!templates/lyrics'], function (player, events, 
 	lyrics.setAttribute('id', 'lyrics-container');
 	lyrics.innerHTML = lyrics_tpl();
 
-	button.addEventListener('click', function () {
-		lyrics.classList.toggle('visible');
-
-		if (lyrics.classList.contains('visible')) {
-			loadLyrics();
-		}
-	});
 
 	// @TODO make this configurable
 	var lyricsProviders = {
@@ -29,6 +22,9 @@ define(['player', 'events', 'jade!templates/lyrics'], function (player, events, 
 			},
 			'metrolyrics.com': function (response) {
 				return response.split('id="lyrics-body-text">')[1].split('</div>')[0];
+			},
+			'azlyrics.com': function (response) {
+				return response.split('<!-- start of lyrics -->')[1].split('<!-- end of lyrics -->')[0].trim();
 			}
 		},
 		lyricsProvidersQuery = Object.keys(lyricsProviders)
@@ -36,6 +32,30 @@ define(['player', 'events', 'jade!templates/lyrics'], function (player, events, 
 				return 'site:' + key;
 			})
 			.join(' OR ');
+
+	button.addEventListener('click', function () {
+		var enabled = lyrics.classList.contains('visible');
+
+		chrome.runtime.sendMessage({
+			permissions: {
+				origins: Object.keys(lyricsProviders).map(function (v) {
+					return 'http://*.' + v + '/*';
+				})
+			},
+			type: enabled ? 'remove' : 'request'
+		}, function (granted) {
+			if (!granted) {
+				return;
+			}
+
+			lyrics.classList.toggle('visible');
+
+			if (!enabled) {
+				loadLyrics();
+			}
+		});
+	});
+
 
 	function loadLyrics() {
 		var chimeLyrics = document.getElementById('chime-lyrics'),
@@ -76,9 +96,13 @@ define(['player', 'events', 'jade!templates/lyrics'], function (player, events, 
 		showLoading();
 		chimeLyrics.innerHTML = '';
 
-		var xhr = new XMLHttpRequest();
-		xhr.open('GET', 'https://www.google.com/search?q=' +
-			encodeURIComponent(track.title + ' ' + track.artist + ' Lyrics AND (' + lyricsProvidersQuery + ')'));
+		var xhr = new XMLHttpRequest(),
+			params = {
+				hl: 'en',
+				q: track.title + ' ' + track.artist + ' Lyrics AND (' + lyricsProvidersQuery + ')'
+			};
+
+		xhr.open('GET', 'https://www.google.com/search?' + queryString(params));
 		xhr.onload = function () {
 			var response = xhr.responseText,
 				url,

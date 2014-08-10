@@ -12,11 +12,11 @@
 
 	"permissions": [
 		"storage",
-		"tabs",
-		"background",
 		"notifications",
-		"http://*/*",
-		"https://*/*"
+		"https://play.google.com/music/*",
+		"*://www.last.fm/api/*",
+		"https://ws.audioscrobbler.com/2.0/*",
+		"https://www.googleapis.com/customsearch/v1"
 	],
 
 	"optional_permissions": [
@@ -38,7 +38,7 @@
 		],
 		"js": [
 			"js/misc/utils.js",
-			"vendor/requirejs/require.js",
+			"vendor/requirejs/js/require.js",
 			"js/content/main.js"
 		],
 		"run_at": "document_end"
