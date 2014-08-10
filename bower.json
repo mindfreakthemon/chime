@@ -3,11 +3,19 @@
   "version": "0.0.7",
   "private": true,
   "dependencies": {
-    "requirejs": "~2.1.14"
+    "requirejs": "~2.1.14",
+    "require-jade": "~0.0.3",
+    "blueimp-md5": "~1.1.0"
   },
   "preen": {
     "requirejs": [
       "require.js"
+    ],
+	"blueimp-md5": [
+      "js/md5.min.js"
+    ],
+    "require-jade": [
+      "jade.js"
     ]
   }
 }

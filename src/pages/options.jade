@@ -8,92 +8,15 @@ head
 		.frame
 			.navigation
 				h1
-					a(href='javascript:') Chime
+					a(href='') Chime
 				ul.menu
 					li.selected
-						a(href='#behaviour') Behaviour
-					li
-						a(href='#notifications') Notifications
-					li
 						a(href='#features') Features
 					li
 						a(href='#help') Help
 			form#form.form-horizontal
 				.mainview.view
-					#behaviour.selected
-						header
-							h1 Behaviour
-						.content
-							section
-								h3 Click on chime icon:
-								article
-									select#input-1.form-control(name='click_action')
-										option(value='popup') Show popup with controls
-										option(value='focus') Activate Google Music tab
-									p Configures what happens if you click onto the chime icon in chrome's toolbar.
-							section
-								h3 Popup's album art click action:
-								article
-									select#input-4.form-control(name='popup_album_art_action')
-										option(value='nothing') Do nothing
-										option(value='close') Close popup
-										option(value='navigate') Close popup and navigate to music tab
-									p What happens when you click on album art in the popup.
-							section
-								h3 If no Google Music tab was found:
-								article
-									label.form-control-static
-										input(type='checkbox', name='open_new')
-										| open new tab
-									br
-									label.form-control-static
-										input(type='checkbox', name='open_active')
-										| make it active
-									br
-									label.form-control-static
-										input(type='checkbox', name='open_pinned')
-										| make it pinned
-									p If no tab was found while pressing any hotkey or clicking on chime icon.
-							section
-								h3 Default playlist:
-								article
-									select#input-3.form-control(name='default_playlist')
-										option(value='all') All
-										optgroup(label='Auto playlists')
-											option(value='ap/auto-playlist-thumbs-up') Highly rated
-											option(value='ap/auto-playlist-recent') Last added
-											option(value='ap/auto-playlist-promo') Free & Purchased
-											option(value='ap/shared-with-me') Shared with me
-										optgroup#personal-playlists(label='Personal playlists')
-											option(disabled='disabled') Loading...
-									p Default playlist to open when creating new Google Music tab.
-					#notifications
-						header
-							h1 Notifications
-						.content
-							section
-								h3 Enable playing notifications on:
-								article
-									label.form-control-static
-										input(type='checkbox', name='notify_resumed')
-										| track resume
-									br
-									label.form-control-static
-										input(type='checkbox', name='notify_playing')
-										| track start
-									br
-									label.form-control-static
-										input(type='checkbox', name='notify_paused')
-										| track pause
-									br
-									label.form-control-static
-										input(type='checkbox', name='notify_stopped')
-										| track finish
-									br
-									label.form-control-static
-										input(type='checkbox', name='notify_finished')
-										| playlist finish
-					#features
+					#features.selected
 						header
 							h1 Features
 						.content
@@ -127,19 +50,32 @@ head
 									label.form-control-static
 										input#input-lyrics_enabled(type='checkbox', name='lyrics_enabled')
 										| enables lyrics fetching in web player (look for orange button in web player's toolbox)
+							section
+								h3 Enable playing notifications on:
+								article
+									label.form-control-static
+										input(type='checkbox', name='notify_resumed')
+										| track resume
+									br
+									label.form-control-static
+										input(type='checkbox', name='notify_playing')
+										| track start
+									br
+									label.form-control-static
+										input(type='checkbox', name='notify_paused')
+										| track pause
+									br
+									label.form-control-static
+										input(type='checkbox', name='notify_stopped')
+										| track finish
+									br
+									label.form-control-static
+										input(type='checkbox', name='notify_finished')
+										| playlist finish
 					#help
 						header
 							h1 Help
 						.content
-							ul.highlightable.editable
-								li
-									a(href='javascript:')
-										dl#command-launch
-											dt
-												| MediaKeyLaunch
-												span.label.label-default native
-											dd Activates Google Music tab (despite Settings).
-							p You can change browser hotkeys from extensions page (at the bottom).
 							section
 								h3 Debug:
 								article
@@ -149,4 +85,5 @@ head
 									br
 									p
 										button#debug-reset(type='button') Reset settings to defaults
+	script(src='../js/misc/utils.js')
 	script(data-main='../js/options/main.js', src='../vendor/requirejs/require.js')

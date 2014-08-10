@@ -13,7 +13,10 @@
 	"permissions": [
 		"storage",
 		"tabs",
-		"notifications"
+		"background",
+		"notifications",
+		"http://*/*",
+		"https://*/*"
 	],
 
 	"optional_permissions": [
@@ -21,21 +24,31 @@
 		"https://*/*"
 	],
 
+	"background": {
+		"scripts": ["js/messenger.js"],
+		"persistent": false
+	},
+
 	"options_page": "pages/options.html",
 
 	"content_scripts": [{
 		"matches": ["*://play.google.com/music/listen*"],
 		"css": [
+			"styles/content.css"
 		],
 		"js": [
+			"js/misc/utils.js",
 			"vendor/requirejs/require.js",
-			"js/templates.js",
-			"js/content.js"
-		]
+			"js/content/main.js"
+		],
+		"run_at": "document_end"
 	}],
 
 	"web_accessible_resources": [
-
+		"js/*.js",
+		"js/*.jade",
+		"vendor/*.js",
+		"styles/*.css"
 	]
 }
 

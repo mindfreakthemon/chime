@@ -1,0 +1,148 @@
+$color = #000
+
+html {
+	#oneGoogleWrapper {
+		display: none;
+	}
+
+	.music-banner {
+		background-color: $color;
+	}
+
+	.button.primary,
+	.simple-dialog-buttons button.goog-buttonset-default {
+		background-color: $color;
+	}
+
+	#nav_collections .nav-item-container.selected,
+	.nav-item-container.selected {
+		color: $color;
+	}
+
+	#volume_slider {
+		background-color: $color;
+	}
+
+	#slider .goog-slider-thumb,
+	#player .flat-button {
+		-webkit-filter: grayscale();
+	}
+
+	.header-tab-title.selected {
+		border-bottom-color: $color;
+	}
+
+	.button.primary:focus, .button.primary:hover, .simple-dialog-buttons button.goog-buttonset-default:hover {
+		background-color: #737373;
+	}
+
+	#time_container_current {
+		background-color: $color;
+	}
+
+	#slider .played-progress {
+		background: $color;
+	}
+}
+
+::selection {
+	background: rgba(0, 0, 0, .4);
+	color: #000;
+}
+
+/* search box */
+#gbqfw {
+	opacity: 0.2;
+	display: inline-block;
+	margin: 8px 10px 0;
+
+	&:hover, &:focus {
+		opacity: 1;
+	}
+
+	.gbqfqw.gbqfqw:active,
+	.gbqfqw.gbqfqwf.gbqfqwf {
+		border-color: #000;
+	}
+
+	#gbqfbw {
+		-webkit-filter: grayscale();
+	}
+
+	#gbqfaa, #gbqfab, #gbqfqwb {
+		position: static;
+	}
+
+	#gbqfq {
+	}
+}
+
+
+/* lyrics container */
+#nav-content-container {
+	display: flex;
+
+	#nav-container {
+		width: 220px;
+	}
+
+	#content-container {
+		flex: 1;
+		margin: 0;
+	}
+
+	#lyrics-container {
+		width: 370px;
+		order: 3;
+	}
+}
+
+
+#lyrics-container {
+	margin: 0;
+	display: none;
+
+	&.visible {
+		display: block;
+	}
+
+	.music-banner {
+		width: 100%;
+	}
+
+	.lyrics-container {
+		overflow: auto;
+		max-height: unquote("calc(100% - 50px)");
+
+		> div {
+			display: none;
+
+			&.visible {
+				display: block;
+			}
+		}
+	}
+
+	.subscription .music-banner-title {
+		margin-top: 12px;
+	}
+}
+
+#chime-lyrics {
+	padding: 0 20px;
+}
+
+#chime-loading {
+	margin: 20px 0;
+}
+
+#chime-source {
+	padding: 10px;
+	text-align: center;
+}
+
+#chime-loading,
+#chime-error {
+	text-align: center;
+	padding: 20px;
+}

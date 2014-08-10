@@ -16,7 +16,6 @@ module.exports = function(grunt) {
 		clean: [
 			'build',
 			'extension/pages',
-			'extension/templates',
 			'extension/styles',
 			'extension/vendor'
 		],
@@ -73,19 +72,6 @@ module.exports = function(grunt) {
 					cwd: 'src/pages',
 					ext: '.html'
 				}]
-			},
-
-			templates: {
-				files: {
-					'extension/js/templates.js': 'src/templates/**/*.jade'
-				},
-				options: {
-					amd: true,
-					client: true,
-					processName: function (name) {
-						return path.basename(name, '.jade');
-					}
-				}
 			}
 		},
 
@@ -93,14 +79,6 @@ module.exports = function(grunt) {
 			stylus: {
 				files: ['src/styles/**/*.styl'],
 				tasks: ['stylus:styles'],
-				options: {
-					atBegin: true
-				}
-			},
-
-			templates: {
-				files: ['src/templates/**/*.jade'],
-				tasks: ['jade:templates'],
 				options: {
 					atBegin: true
 				}
@@ -117,7 +95,7 @@ module.exports = function(grunt) {
 
 		concurrent: {
 			watch: {
-				tasks: ['watch:templates', 'watch:stylus', 'watch:pages'],
+				tasks: ['watch:stylus', 'watch:pages'],
 				options: {
 					logConcurrentOutput: true
 				}
