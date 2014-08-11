@@ -31,16 +31,21 @@ define(['player', 'events', 'settings', 'jade!templates/lyrics'], function (play
 			.map(function (key) {
 				return 'site:' + key;
 			})
-			.join(' OR ');
+			.join(' OR '),
+		origins = [];
+
+	Object.keys(lyricsProviders)
+		.concat(['google.com'])
+		.forEach(function (v) {
+			origins.push('http://*.' + v + '/*', 'https://*.' + v + '/*');
+		});
 
 	button.addEventListener('click', function () {
 		var enabled = lyrics.classList.contains('visible');
 
 		chrome.runtime.sendMessage({
 			permissions: {
-				origins: Object.keys(lyricsProviders).map(function (v) {
-					return 'http://*.' + v + '/*';
-				})
+				origins: origins
 			},
 			type: enabled ? 'remove' : 'request'
 		}, function (granted) {
