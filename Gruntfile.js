@@ -119,9 +119,7 @@ module.exports = function(grunt) {
 					'bower.json',
 					'extension/manifest.json'
 				],
-				syncVersions: true,
-				commit: false,
-				tag: false
+				syncVersions: true
 			}
 		}
 	});
