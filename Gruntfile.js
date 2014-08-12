@@ -114,7 +114,7 @@ module.exports = function(grunt) {
 
 		bump: {
 			options: {
-				filepaths: [
+				files: [
 					'package.json',
 					'bower.json',
 					'extension/manifest.json'
@@ -129,7 +129,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-stylus');
 	grunt.loadNpmTasks('grunt-contrib-jade');
 	grunt.loadNpmTasks('grunt-contrib-watch');
-	grunt.loadNpmTasks('grunt-contrib-bump');
+	grunt.loadNpmTasks('grunt-bump');
 	grunt.loadNpmTasks('grunt-bower-task');
 	grunt.loadNpmTasks('grunt-concurrent');
 	grunt.loadNpmTasks('grunt-zip');
