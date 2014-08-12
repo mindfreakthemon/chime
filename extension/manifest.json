@@ -1,7 +1,6 @@
 {
-	"manifest_version": 2,
 	"name": "Chime",
-	"version": "0.0.8",
+	"version": "0.0.9",
 	"author": "Monday Freelem <mfthemon@gmail.com>",
 	"description": "Adds new features to Google Music Web Player",
 	"icons": {
@@ -46,6 +45,8 @@
 		"js/*.jade",
 		"vendor/*.js",
 		"styles/*.css"
-	]
+	],
+
+	"manifest_version": 2
 }
 
