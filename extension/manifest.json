@@ -13,10 +13,7 @@
 	"permissions": [
 		"storage",
 		"notifications",
-		"https://play.google.com/music/*",
-		"https://*.googleusercontent.com/*",
-		"https://ws.audioscrobbler.com/2.0/*",
-		"https://www.googleapis.com/customsearch/v1"
+		"https://play.google.com/music/*"
 	],
 
 	"optional_permissions": [
@@ -32,7 +29,7 @@
 	"options_page": "pages/options.html",
 
 	"content_scripts": [{
-		"matches": ["*://play.google.com/music/listen*"],
+		"matches": ["https://play.google.com/music/*"],
 		"css": [
 			"styles/content.css"
 		],

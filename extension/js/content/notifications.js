@@ -1,6 +1,7 @@
 define(['events', 'settings'], function (events, settings) {
-	var logger = getLogger('notifications'),
-		clearer = {};
+	var logger = getLogger('notifications');
+
+	var	clearer = {};
 
 	function clear(id) {
 		chrome.runtime.sendMessage({
@@ -16,7 +17,7 @@ define(['events', 'settings'], function (events, settings) {
 			delete clearer[type];
 		}
 
-		params.iconUrl = params.iconUrl || settings.get('default_icon');
+		params.iconUrl = params.iconUrl || settings.get('notify_default_icon');
 
 		chrome.runtime.sendMessage({
 			id: 'chime-notification-' + type,

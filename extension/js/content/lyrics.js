@@ -1,4 +1,6 @@
 define(['player', 'events', 'settings', 'jade!templates/lyrics'], function (player, events, settings, lyrics_tpl) {
+	var logger = getLogger('lyrics');
+
 	// @TODO refine this stuff
 	var button = document.createElement('a'),
 		text = document.createElement('span'),
@@ -13,7 +15,10 @@ define(['player', 'events', 'settings', 'jade!templates/lyrics'], function (play
 	lyrics.innerHTML = lyrics_tpl();
 
 	// @TODO make this configurable
-	var lyricsProviders = {
+	var filterPatters = [
+			'[\\(\\[](explicit|live|remastered)[^\\)]*[\\)\\]]',
+		],
+		lyricsProviders = {
 			'songlyrics.com': function (response) {
 				var div = document.createElement('div');
 				div.innerHTML = response.split('id="songLyricsDiv-outer">')[1].split('</div>')[0].trim();
@@ -33,6 +38,16 @@ define(['player', 'events', 'settings', 'jade!templates/lyrics'], function (play
 			})
 			.join(' OR '),
 		origins = [];
+
+	function clearTitle(title) {
+		filterPatters.forEach(function (filter) {
+			var regexp = new RegExp(filter, 'gi');
+
+			title = title.replace(regexp, '');
+		});
+
+		return title;
+	}
 
 	Object.keys(lyricsProviders)
 		.concat(['google.com'])
@@ -103,7 +118,7 @@ define(['player', 'events', 'settings', 'jade!templates/lyrics'], function (play
 		var xhr = new XMLHttpRequest(),
 			params = {
 				hl: 'en',
-				q: track.title + ' ' + track.artist + ' Lyrics AND (' + lyricsProvidersQuery + ')'
+				q: clearTitle(track.title) + ' ' + track.artist + ' Lyrics AND (' + lyricsProvidersQuery + ')'
 			};
 
 		xhr.open('GET', 'https://www.google.com/search?' + queryString(params));
@@ -116,7 +131,7 @@ define(['player', 'events', 'settings', 'jade!templates/lyrics'], function (play
 				url = response.split(' id="search"')[1].split('<a href="')[1].split('"')[0];
 				host = url.match(/^https?:\/\/(?:www\.)?([^\/]+)/i)[1];
 			} catch (e) {
-				console.log('error parsing query results: %s', e.message);
+				logger('error parsing query results: %s', e.message);
 				showError();
 				return;
 			}
@@ -129,7 +144,7 @@ define(['player', 'events', 'settings', 'jade!templates/lyrics'], function (play
 				try {
 					text = lyricsProviders[host](data.response);
 				} catch (e) {
-					console.log('error parsing lyrics on %s: %s', host, e.message);
+					logger('error parsing lyrics on %s: %s', host, e.message);
 					showError();
 					return;
 				}
@@ -147,12 +162,8 @@ define(['player', 'events', 'settings', 'jade!templates/lyrics'], function (play
 	window.addEventListener('load', function () {
 		var container = document.getElementById('nav-content-container');
 
-		settings.promise.then(function () {
-			if (settings.get('lyrics_enabled')) {
-				document.getElementById('nav_collections').appendChild(button);
-				container.insertBefore(lyrics, container.firstChild);
-			}
-		});
+		document.getElementById('nav_collections').appendChild(button);
+		container.insertBefore(lyrics, container.firstChild);
 	});
 
 	events.addEventListener('chime-playing', function () {

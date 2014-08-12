@@ -21,13 +21,14 @@ require.config({
 		jade: '../../vendor/require-jade/js/jade',
 		md5: '../../vendor/blueimp-md5/js/md5.min',
 		settings: '../misc/settings',
-		lastfm: '../misc/lastfm'
+		lastfm: '../misc/lastfm',
+		loader: '../misc/loader'
 	},
 	deps: [
-		'notifications',
 		'observer',
 		'search',
-		'lyrics',
-		'scrobbling'
+		'loader!lyrics_enabled:lyrics',
+		'loader!scrobbling_enabled:scrobbling',
+		'loader!notify_enabled:notifications'
 	]
 });

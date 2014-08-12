@@ -7,6 +7,7 @@ require.config({
 		lastfm: '../misc/lastfm'
 	},
 	deps: [
+		'notifications',
 		'navigation',
 		'scrobbling',
 		'form'

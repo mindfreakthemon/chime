@@ -41,14 +41,26 @@ define(['settings', 'lastfm'], function (settings, lastfm) {
 
 	document.getElementById('last-fm-disconnect')
 		.addEventListener('click', function () {
-			chrome.storage.sync.remove(['scrobbling_token', 'scrobbling_sessionID']);
-			location.reload();
+			chrome.permissions.request({
+				origins: settings.get('scrobbling_api_origins')
+			}, function () {
+				chrome.storage.sync.remove(['scrobbling_token', 'scrobbling_sessionID']);
+				location.reload();
+			});
 		});
 
 	document.getElementById('last-fm-connect')
 		.addEventListener('click', function () {
-			lastfm.authorize(function () {
-				location.reload();
+			chrome.permissions.request({
+				origins: settings.get('scrobbling_api_origins')
+			}, function (granted) {
+				if (!granted) {
+					return;
+				}
+
+				lastfm.authorize(function () {
+					location.reload();
+				});
 			});
 		});
 });

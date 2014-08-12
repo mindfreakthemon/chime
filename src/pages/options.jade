@@ -23,57 +23,9 @@ head
 						header
 							h1 Features
 						.content
-							section
-								h3 Enable last.fm scrobbling:
-								article
-									label.form-control-static
-										input#input-last_fm(type='checkbox', name='scrobbling_enabled')
-										| scrobbling
-									br
-									label.form-control-static
-										input#input-last_fm_now_playing(type='checkbox', name='scrobbling_now_playing')
-										| now playing update
-								article#last-fm-profile(hidden='hidden')
-									h4#last-fm-user-name
-									img#last-fm-user-image(src='about:blank')
-									p
-										button#last-fm-disconnect(type='button') Disconnect
-								article#last-fm-not-connected
-									p
-										button#last-fm-connect(type='button') Connect
-							section
-								h3
-									| Enable lyrics fetching:
-								article
-									label.form-control-static
-										input#input-lyrics_enabled(type='checkbox', name='lyrics_enabled')
-										| enables lyrics fetching in web player
-							section
-								h3 Enable playing notifications on:
-								article
-									label.form-control-static
-										input(type='checkbox', name='notify_resumed')
-										| track resume
-									br
-									label.form-control-static
-										input(type='checkbox', name='notify_playing')
-										| track start
-									br
-									label.form-control-static
-										input(type='checkbox', name='notify_paused')
-										| track pause
-									br
-									label.form-control-static
-										input(type='checkbox', name='notify_seeking')
-										| track seeking
-									br
-									label.form-control-static
-										input(type='checkbox', name='notify_stopped')
-										| track finish
-									br
-									label.form-control-static
-										input(type='checkbox', name='notify_finished')
-										| playlist finish
+							include ../includes/notifications
+							include ../includes/scrobbling
+							include ../includes/lyrics
 					#help
 						header
 							h1 Help

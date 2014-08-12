@@ -1,0 +1,31 @@
+section
+	h3 Enable playing notifications:
+	article
+		label.form-control-static
+			input(type='checkbox', name='notify_enabled')
+			| enable notifications
+		p You might need to allow some additional permissions for the extension in order to show album arts.
+		br
+		label.form-control-static
+			input(type='checkbox', name='notify_resumed')
+			| track resume
+		br
+		label.form-control-static
+			input(type='checkbox', name='notify_playing')
+			| track start
+		br
+		label.form-control-static
+			input(type='checkbox', name='notify_paused')
+			| track pause
+		br
+		label.form-control-static
+			input(type='checkbox', name='notify_seeking')
+			| track seeking
+		br
+		label.form-control-static
+			input(type='checkbox', name='notify_stopped')
+			| track finish
+		br
+		label.form-control-static
+			input(type='checkbox', name='notify_finished')
+			| playlist finish

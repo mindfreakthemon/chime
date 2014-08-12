@@ -2,15 +2,19 @@ define(function () {
 	var defaults = {
 		debug: false,
 
-		notify_resumed: true,
-		notify_playing: true,
+		notify_enabled: false,
+		notify_origins: ['https://*.googleusercontent.com/*'],
+		notify_resumed: false,
+		notify_playing: false,
 		notify_paused: false,
 		notify_seeking: false,
 		notify_stopped: false,
 		notify_finished: false,
+		notify_default_icon: 'images/icon.png',
 
-		scrobbling_enabled: true,
-		scrobbling_now_playing: true,
+		scrobbling_enabled: false,
+		scrobbling_api_origins: ['https://ws.audioscrobbler.com/2.0/*'],
+		scrobbling_now_playing: false,
 		scrobbling_api_secret: '672707041194c804c5973e54fb4ee520',
 		scrobbling_api_key: '74639aa1297c3397d80d934196f1e542',
 		scrobbling_api_url: 'https://ws.audioscrobbler.com/2.0/?',
@@ -19,9 +23,8 @@ define(function () {
 		scrobbling_min_length: 30000,
 		scrobbling_min_percent: 0.5,
 
-		lyrics_enabled: true,
+		lyrics_enabled: false
 
-		default_icon: 'images/icon.png'
 	}, settings = {};
 
 	chrome.storage.onChanged.addListener(function (changes) {

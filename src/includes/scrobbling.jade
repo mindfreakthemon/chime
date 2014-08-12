@@ -1,0 +1,19 @@
+section
+	h3 Enable last.fm scrobbling:
+	article
+		label.form-control-static
+			input#input-last_fm(type='checkbox', name='scrobbling_enabled')
+			| scrobbling
+		br
+		label.form-control-static
+			input#input-last_fm_now_playing(type='checkbox', name='scrobbling_now_playing')
+			| now playing update
+	article#last-fm-profile(hidden='hidden')
+		h4#last-fm-user-name
+		img#last-fm-user-image(src='about:blank')
+		p
+			button#last-fm-disconnect(type='button') Disconnect
+	article#last-fm-not-connected
+		p
+			button#last-fm-connect(type='button') Connect
+		p You might need to allow some additional permissions for the extension in order to connect to last.fm.

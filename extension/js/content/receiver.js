@@ -1,4 +1,6 @@
 define(['player'], function (player) {
+	var logger = getLogger('receiver');
+
 	function click(id) {
 		// request.id in ['repeat', 'play-pause', 'forward', 'rewind', 'shuffle']
 		var player = document.getElementById('player'),
@@ -8,7 +10,7 @@ define(['player'], function (player) {
 			el = player.querySelector('[data-id=' + id + ']');
 		el.dispatchEvent(event);
 
-		console.log('executed click on %s', id);
+		logger('executed click on %s', id);
 	}
 
 	function setPosition(position) {
@@ -19,7 +21,7 @@ define(['player'], function (player) {
 			});
 		slider.dispatchEvent(event);
 
-		console.log('executed setPosition on %d', position);
+		logger('executed setPosition on %d', position);
 	}
 
 	//noinspection JSUnusedLocalSymbols
