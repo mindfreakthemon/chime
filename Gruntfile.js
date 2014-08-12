@@ -118,7 +118,9 @@ module.exports = function(grunt) {
 					'package.json',
 					'bower.json',
 					'extension/manifest.json'
-				]
+				],
+				pushTo: 'origin',
+				commitFiles: ['-a']
 			}
 		}
 	});
