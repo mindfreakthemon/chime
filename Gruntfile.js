@@ -110,6 +110,19 @@ module.exports = function(grunt) {
 					logConcurrentOutput: true
 				}
 			}
+		},
+
+		bump: {
+			options: {
+				filepaths: [
+					'package.json',
+					'bower.json',
+					'extension/manifest.json'
+				],
+				syncVersions: true,
+				commit: false,
+				tag: false
+			}
 		}
 	});
 
@@ -118,6 +131,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-stylus');
 	grunt.loadNpmTasks('grunt-contrib-jade');
 	grunt.loadNpmTasks('grunt-contrib-watch');
+	grunt.loadNpmTasks('grunt-contrib-bump');
 	grunt.loadNpmTasks('grunt-bower-task');
 	grunt.loadNpmTasks('grunt-concurrent');
 	grunt.loadNpmTasks('grunt-zip');
