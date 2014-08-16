@@ -3,7 +3,6 @@ define(['settings', 'templates'], function (settings, templates) {
 		host = document.getElementById('lyrics-host'),
 		body = document.getElementById('lyrics-body'),
 		add = document.getElementById('lyrics-button-add'),
-		checkbox = document.querySelector('input[name=lyrics_enabled]'),
 		providers = settings.get('lyrics_providers');
 
 	providersList.innerHTML = templates.lyrics({
@@ -19,16 +18,10 @@ define(['settings', 'templates'], function (settings, templates) {
 				break;
 			}
 		}
-
-		checkbox.checked = false;
-		settings.set('lyrics_enabled', false);
 	}
 
 	function addHost(host, body) {
 		providers.push([host, body]);
-
-		checkbox.checked = false;
-		settings.set('lyrics_enabled', false);
 	}
 
 	function saveHosts() {
