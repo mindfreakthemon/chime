@@ -29,6 +29,7 @@ node_modules
 build
 extension/styles
 extension/pages
+extension/js/templates
 
 # Idea workspace
 *.iws

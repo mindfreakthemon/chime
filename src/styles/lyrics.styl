@@ -1,0 +1,69 @@
+/* lyrics container */
+#nav-content-container {
+	display: flex;
+
+	#nav-container {
+		width: 220px;
+	}
+
+	#content-container {
+		flex: 1;
+		margin: 0;
+	}
+
+	#lyrics-container {
+		width: 370px;
+		order: 3;
+	}
+}
+
+
+#lyrics-container {
+	margin: 0;
+	display: none;
+
+	&.visible {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.music-banner {
+		width: 100%;
+	}
+
+	.lyrics-container {
+		overflow: auto;
+		flex: 1;
+
+		> div {
+			display: none;
+
+			&.visible {
+				display: block;
+			}
+		}
+	}
+
+	.subscription .music-banner-title {
+		margin-top: 12px;
+	}
+}
+
+#chime-lyrics {
+	margin: 10px 20px;
+}
+
+#chime-loading {
+	margin: 20px 0;
+}
+
+#chime-source {
+	margin: 10px 0;
+	text-align: center;
+}
+
+#chime-loading,
+#chime-error {
+	text-align: center;
+	margin: 20px 0;
+}

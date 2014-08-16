@@ -9,7 +9,8 @@ module.exports = function(grunt) {
 		jshint: {
 			extension: [
 				'Gruntfile.js',
-				'extension/js/**/*.js'
+				'extension/js/**/*.js',
+				'!extension/js/templates/**'
 			]
 		},
 
@@ -38,13 +39,13 @@ module.exports = function(grunt) {
 			extension: {
 				cwd: 'extension/',
 				src: ['extension/**'],
-				dest: 'build/extension.zip'
+				dest: 'build/chime.crx.zip'
 			}
 		},
 
 		crx: {
 			extension: {
-				src: 'build/extension.zip',
+				src: 'build/chime.crx.zip',
 				dest: 'build/chime.crx'
 			}
 		},
@@ -70,6 +71,20 @@ module.exports = function(grunt) {
 					cwd: 'src/pages',
 					ext: '.html'
 				}]
+			},
+
+			templates: {
+				files: {
+					'extension/js/templates/options.js': ['src/templates/options/**/*.jade'],
+					'extension/js/templates/content.js': ['src/templates/content/**/*.jade']
+				},
+				options: {
+					client: true,
+					amd: true,
+					processName: function (name) {
+						return path.basename(name, '.jade');
+					}
+				}
 			}
 		},
 
@@ -83,8 +98,16 @@ module.exports = function(grunt) {
 			},
 
 			pages: {
-				files: ['src/pages/**/*.jade'],
+				files: ['src/pages/**/*.jade', 'src/includes/**/*.jade'],
 				tasks: ['jade:pages'],
+				options: {
+					atBegin: true
+				}
+			},
+
+			templates: {
+				files: ['src/templates/**/*.jade'],
+				tasks: ['jade:templates'],
 				options: {
 					atBegin: true
 				}
@@ -105,7 +128,7 @@ module.exports = function(grunt) {
 
 		concurrent: {
 			watch: {
-				tasks: ['watch:stylus', 'watch:pages'],
+				tasks: ['watch:stylus', 'watch:pages', 'watch:templates'],
 				options: {
 					logConcurrentOutput: true
 				}
@@ -145,10 +168,11 @@ module.exports = function(grunt) {
 	});
 
 	grunt.registerTask('test', ['jshint']);
-	grunt.registerTask('assets', ['clean:assets', 'bower:install', 'jade:pages', 'stylus:styles']);
+	grunt.registerTask('assets', ['clean:assets', 'bower:install', 'jade:pages', 'jade:templates', 'stylus:styles']);
+	grunt.registerTask('prepare', ['clean:build', 'check', 'assets', 'test']);
 
-	grunt.registerTask('crx-extension', ['assets', 'test', 'zip:extension', 'crx:extension']);
-	grunt.registerTask('chrome-extension', ['check', 'assets', 'test', 'zip:chrome']);
+	grunt.registerTask('crx-extension', ['prepare', 'zip:extension', 'crx:extension']);
+	grunt.registerTask('chrome-extension', ['prepare', 'zip:chrome']);
 
 	grunt.registerTask('default', ['chrome-extension']);
 };

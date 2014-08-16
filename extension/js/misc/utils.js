@@ -1,28 +1,4 @@
 /**
- * Returns closest element (including self) that matches selector
- * @param elem
- * @param selector
- * @returns {*}
- */
-function closest(elem, selector) {
-	var matchesSelector = elem.matches || elem.webkitMatchesSelector;
-
-	while (elem) {
-		try {
-			if (matchesSelector.call(elem, selector)) {
-				return elem;
-			} else {
-				elem = elem.parentNode;
-			}
-		} catch (e) {
-			return null;
-		}
-	}
-
-	return null;
-}
-
-/**
  *
  * @param target
  * @returns {*}
@@ -210,26 +186,6 @@ function deobjectify(form, data) {
 				break;
 		}
 	}
-}
-
-/**
- *
- * @param str
- * @param len
- * @param ph
- * @returns {string}
- */
-function strpad(str, len, ph) {
-	str = str.toString();
-
-	if (str.length < len) {
-		len -= str.length;
-		while (len--) {
-			str = (ph || ' ') + str;
-		}
-	}
-
-	return str;
 }
 
 /**

@@ -1,7 +1,18 @@
 section
 	h3
-		| Enable lyrics fetching:
+		| Lyrics:
 	article
 		label.form-control-static
-			input#input-lyrics_enabled(type='checkbox', name='lyrics_enabled')
+			input(type='checkbox', name='lyrics_enabled')
 			| enables lyrics fetching
+	article
+		h4 Lyrics providers
+		.row
+			ul#lyrics-providers.highlightable.editable
+	article
+		h4 Add lyrics provider
+		.row
+			input(type='text', id='lyrics-host', placeholder='Hostname')
+		.row
+			textarea(id='lyrics-body', placeholder='Function body')
+		button#lyrics-button-add(type='button') Add

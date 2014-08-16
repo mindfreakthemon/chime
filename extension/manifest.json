@@ -12,7 +12,10 @@
 	"permissions": [
 		"storage",
 		"notifications",
-		"https://play.google.com/music/*"
+		"https://play.google.com/music/*",
+		"https://*.googleusercontent.com/*",
+		"https://ws.audioscrobbler.com/2.0/*",
+		"https://*.google.com/*"
 	],
 
 	"optional_permissions": [
@@ -21,8 +24,14 @@
 	],
 
 	"background": {
-		"scripts": ["js/messenger.js"],
+		"page": "pages/background.html",
 		"persistent": false
+	},
+
+	"sandbox": {
+		"pages": [
+			"pages/sandbox.html"
+		]
 	},
 
 	"options_page": "pages/options.html",

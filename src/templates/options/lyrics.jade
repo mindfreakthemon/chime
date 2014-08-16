@@ -1,0 +1,10 @@
+if !providers.length
+	li no providers defined
+each provider in providers
+	li
+		a(href='#')
+			dl
+				dt #{provider[0]}
+				dd #{provider[1]}
+		//a.action action shmaction
+		a.delete(data-host=provider[0]) delete

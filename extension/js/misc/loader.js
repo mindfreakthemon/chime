@@ -1,34 +1,60 @@
-/**
- * This plugin loads modules if specified setting is set to true
- */
 (function () {
 	function parse(name) {
 		var parts = name.split(':');
 
 		return {
-			setting: parts[0],
-			module: parts[1]
+			type: parts.shift(),
+			module: parts.shift(),
+			options: parts.slice(0)
 		};
+	}
+
+	function css(url) {
+		var link = document.createElement('link');
+
+		link.type = 'text/css';
+		link.rel = 'stylesheet';
+		link.href = url;
+
+		document.querySelector('head').appendChild(link);
+
+		return link;
 	}
 
 	define({
 		normalize: function (name, normalize) {
 			var parts = parse(name);
 
-			return parts.setting + ':' + normalize(parts.module);
+			return parts.type + ':' + normalize(parts.module) + (parts.options.length ? ':' + parts.options.join(':') : '');
 		},
 		load: function (name, req, onload, config) {
 			var parts = parse(name);
 
-			req(['settings'], function (settings) {
-				settings.promise.then(function () {
-					if (settings.get(parts.setting)) {
-						req([parts.module], onload);
-					} else {
-						onload(null);
-					}
-				});
-			});
+			switch (parts.type) {
+				case 'required':
+					req(['settings'], function (settings) {
+						settings.promise.then(function () {
+							req([parts.module], onload);
+						});
+					});
+					break;
+
+				case 'optional':
+					req(['settings'], function (settings) {
+						settings.promise.then(function () {
+							if (settings.get(parts.options[0])) {
+								req([parts.module], onload);
+							} else {
+								onload(null);
+							}
+						});
+					});
+					break;
+
+				case 'css':
+					onload(css(chrome.runtime.getURL(parts.module)));
+					break;
+			}
 		}
 	});
 })();

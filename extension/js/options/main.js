@@ -1,15 +1,18 @@
 require.config({
 	baseUrl: chrome.extension.getURL('/js/options'),
 	paths: {
-		jade: '../../vendor/require-jade/js/jade',
+		jade: '../../vendor/jade/js/runtime',
 		md5: '../../vendor/blueimp-md5/js/md5.min',
 		settings: '../misc/settings',
-		lastfm: '../misc/lastfm'
+		lastfm: '../misc/lastfm',
+		loader: '../misc/loader',
+		templates: '../templates/options'
 	},
 	deps: [
-		'notifications',
+		'form',
 		'navigation',
-		'scrobbling',
-		'form'
+		'loader!required:notifications',
+		'loader!required:scrobbling',
+		'loader!required:lyrics'
 	]
 });
