@@ -19,7 +19,8 @@ module.exports = function(grunt) {
 			assets: [
 				'extension/pages',
 				'extension/styles',
-				'extension/vendor'
+				'extension/vendor',
+				'extension/js/templates'
 			]
 		},
 
