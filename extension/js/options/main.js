@@ -11,7 +11,6 @@ require.config({
 	deps: [
 		'form',
 		'navigation',
-		'loader!required:notifications',
 		'loader!required:scrobbling',
 		'loader!required:lyrics'
 	]
