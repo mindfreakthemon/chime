@@ -1,5 +1,5 @@
 define(['player', 'settings'], function (player, settings) {
-	var logger = getLogger('lyrics');
+	var logger = getLogger('lyrics/loader');
 
 	var filters = settings.get('lyrics_filters'),
 		providers = settings.get('lyrics_providers'),

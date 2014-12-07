@@ -1,4 +1,6 @@
 define(['player', 'events', 'settings', 'lyrics/ui', 'lyrics/loader', 'loader!css:styles/lyrics.css'], function (player, events, settings, ui, loader) {
+	var logger = getLogger('lyrics');
+
 	var providers = settings.get('lyrics_providers'),
 		providersOrigins = [];
 
@@ -24,6 +26,8 @@ define(['player', 'events', 'settings', 'lyrics/ui', 'lyrics/loader', 'loader!cs
 
 	ui.button.addEventListener('click', function () {
 		var enabled = ui.isShown();
+
+		logger('clicked on lyrics link');
 
 		chrome.runtime.sendMessage({
 			permissions: {

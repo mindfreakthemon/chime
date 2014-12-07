@@ -17,6 +17,8 @@ define(['events', 'settings'], function (events, settings) {
 			delete clearer[type];
 		}
 
+		logger('notification was sent');
+
 		params.iconUrl = params.iconUrl || settings.get('notify_default_icon');
 
 		chrome.runtime.sendMessage({

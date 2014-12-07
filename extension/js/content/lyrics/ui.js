@@ -1,4 +1,6 @@
 define(['templates'], function (templates) {
+	var logger = getLogger('lyrics/ui');
+
 	var button = document.createElement('a'),
 		text = document.createElement('span'),
 		container = document.createElement('div');
@@ -17,12 +19,20 @@ define(['templates'], function (templates) {
 		chimeSource = container.querySelector('#chime-source'),
 		chimeSourceLink = container.querySelector('#chime-source-link');
 
-	window.addEventListener('load', function () {
+	if (document.readyState === 'complete') {
+		addButton();
+	} else {
+		window.addEventListener('load', addButton);
+	}
+
+	function addButton() {
 		var nav = document.getElementById('nav-content-container');
+
+		logger('lyrics button was added');
 
 		document.getElementById('nav_collections').appendChild(button);
 		nav.insertBefore(container, nav.firstChild);
-	});
+	}
 
 	function hideAll() {
 		chimeLyrics.classList.remove('visible');
@@ -41,7 +51,6 @@ define(['templates'], function (templates) {
 		toggleShown: function () {
 			container.classList.toggle('visible');
 		},
-
 
 		setLyrics: function (data) {
 			chimeSourceLink.href = data.url;
