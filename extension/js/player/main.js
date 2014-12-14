@@ -1,5 +1,5 @@
 require.config({
-	baseUrl: chrome.extension.getURL('/js/options'),
+	baseUrl: chrome.extension.getURL('/js/player'),
 	paths: {
 		jade: '../../vendor/jade/js/runtime',
 		md5: '../../vendor/blueimp-md5/js/md5.min',
@@ -9,9 +9,7 @@ require.config({
 		templates: '../templates/options'
 	},
 	deps: [
-		'navigation',
-		'loader!required:form',
-		'loader!required:scrobbling',
-		'loader!required:lyrics'
+		'requester',
+		'loader!required:controls'
 	]
 });

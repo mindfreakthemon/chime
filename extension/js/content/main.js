@@ -24,9 +24,11 @@ require.config({
 	},
 	deps: [
 		'observer',
-		'search',
-		'loader!optional:lyrics:lyrics_enabled',
+		'receiver',
+		'loader!optional:theme/theme:theme_enabled',
+		'loader!optional:lyrics/lyrics:lyrics_enabled',
 		'loader!optional:scrobbling:scrobbling_enabled',
-		'loader!optional:notifications:notify_enabled'
+		'loader!optional:notifications:notify_enabled',
+		'loader!optional:external:player_enabled'
 	]
 });

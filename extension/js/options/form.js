@@ -16,8 +16,6 @@ define(['settings'], function (settings) {
 			location.reload();
 		});
 
-	settings.promise.then(function () {
-		// set inputs according to current Settings
-		deobjectify(form, settings.getAll());
-	});
+	// set inputs according to current Settings
+	deobjectify(form, settings.getAll());
 });

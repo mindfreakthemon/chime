@@ -51,7 +51,7 @@ define(['player', 'settings'], function (player, settings) {
 			}
 
 			chrome.runtime.sendMessage({
-				url: url
+				remote: url
 			}, function (data) {
 				chrome.runtime.sendMessage({
 					sandbox: {

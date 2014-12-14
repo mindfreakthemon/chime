@@ -1,13 +1,31 @@
-define(['player', 'events', 'settings', 'lyrics/ui', 'lyrics/loader', 'loader!css:styles/lyrics.css'], function (player, events, settings, ui, loader) {
+define(['player', 'events', 'settings', 'lyrics/ui', 'lyrics/loader'], function (player, events, settings, ui, loader) {
 	var logger = getLogger('lyrics');
 
-	var providers = settings.get('lyrics_providers'),
+	logger('lyrics was enabled');
+
+	var providers = [],
 		providersOrigins = [];
 
-	providers
-		.forEach(function (provider) {
-			providersOrigins.push('http://*.' + provider[0] + '/*', 'https://*.' + provider[0] + '/*');
-		});
+	fill();
+
+	settings.onUpdate.addListener(function (changes) {
+		if (changes.lyrics_providers) {
+			logger('providers list was updated');
+
+			fill();
+		}
+	});
+
+	function fill() {
+		logger('filling providers and origins');
+
+		providers = settings.get('lyrics_providers');
+
+		providers
+			.forEach(function (provider) {
+				providersOrigins.push('http://*.' + provider[0] + '/*', 'https://*.' + provider[0] + '/*');
+			});
+	}
 
 	function callLoader() {
 		ui.clearLyrics();

@@ -1,4 +1,4 @@
-define(['templates'], function (templates) {
+define(['templates', 'loader!css:styles/lyrics.css'], function (templates) {
 	var logger = getLogger('lyrics/ui');
 
 	var button = document.createElement('a'),

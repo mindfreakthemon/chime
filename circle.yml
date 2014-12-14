@@ -1,0 +1,6 @@
+dependencies:
+  post:
+    - npm install -g grunt-cli
+test:
+  override:
+    - grunt test

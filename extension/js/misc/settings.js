@@ -1,4 +1,6 @@
 define(function () {
+	var logger = getLogger('settings');
+
 	var defaults = {
 		notify_enabled: false,
 //		notify_origins: ['https://*.googleusercontent.com/*'],
@@ -8,6 +10,7 @@ define(function () {
 		notify_seeking: false,
 		notify_stopped: false,
 		notify_finished: false,
+		notify_timeout: 3000,
 		notify_default_icon: 'images/icon.png',
 
 		scrobbling_enabled: false,
@@ -38,14 +41,25 @@ define(function () {
 		*/
 		lyrics_filters: ['[\\(\\[](explicit|live|remastered)[^\\)]*[\\)\\]]'],
 
+		player_enabled: true,
+		player_width: 400,
+		player_height: 220,
+		player_album_art_action: 'nothing',
+
+		theme_enabled: true,
+
 		debug: false
-	}, settings = {};
+	}, settings = {}, onUpdateEvent = new chrome.Event();
 
 	chrome.storage.onChanged.addListener(function (changes) {
 		Object.keys(changes)
 			.forEach(function (key) {
+				logger('%s key updated', key);
+
 				settings[key] = changes[key].newValue;
 			});
+
+		onUpdateEvent.dispatch(changes);
 	});
 
 	return {
@@ -61,8 +75,13 @@ define(function () {
 		getAll: function () {
 			return extend({}, defaults, settings);
 		},
+
+		onUpdate: onUpdateEvent,
+
 		promise: new Promise(function (fulfill) {
 			chrome.storage.sync.get(defaults, function (overrided) {
+				logger('all settings synced');
+
 				settings = overrided;
 				fulfill();
 			});

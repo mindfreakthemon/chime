@@ -1,0 +1,37 @@
+doctype html
+html
+	head
+		title Chime Player
+		link(rel='stylesheet', type='text/css', href='../vendor/bootstrap/css/bootstrap-theme.min.css')
+		link(rel='stylesheet', type='text/css', href='../vendor/bootstrap/css/bootstrap.min.css')
+		link(rel='stylesheet', type='text/css', href='../styles/player.css')
+		script(src='../js/misc/utils.js')
+		script(data-main='../js/player/main.js', src='../vendor/requirejs/js/require.js')
+	body
+		#loading.text-center
+			span.glyphicon.glyphicon-cloud-download
+		#widget.media.hidden
+			img#track-cover.media-object(src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAACDUlEQVR4Xu2Yz6/BQBDHpxoEcfTjVBVx4yjEv+/EQdwa14pTE04OBO+92WSavqoXOuFp+u1JY3d29rvfmQ9r7Xa7L8rxY0EAOAAlgB6Q4x5IaIKgACgACoACoECOFQAGgUFgEBgEBnMMAfwZAgaBQWAQGAQGgcEcK6DG4Pl8ptlsRpfLxcjYarVoOBz+knSz2dB6vU78Lkn7V8S8d8YqAa7XK83ncyoUCjQej2m5XNIPVmkwGFC73TZrypjD4fCQAK+I+ZfBVQLwZlerFXU6Her1eonreJ5HQRAQn2qj0TDukHm1Ws0Ix2O2260RrlQqpYqZtopVAoi1y+UyHY9Hk0O32w3FkI06jkO+74cC8Dh2y36/p8lkQovFgqrVqhFDEzONCCoB5OSk7qMl0Gw2w/Lo9/vmVMUBnGi0zi3Loul0SpVKJXRDmphvF0BOS049+n46nW5sHRVAXMAuiTZObcxnRVA5IN4DJHnXdU3dc+OLP/V63Vhd5haLRVM+0jg1MZ/dPI9XCZDUsbmuxc6SkGxKHCDzGJ2j0cj0A/7Mwti2fUOWR2Km2bxagHgt83sUgfcEkN4RLx0phfjvgEdi/psAaRf+lHmqEviUTWjygAC4EcKNEG6EcCOk6aJZnwsKgAKgACgACmS9k2vyBwVAAVAAFAAFNF0063NBAVAAFAAFQIGsd3JN/qBA3inwDTUHcp+19ttaAAAAAElFTkSuQmCC')
+			#track.media-body
+				h3.media-heading.text-overflow
+					span#track-title
+				h4.text-overflow
+					span#track-artist
+		#controls.well.hidden
+			input#range-control(type='range', min='0', value='0', max='100', step='1')
+			#length-screen.well.well-sm
+				span#position-value 0:00
+				| /
+				span#duration-value 0:00
+			.btn-group
+				button.btn.btn-default(type='button', title='Rewind', data-command='rewind')
+					span#rewind-icon.glyphicon.glyphicon-backward
+				button.btn.btn-default(type='button', title='Play', data-command='play-pause')
+					span#play-icon.glyphicon
+				button.btn.btn-default(type='button', title='Forward', data-command='forward')
+					span#forward-icon.glyphicon.glyphicon-forward
+			.btn-group
+				button.btn.btn-default(type='button', title='Shuffle', data-command='shuffle')
+					span#shuffle-icon.glyphicon.glyphicon-random.disabled
+				button.btn.btn-default(type='button', title='Repeat', data-command='repeat')
+					span#repeat-icon.glyphicon.glyphicon-retweet.disabled

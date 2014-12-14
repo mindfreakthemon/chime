@@ -32,6 +32,9 @@
 
 			switch (parts.type) {
 				case 'required':
+					/**
+					 * module is required and needs to be loaded after the settings init
+					 */
 					req(['settings'], function (settings) {
 						settings.promise.then(function () {
 							req([parts.module], onload);
@@ -40,6 +43,10 @@
 					break;
 
 				case 'optional':
+					/**
+					 * module is options and needs to be loaded after the settings init
+					 * so that specific setting could be checked
+					 */
 					req(['settings'], function (settings) {
 						settings.promise.then(function () {
 							if (settings.get(parts.options[0])) {

@@ -1,0 +1,56 @@
+html, body {
+	height: 100%;
+}
+
+body {
+	padding: 10px;
+	display: flex;
+	flex-direction: column;
+	align-content: center;
+}
+
+.glyphicon.disabled {
+	opacity: .8;
+}
+
+.text-overflow {
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+#track {
+	margin: 5px 10px 0;
+	flex: 1;
+}
+
+#widget {
+	margin: 0;
+	width: 100%;
+	flex: 1;
+	display: flex;
+	align-content: center;
+}
+
+#controls {
+	margin: 0;
+	padding: 10px;
+}
+
+#range-control {
+	width: 100%;
+}
+
+#length-screen {
+	float: right;
+	margin: 0;
+}
+
+#track-cover {
+	width: 64px;
+	height: 64px;
+
+	&.clickable {
+		cursor: pointer;
+	}
+}

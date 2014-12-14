@@ -34,9 +34,7 @@
 	"content_scripts": [
 		{
 			"matches": ["https://play.google.com/music/*"],
-			"css": [
-				"styles/content.css"
-			],
+			"css": [],
 			"js": [
 				"js/misc/utils.js",
 				"vendor/requirejs/js/require.js",

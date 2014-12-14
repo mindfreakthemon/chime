@@ -5,9 +5,11 @@ define(['events', 'settings'], function (events, settings) {
 
 	function clear(id) {
 		chrome.runtime.sendMessage({
-			notification: 'chime-notification-' + id
+			notifications: {},
+			id: 'chime-notification-' + id,
+			type: 'clear'
 		}, function () {
-
+			logger('notification was cleared: %s', id);
 		});
 	}
 
@@ -17,16 +19,16 @@ define(['events', 'settings'], function (events, settings) {
 			delete clearer[type];
 		}
 
-		logger('notification was sent');
+		logger('notification was sent: %s', type);
 
 		params.iconUrl = params.iconUrl || settings.get('notify_default_icon');
 
 		chrome.runtime.sendMessage({
+			notifications: params,
 			id: 'chime-notification-' + type,
-			type: 'create',
-			notifications: params
+			type: 'create'
 		}, function () {
-			clearer[type] = setTimeout(clear.bind(null, type), 3000);
+			clearer[type] = setTimeout(clear.bind(null, type), settings.get('notify_timeout'));
 		});
 	}
 

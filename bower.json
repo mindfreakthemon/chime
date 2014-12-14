@@ -5,9 +5,15 @@
   "dependencies": {
     "requirejs": "~2.1.14",
     "blueimp-md5": "~1.1.0",
-    "jade": "~1.5.0"
+    "jade": "~1.5.0",
+    "bootstrap": "~3.3.1"
   },
   "exportsOverride": {
+    "bootstrap": {
+      "js": "dist/js/*.js",
+      "css": "dist/css/*.css",
+      "fonts": "dist/fonts/*.*"
+    },
     "requirejs": {
       "js": "require.js"
     },

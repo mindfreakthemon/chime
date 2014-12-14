@@ -1,6 +1,8 @@
 define(['player'], function (player) {
 	var logger = getLogger('receiver');
 
+	logger('received enabled');
+
 	function click(id) {
 		// request.id in ['repeat', 'play-pause', 'forward', 'rewind', 'shuffle']
 		var player = document.getElementById('player'),
@@ -24,8 +26,9 @@ define(['player'], function (player) {
 		logger('executed setPosition on %d', position);
 	}
 
-	//noinspection JSUnusedLocalSymbols
 	function receiver(request, sender, sendResponse) {
+		logger('received command %s', request.command);
+
 		switch (request.command) {
 			case 'status':
 				var data = {};

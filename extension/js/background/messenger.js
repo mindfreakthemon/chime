@@ -1,8 +1,12 @@
 define(['sandbox', 'remote'], function (sandbox, remote) {
 	chrome.runtime.onMessage.addListener(
 		function (request, sender, callback) {
-			if (request.url) {
-				remote.request(request.url, callback);
+			if (request.remote) {
+				remote.request(request.remote, callback);
+			}
+
+			if (request.sandbox) {
+				sandbox.request(request.sandbox, callback);
 			}
 
 			if (request.permissions) {
@@ -10,15 +14,29 @@ define(['sandbox', 'remote'], function (sandbox, remote) {
 			}
 
 			if (request.notifications) {
-				chrome.notifications[request.type](request.id, request.notifications, callback);
+				switch (request.type) {
+					case 'clear':
+						chrome.notifications.clear(request.id, callback);
+						break;
+
+					default:
+						chrome.notifications[request.type](request.id, request.notifications, callback);
+				}
 			}
 
-			if (request.notification) {
-				chrome.notifications.clear(request.notification, callback);
-			}
+			if (request.windows) {
+				switch (request.type) {
+					case 'update':
+					case 'get':
+						chrome.windows[request.type](request.id, request.windows, callback);
+						break;
+					case 'remove':
+						chrome.windows.remove(request.id, callback);
+						break;
+					default:
+						chrome.windows[request.type](request.windows, callback);
+				}
 
-			if (request.sandbox) {
-				sandbox.request(request.sandbox, callback);
 			}
 
 			return true;

@@ -175,5 +175,6 @@ module.exports = function(grunt) {
 	grunt.registerTask('crx-extension', ['prepare', 'zip:extension', 'crx:extension']);
 	grunt.registerTask('chrome-extension', ['prepare', 'zip:chrome']);
 
+	grunt.registerTask('dev', ['concurrent:watch']);
 	grunt.registerTask('default', ['chrome-extension']);
 };

@@ -28,3 +28,7 @@ section
 		label.form-control-static
 			input(type='checkbox', name='notify_finished')
 			| playlist finish
+		br
+		label.form-control-static
+			input(type='number', min=1000, max=10000, step=100, name='notify_timeout')
+			| notification timeout (ms)
