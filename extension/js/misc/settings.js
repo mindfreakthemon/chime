@@ -26,7 +26,11 @@ define(function () {
 
 		lyrics_enabled: false,
 //		lyrics_origins: ['https://*.google.com/*'],
-		lyrics_providers: [],
+		lyrics_providers: [
+			['songlyrics.com', "var div = document.createElement('div'); div.innerHTML = response.split('id=\"songLyricsDiv-outer\">')[1].split('</div>')[0].trim(); return div.firstChild.innerHTML;"],
+			['metrolyrics.com', "return response.split('id=\"lyrics-body-text\">')[1].split('</div>')[0];"],
+			['azlyrics.com', "return response.split('<!-- start of lyrics -->')[1].split('<!-- end of lyrics -->')[0].trim();"]
+		],
 
 		/*
 		'songlyrics.com': function (response) {

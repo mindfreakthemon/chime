@@ -9,6 +9,7 @@ require.config({
 		templates: '../templates/options'
 	},
 	deps: [
+		'resizer',
 		'requester',
 		'loader!required:controls'
 	]

@@ -4,51 +4,53 @@ head
 	title Chime Options
 	link(rel='stylesheet', type='text/css', href='../styles/chrome.css')
 	link(rel='stylesheet', type='text/css', href='../styles/options.css')
-	body.chrome-bootstrap
-		.frame
-			.navigation
-				h1
-					a(href='') Chime #{''}
-						sup beta
-				ul.menu
-					li.selected
-						a(href='#features') Features
-					li
-						a(href='#help') Help
-					li
-						a(href='#about') About
-			form#form.form-horizontal
-				.mainview.view
-					#features.selected
-						header
-							h1 Features
-						.content
-							include ../includes/theme
-							include ../includes/notifications
-							include ../includes/scrobbling
-							include ../includes/lyrics
-							include ../includes/player
-					#help
-						header
-							h1 Help
-						.content
-							section
-								h3 Debug:
-								article
-									label.form-control-static
-										input(type='checkbox', name='debug')
-										| enable log outputs in console
-									br
-									p
-										button#debug-reset(type='button') Reset settings to defaults
-					#about
-						header
-							h1 About
-						.content
-							section
-								h3 Source code
-								article
-									p
-										a(href='https://github.com/mindfreakthemon/chime') Github
 	script(src='../js/misc/utils.js')
 	script(data-main='../js/options/main.js', src='../vendor/requirejs/js/require.js')
+body.chrome-bootstrap
+	.modal.hidden
+		.message Waiting...
+	.frame
+		.navigation
+			h1
+				a(href='') Chime #{''}
+					sup beta
+			ul.menu
+				li.selected
+					a(href='#features') Features
+				li
+					a(href='#help') Help
+				li
+					a(href='#about') About
+		form#form.form-horizontal
+			.mainview.view
+				#features.selected
+					header
+						h1 Features
+					.content
+						include ../includes/theme
+						include ../includes/notifications
+						include ../includes/scrobbling
+						include ../includes/lyrics
+						include ../includes/player
+				#help
+					header
+						h1 Help
+					.content
+						section
+							h3 Debug:
+							article
+								label.form-control-static
+									input(type='checkbox', name='debug')
+									| enable log outputs in console
+								br
+								p
+									button#debug-reset(type='button') Reset settings to defaults
+				#about
+					header
+						h1 About
+					.content
+						section
+							h3 Source code
+							article
+								p
+									a(href='https://github.com/mindfreakthemon/chime') Github
