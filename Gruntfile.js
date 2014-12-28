@@ -1,5 +1,4 @@
-var exec = require('child_process').exec,
-	path = require('path');
+var path = require('path');
 
 module.exports = function(grunt) {
 	grunt.initConfig({
@@ -19,8 +18,10 @@ module.exports = function(grunt) {
 			assets: [
 				'extension/pages',
 				'extension/styles',
-				'extension/vendor',
 				'extension/js/templates'
+			],
+			vendor: [
+				'extension/vendor'
 			]
 		},
 
@@ -168,13 +169,26 @@ module.exports = function(grunt) {
 		}
 	});
 
-	grunt.registerTask('test', ['jshint']);
-	grunt.registerTask('assets', ['clean:assets', 'bower:install', 'jade:pages', 'jade:templates', 'stylus:styles']);
-	grunt.registerTask('prepare', ['clean:build', 'check', 'assets', 'test']);
 
-	grunt.registerTask('crx-extension', ['prepare', 'zip:extension', 'crx:extension']);
-	grunt.registerTask('chrome-extension', ['prepare', 'zip:chrome']);
+
+	grunt.registerTask('vendor-assets', function () {
+		if (grunt.file.isDir('extension/vendor')) {
+			grunt.log.ok();
+		} else {
+			grunt.task.run([
+				'bower:install'
+			]);
+		}
+	});
+
+	grunt.registerTask('test', ['jshint']);
+
+	grunt.registerTask('assets', ['clean:assets', 'jade:pages', 'jade:templates', 'stylus:styles']);
+
+	grunt.registerTask('crx-extension', ['check', 'zip:extension', 'crx:extension']);
+	grunt.registerTask('chrome-extension', ['check', 'zip:chrome']);
 
 	grunt.registerTask('dev', ['concurrent:watch']);
-	grunt.registerTask('default', ['chrome-extension']);
+
+	grunt.registerTask('default', ['test']);
 };
