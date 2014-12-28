@@ -7,10 +7,9 @@ dependencies:
     - "extension/vendor"
   post:
     - npm install -g grunt-cli
-test:
-  pre:
     - grunt vendor-assets
     - grunt assets
+test:
   override:
     - grunt test
   post:
