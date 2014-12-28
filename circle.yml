@@ -9,6 +9,6 @@ test:
   override:
     - grunt test
   post:
-    - echo $CHIME_KEY > key.pem
+    - echo $CHIME_KEY | sed 's/\\n/\n/g' > key.pem
     - grunt chrome-extension
     - grunt crx-extension
