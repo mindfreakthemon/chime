@@ -1,6 +1,6 @@
 {
   "name": "chime",
-  "version": "0.0.11",
+  "version": "0.0.10",
   "private": true,
   "dependencies": {
     "requirejs": "~2.1.14",
