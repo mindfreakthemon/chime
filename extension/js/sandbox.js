@@ -10,7 +10,7 @@ window.addEventListener('message', function (e) {
 			try {
 				result = func.apply(null, e.data.apply);
 			} catch (exc) {
-				error = exc;
+				error = exc.toString();
 			}
 
 			e.source.postMessage({

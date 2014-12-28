@@ -1,4 +1,4 @@
-define(['player', 'settings'], function (player, settings) {
+define(['settings'], function (settings) {
 	var logger = getLogger('lyrics/loader');
 
 	var filters = settings.get('lyrics_filters'),
@@ -36,23 +36,44 @@ define(['player', 'settings'], function (player, settings) {
 				q: clearTitle(track.title) + ' ' + track.artist + ' Lyrics AND (' + providersQuery.join(' OR ') + ')'
 			};
 
+		xhr.ontimeout = function () {
+			callback('timeout');
+		};
+
+		xhr.onerror = function (e) {
+			callback(e.toString());
+		};
+
 		xhr.onload = function () {
 			var response = xhr.responseText,
 				url,
 				host;
 
+			logger('got response from the search');
+
 			try {
 				url = response.split(' id="search"')[1].split('<a href="')[1].split('"')[0];
 				host = url.match(/^https?:\/\/(?:www\.)?([^\/]+)/i)[1];
 			} catch (e) {
-				logger('error parsing query results: %s', e.message);
-				callback(e);
+				logger('error parsing query results: %s', e.toString());
+				callback(e.toString());
 				return;
 			}
 
+			logger('parsed host: %s', host);
+
 			chrome.runtime.sendMessage({
-				remote: url
+				remote: {
+					url: url,
+					timeout: 10
+				}
 			}, function (data) {
+				if (data.error) {
+					logger('error fetching lyrics on %s: %s', host, data.error);
+					callback(data.error);
+					return;
+				}
+
 				chrome.runtime.sendMessage({
 					sandbox: {
 						command: 'run',
@@ -62,7 +83,7 @@ define(['player', 'settings'], function (player, settings) {
 					}
 				}, function (data) {
 					if (data.error) {
-						logger('error parsing lyrics on %s: %s', host, e.message);
+						logger('error parsing lyrics on %s: %s', host, data.error);
 						callback(data.error);
 						return;
 					}
@@ -76,7 +97,9 @@ define(['player', 'settings'], function (player, settings) {
 			});
 		};
 
-		logger('making request %s', 'https://www.google.com/search?' + queryString(params));
+		xhr.timeout = 10000;
+
+		logger('making request %s (timeout %s)', 'https://www.google.com/search?' + queryString(params), xhr.timeout);
 
 		xhr.open('GET', 'https://www.google.com/search?' + queryString(params));
 		xhr.send();

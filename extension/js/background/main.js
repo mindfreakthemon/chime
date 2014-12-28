@@ -1,7 +1,10 @@
 require.config({
 	baseUrl: chrome.extension.getURL('/js/background'),
-	paths: {},
+	paths: {
+		settings: '../misc/settings'
+	},
 	deps: [
+		'settings',
 		'messenger'
 	]
 });

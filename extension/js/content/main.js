@@ -27,8 +27,8 @@ require.config({
 		'receiver',
 		'loader!optional:theme/theme:theme_enabled',
 		'loader!optional:lyrics/lyrics:lyrics_enabled',
-		'loader!optional:scrobbling:scrobbling_enabled',
-		'loader!optional:notifications:notify_enabled',
-		'loader!optional:external:player_enabled'
+		'loader!optional:scrobbling/scrobbling:scrobbling_enabled',
+		'loader!optional:notifications/notifications:notify_enabled',
+		'loader!optional:external/external:player_enabled'
 	]
 });

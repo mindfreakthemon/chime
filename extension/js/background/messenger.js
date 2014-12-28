@@ -2,11 +2,11 @@ define(['sandbox', 'remote'], function (sandbox, remote) {
 	chrome.runtime.onMessage.addListener(
 		function (request, sender, callback) {
 			if (request.remote) {
-				remote.request(request.remote, callback);
+				remote(request.remote, callback);
 			}
 
 			if (request.sandbox) {
-				sandbox.request(request.sandbox, callback);
+				sandbox(request.sandbox, callback);
 			}
 
 			if (request.permissions) {

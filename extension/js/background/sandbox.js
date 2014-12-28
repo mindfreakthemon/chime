@@ -2,16 +2,6 @@ define([], function () {
 	var frame = document.getElementById('sandbox'),
 		hash = {};
 
-	function requestSandbox(message, callback) {
-		if (!message.id) {
-			message.id = Date.now() + '' + Math.random();
-		}
-
-		hash[message.id] = callback;
-
-		frame.contentWindow.postMessage(message, '*');
-	}
-
 	window.addEventListener('message', function (e) {
 		var callback;
 
@@ -26,7 +16,13 @@ define([], function () {
 		}
 	});
 
-	return {
-		request: requestSandbox
+	return function (message, callback) {
+		if (!message.id) {
+			message.id = Date.now() + '' + Math.random();
+		}
+
+		hash[message.id] = callback;
+
+		frame.contentWindow.postMessage(message, '*');
 	};
 });

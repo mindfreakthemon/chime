@@ -1,36 +1,5 @@
-define(['events', 'settings'], function (events, settings) {
+define(['events', 'settings', 'notifications/display'], function (events, settings, display) {
 	var logger = getLogger('notifications');
-
-	var	clearer = {};
-
-	function clear(id) {
-		chrome.runtime.sendMessage({
-			notifications: {},
-			id: 'chime-notification-' + id,
-			type: 'clear'
-		}, function () {
-			logger('notification was cleared: %s', id);
-		});
-	}
-
-	function notify(type, params) {
-		if (clearer[type]) {
-			clearTimeout(clearer[type]);
-			delete clearer[type];
-		}
-
-		logger('notification was sent: %s', type);
-
-		params.iconUrl = params.iconUrl || settings.get('notify_default_icon');
-
-		chrome.runtime.sendMessage({
-			notifications: params,
-			id: 'chime-notification-' + type,
-			type: 'create'
-		}, function () {
-			clearer[type] = setTimeout(clear.bind(null, type), settings.get('notify_timeout'));
-		});
-	}
 
 	events.addEventListener('chime-playing', function (e) {
 		var track = e.detail.playingTrack;
@@ -38,7 +7,7 @@ define(['events', 'settings'], function (events, settings) {
 		if (settings.get('notify_playing')) {
 			logger(e.type, e);
 
-			notify('play-pause', {
+			display('play-pause', {
 				type: 'basic',
 				iconUrl: track.cover,
 				title: track.title,
@@ -53,7 +22,7 @@ define(['events', 'settings'], function (events, settings) {
 		if (settings.get('notify_resumed')) {
 			logger(e.type, e);
 
-			notify('play-pause', {
+			display('play-pause', {
 				type: 'progress',
 				iconUrl: track.cover,
 				title: track.title,
@@ -69,7 +38,7 @@ define(['events', 'settings'], function (events, settings) {
 		if (settings.get('notify_seeking')) {
 			logger(e.type, e);
 
-			notify('play-pause', {
+			display('play-pause', {
 				type: 'progress',
 				iconUrl: track.cover,
 				title: track.title,
@@ -85,7 +54,7 @@ define(['events', 'settings'], function (events, settings) {
 		if (settings.get('notify_paused')) {
 			logger(e.type, e);
 
-			notify('play-pause', {
+			display('play-pause', {
 				type: 'progress',
 				iconUrl: track.cover,
 				title: 'Paused: ' + track.title,
@@ -101,7 +70,7 @@ define(['events', 'settings'], function (events, settings) {
 		if (settings.get('notify_stopped')) {
 			logger(e.type, e);
 
-			notify('stop', {
+			display('stop', {
 				type: 'basic',
 				iconUrl: track.cover,
 				title: 'Stopped: ' + track.title,
@@ -114,7 +83,7 @@ define(['events', 'settings'], function (events, settings) {
 		if (settings.get('notify_finished')) {
 			logger(e.type, e);
 
-			notify('finish', {
+			display('finish', {
 				type: 'basic',
 				title: 'Playlist has ended!',
 				message: 'No more songs to play.'

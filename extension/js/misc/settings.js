@@ -28,7 +28,6 @@ define(function () {
 			['metrolyrics.com', "return response.split('id=\"lyrics-body-text\">')[1].split('</div>')[0];"],
 			['azlyrics.com', "return response.split('<!-- start of lyrics -->')[1].split('<!-- end of lyrics -->')[0].trim();"]
 		],
-
 		lyrics_filters: ['[\\(\\[](explicit|live|remastered)[^\\)]*[\\)\\]]'],
 
 		player_enabled: true,
@@ -52,7 +51,7 @@ define(function () {
 		onUpdateEvent.dispatch(changes);
 	});
 
-	return {
+	return window.settings = {
 		get: function (key) {
 			return key in settings ? settings[key] : defaults[key];
 		},
