@@ -1,10 +1,10 @@
 general:
   artifacts:
-    - build/chime.crx
-    - build/chime.zip
+    - "build/chime.crx"
+    - "build/chime.zip"
 dependencies:
   cache_directories:
-    - extension/vendor
+    - "extension/vendor"
   post:
     - npm install -g grunt-cli
 test:
@@ -14,7 +14,6 @@ test:
   override:
     - grunt test
   post:
-    - grunt clean:build
     - echo $CHIME_KEY | sed 's/\\n/\n/g' > key.pem
     - grunt chrome-extension
     - grunt crx-extension
