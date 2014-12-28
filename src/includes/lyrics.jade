@@ -10,9 +10,26 @@ section
 		.row
 			ul#lyrics-providers.highlightable.editable
 	article
-		h4 Add lyrics provider
-		.row
-			input(type='text', id='lyrics-host', placeholder='Hostname')
-		.row
-			textarea(id='lyrics-body', placeholder='Function body')
-		button#lyrics-button-add(type='button') Add
+		h4: button.open-modal(data-id='lyrics_provider',type='button') Add lyrics provider
+
+		div#lyrics_provider.overlay.hidden
+			div.page
+				h1 Add lyrics provider
+				div.close-button.close
+				div.content-area
+					.row
+						span function &nbsp;
+						input(type='text', id='lyrics-host', placeholder='hostname')
+						span &nbsp; (response) {
+					.row
+						span /* should return string */ &nbsp;
+						input(type='text', id='lyrics-body', placeholder='return response.extractText();', size=30)
+					.row
+						span }
+				div.action-area
+					div.action-area-right
+						div.button-strip
+							button#lyrics-button-add(type='button') Add
+							button.close(type='button') Close
+
+

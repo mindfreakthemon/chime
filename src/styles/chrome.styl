@@ -694,21 +694,6 @@
 			position: relative;
 			overflow: hidden;
 
-			@-webkit-keyframes pulse {
-				0% {
-					-webkit-transform: scale(1);
-				}
-				40% {
-					-webkit-transform: scale(1.02);
-				}
-				60% {
-					-webkit-transform: scale(1.02);
-				}
-				100% {
-					-webkit-transform: scale(1);
-				}
-			}
-
 			&.pulse {
 				-webkit-animation-duration: 180ms;
 				-webkit-animation-iteration-count: 1;
@@ -770,5 +755,20 @@
 				}
 			}
 		}
+	}
+}
+
+@-webkit-keyframes pulse {
+	0% {
+		-webkit-transform: scale(1);
+	}
+	40% {
+		-webkit-transform: scale(1.02);
+	}
+	60% {
+		-webkit-transform: scale(1.02);
+	}
+	100% {
+		-webkit-transform: scale(1);
 	}
 }

@@ -10,6 +10,7 @@ require.config({
 	},
 	deps: [
 		'navigation',
+		'modals',
 		'loader!required:form',
 		'loader!required:scrobbling',
 		'loader!required:lyrics'
