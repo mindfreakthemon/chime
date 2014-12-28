@@ -1,6 +1,6 @@
 general:
   artifacts:
-    build/chime.crx
+    - build/chime.crx
 dependencies:
   post:
     - npm install -g grunt-cli
