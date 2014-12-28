@@ -118,7 +118,7 @@ define(['requester', 'settings'], function (requester, settings) {
 			widget.classList.remove('hidden');
 			controls.classList.remove('hidden');
 			range_control.max = status.duration;
-			duration_value.innerText = _convertToTime(status.duration)
+			duration_value.innerText = _convertToTime(status.duration);
 		}
 
 		range_control.value = status.position;

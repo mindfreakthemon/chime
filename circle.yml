@@ -1,6 +1,13 @@
+general:
+  artifacts:
+    build/chime.crx
 dependencies:
   post:
     - npm install -g grunt-cli
 test:
   override:
     - grunt test
+  post:
+    - echo $CHIME_KEY > key.pem
+    - grunt chrome-extension
+    - grunt crx-extension

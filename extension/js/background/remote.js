@@ -11,7 +11,7 @@ define([], function () {
 		xhr.onerror = function (error) {
 			callback({
 				error: error.toString()
-			})
+			});
 		};
 
 		xhr.open('GET', url, true);
