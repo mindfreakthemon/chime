@@ -15,6 +15,10 @@ define(['settings'], function (settings) {
 	}
 
 	function click(e) {
+		if (!settings.get('player_enabled')) {
+			return;
+		}
+
 		e.stopPropagation();
 
 		var promise = new Promise(handle);

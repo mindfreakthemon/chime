@@ -13,6 +13,10 @@ define(['settings'], function (settings) {
 	}
 
 	return function (type, params) {
+		if (!settings.get('notify_enabled')) {
+			return;
+		}
+
 		if (clearer[type]) {
 			clearTimeout(clearer[type]);
 			delete clearer[type];
@@ -29,5 +33,5 @@ define(['settings'], function (settings) {
 		}, function () {
 			clearer[type] = setTimeout(clear.bind(null, type), settings.get('notify_timeout'));
 		});
-	}
+	};
 });

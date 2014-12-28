@@ -2,6 +2,7 @@ define(function () {
 	var logger = getLogger('settings');
 
 	var defaults = {
+		notify_loaded: true,
 		notify_enabled: false,
 		notify_resumed: false,
 		notify_playing: false,
@@ -12,6 +13,7 @@ define(function () {
 		notify_timeout: 3000,
 		notify_default_icon: 'images/icon.png',
 
+		scrobbling_loaded: true,
 		scrobbling_enabled: false,
 		scrobbling_now_playing: false,
 		scrobbling_api_secret: '672707041194c804c5973e54fb4ee520',
@@ -22,6 +24,7 @@ define(function () {
 		scrobbling_min_length: 30000,
 		scrobbling_min_percent: 0.5,
 
+		lyrics_loaded: true,
 		lyrics_enabled: true,
 		lyrics_providers: [
 			['songlyrics.com', "var div = document.createElement('div'); div.innerHTML = response.split('id=\"songLyricsDiv-outer\">')[1].split('</div>')[0].trim(); return div.firstChild.innerHTML;"],
@@ -30,6 +33,7 @@ define(function () {
 		],
 		lyrics_filters: ['[\\(\\[](explicit|live|remastered)[^\\)]*[\\)\\]]'],
 
+		player_loaded: true,
 		player_enabled: true,
 		player_width: 400,
 		player_height: 220,
@@ -51,7 +55,7 @@ define(function () {
 		onUpdateEvent.dispatch(changes);
 	});
 
-	return window.settings = {
+	return {
 		get: function (key) {
 			return key in settings ? settings[key] : defaults[key];
 		},

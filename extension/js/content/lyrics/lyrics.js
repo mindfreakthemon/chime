@@ -1,23 +1,20 @@
 define(['player', 'events', 'settings', 'lyrics/ui', 'lyrics/loader'], function (player, events, settings, ui, loader) {
-	var logger = getLogger('lyrics');
-
-	logger('lyrics was enabled');
-
-	var providers = [],
+	var logger = getLogger('lyrics'),
+		providers = [],
 		providersOrigins = [];
-
-	fill();
 
 	settings.onUpdate.addListener(function (changes) {
 		if (changes.lyrics_providers) {
-			logger('providers list was updated');
+			fillProviders();
+		}
 
-			fill();
+		if (changes.lyrics_enabled) {
+			ui.toggle(changes.lyrics_enabled.newValue);
 		}
 	});
 
-	function fill() {
-		logger('filling providers and origins');
+	function fillProviders() {
+		logger('providers list was updated');
 
 		providers = settings.get('lyrics_providers');
 
@@ -42,6 +39,8 @@ define(['player', 'events', 'settings', 'lyrics/ui', 'lyrics/loader'], function 
 		});
 	}
 
+	fillProviders();
+
 	ui.button.addEventListener('click', function () {
 		var enabled = ui.isShown();
 
@@ -64,6 +63,8 @@ define(['player', 'events', 'settings', 'lyrics/ui', 'lyrics/loader'], function 
 			}
 		});
 	});
+
+	ui.toggle(settings.get('lyrics_enabled'));
 
 	events.addEventListener('chime-playing', function () {
 		if (ui.isShown()) {

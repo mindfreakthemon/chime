@@ -1,0 +1,52 @@
+$color = #000
+
+html {
+	#oneGoogleWrapper {
+		display: none;
+	}
+
+	.music-banner {
+		background-color: $color;
+	}
+
+	.button.primary,
+	.simple-dialog-buttons button.goog-buttonset-default {
+		background-color: $color;
+	}
+
+	#nav_collections .nav-item-container.selected,
+	.nav-item-container.selected {
+		color: $color;
+	}
+
+	#volume_slider {
+		background-color: $color;
+	}
+
+	#slider .goog-slider-thumb,
+	#player .flat-button {
+		-webkit-filter: grayscale();
+	}
+
+	.header-tab-title.selected {
+		border-bottom-color: $color;
+	}
+
+	.button.primary:focus, .button.primary:hover, .simple-dialog-buttons button.goog-buttonset-default:hover {
+		background-color: #737373;
+	}
+
+	#time_container_current {
+		background-color: $color;
+	}
+
+	#slider .played-progress {
+		background: $color;
+	}
+}
+
+::selection {
+	background: rgba(0, 0, 0, .4);
+	color: $color;
+}
+

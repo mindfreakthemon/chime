@@ -9,7 +9,7 @@ define(['templates', 'loader!css:styles/lyrics.css'], function (templates) {
 	text.classList.add('text');
 	button.appendChild(text);
 	button.setAttribute('id', 'chime-lyrics-button');
-	button.classList.add('nav-item-container', 'tooltip');
+	button.classList.add('nav-item-container', 'tooltip', 'hidden');
 	container.setAttribute('id', 'lyrics-container');
 	container.innerHTML = templates.lyrics();
 
@@ -45,6 +45,15 @@ define(['templates', 'loader!css:styles/lyrics.css'], function (templates) {
 		container: container,
 		button: button,
 
+		toggle: function (enabled) {
+			if (enabled) {
+				button.classList.remove('hidden');
+			} else {
+				button.classList.add('hidden');
+				container.classList.remove('visible');
+			}
+		},
+
 		isShown: function () {
 			return container.classList.contains('visible');
 		},
@@ -73,7 +82,6 @@ define(['templates', 'loader!css:styles/lyrics.css'], function (templates) {
 		showError: function showError() {
 			hideAll();
 			chimeError.classList.add('visible');
-		},
-		hideAll: hideAll
+		}
 	};
 });
