@@ -3,7 +3,6 @@ define(function () {
 
 	var defaults = {
 		notify_enabled: false,
-//		notify_origins: ['https://*.googleusercontent.com/*'],
 		notify_resumed: false,
 		notify_playing: false,
 		notify_paused: false,
@@ -14,7 +13,6 @@ define(function () {
 		notify_default_icon: 'images/icon.png',
 
 		scrobbling_enabled: false,
-//		scrobbling_api_origins: ['https://ws.audioscrobbler.com/2.0/*'],
 		scrobbling_now_playing: false,
 		scrobbling_api_secret: '672707041194c804c5973e54fb4ee520',
 		scrobbling_api_key: '74639aa1297c3397d80d934196f1e542',
@@ -24,25 +22,13 @@ define(function () {
 		scrobbling_min_length: 30000,
 		scrobbling_min_percent: 0.5,
 
-		lyrics_enabled: false,
-//		lyrics_origins: ['https://*.google.com/*'],
+		lyrics_enabled: true,
 		lyrics_providers: [
 			['songlyrics.com', "var div = document.createElement('div'); div.innerHTML = response.split('id=\"songLyricsDiv-outer\">')[1].split('</div>')[0].trim(); return div.firstChild.innerHTML;"],
 			['metrolyrics.com', "return response.split('id=\"lyrics-body-text\">')[1].split('</div>')[0];"],
 			['azlyrics.com', "return response.split('<!-- start of lyrics -->')[1].split('<!-- end of lyrics -->')[0].trim();"]
 		],
 
-		/*
-		'songlyrics.com': function (response) {
-		var div = document.createElement('div'); div.innerHTML = response.split('id="songLyricsDiv-outer">')[1].split('</div>')[0].trim(); return div.firstChild.innerHTML;
-		},
-		'metrolyrics.com': function (response) {
-		return response.split('id="lyrics-body-text">')[1].split('</div>')[0];
-		},
-		'azlyrics.com': function (response) {
-		return response.split('<!-- start of lyrics -->')[1].split('<!-- end of lyrics -->')[0].trim();
-		}
-		*/
 		lyrics_filters: ['[\\(\\[](explicit|live|remastered)[^\\)]*[\\)\\]]'],
 
 		player_enabled: true,
