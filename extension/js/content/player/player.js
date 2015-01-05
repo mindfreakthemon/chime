@@ -11,7 +11,7 @@ define(['player/observer'], function (observer) {
 		playedTime = 0, // how much time played
 		playingTrack, // currently playing track
 		playingTrackId, // G-id
-		playingTrackCleaned = false;
+		playingTrackCleaned = true;
 
 	try {
 		// if track was playing while

@@ -12,6 +12,11 @@ section
 			label.form-control-static
 				input#input-last_fm_now_playing(type='checkbox', name='scrobbling_now_playing')
 				| now playing update
+		.row
+			label.form-control-static
+				input(type='number', min='0.5', max='1', step='0.01', name='scrobbling_min_percent')
+				| minimum scrobbling percent
+
 		p
 			button#last-fm-disconnect(type='button') Disconnect
 	article#last-fm-not-connected.hidden

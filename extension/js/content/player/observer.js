@@ -1,4 +1,6 @@
 define([], function () {
+	var logger = getLogger('player/observer');
+
 	var onPlaying = new chrome.Event(),
 		onPausing = new chrome.Event();
 
@@ -19,11 +21,13 @@ define([], function () {
 					oldValue !== newValue) {
 
 					if (self.classList.contains('playing')) {
-						console.log('fokin played');
+						logger('playing');
+
 						// playing
 						onPlaying.dispatch();
 					} else {
-						console.log('fokin paused');
+						logger('pausing');
+
 						// paused
 						onPausing.dispatch();
 					}
