@@ -3,7 +3,14 @@ define(['settings', 'templates'], function (settings, templates) {
 		host = document.getElementById('lyrics-host'),
 		body = document.getElementById('lyrics-body'),
 		add = document.getElementById('lyrics-button-add'),
-		providers = settings.get('lyrics_providers');
+		clearPermissions = document.getElementById('lyrics-clear-permissions'),
+		providers = settings.get('lyrics_providers'),
+		providersOrigins = [];
+
+	providers
+		.forEach(function (provider) {
+			providersOrigins.push('http://*.' + provider[0] + '/*', 'https://*.' + provider[0] + '/*');
+		});
 
 	providersList.innerHTML = templates.lyrics({
 		providers: providers
@@ -49,5 +56,16 @@ define(['settings', 'templates'], function (settings, templates) {
 
 		addHost(host.value, body.value);
 		saveHosts();
+	});
+
+	clearPermissions.addEventListener('click', function () {
+		chrome.runtime.sendMessage({
+			permissions: {
+				origins: providersOrigins
+			},
+			type: 'remove'
+		}, function (removed) {
+			location.reload();
+		});
 	});
 });

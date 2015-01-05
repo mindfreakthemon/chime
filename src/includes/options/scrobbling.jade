@@ -1,7 +1,9 @@
 section
 	h3 Enable last.fm scrobbling:
-	article#last-fm-profile(hidden='hidden')
-		h4#last-fm-user-name
+	article#last-fm-loading.flex
+		h5.flex-1 Loading..
+	article#last-fm-profile.hidden
+		#last-fm-account
 		.row
 			label.form-control-static
 				input#input-last_fm(type='checkbox', name='scrobbling_enabled')
@@ -10,9 +12,8 @@ section
 			label.form-control-static
 				input#input-last_fm_now_playing(type='checkbox', name='scrobbling_now_playing')
 				| now playing update
-		img#last-fm-user-image(src='about:blank')
 		p
 			button#last-fm-disconnect(type='button') Disconnect
-	article#last-fm-not-connected
+	article#last-fm-not-connected.hidden
 		p
 			button#last-fm-connect(type='button') Connect

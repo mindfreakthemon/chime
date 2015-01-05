@@ -3,6 +3,7 @@ html
 head
 	title Chime Options
 	link(rel='stylesheet', type='text/css', href='../styles/chrome.css')
+	link(rel='stylesheet', type='text/css', href='../styles/flexible.css')
 	link(rel='stylesheet', type='text/css', href='../styles/options.css')
 	script(src='../js/misc/utils.js')
 	script(data-main='../js/options/main.js', src='../vendor/requirejs/js/require.js')
@@ -25,11 +26,11 @@ body.chrome-bootstrap
 					header
 						h1 Features
 					.content
-						include ../includes/theme
-						include ../includes/notifications
-						include ../includes/scrobbling
-						include ../includes/lyrics
-						include ../includes/player
+						include ../includes/options/theme
+						include ../includes/options/notifications
+						include ../includes/options/scrobbling
+						include ../includes/options/lyrics
+						include ../includes/options/player
 				#help
 					header
 						h1 Help

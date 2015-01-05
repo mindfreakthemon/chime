@@ -1,0 +1,8 @@
+.flex.flex-center
+	img#last-fm-user-image(src=user.image[1]['#text'] || '/images/default_user.png')
+	.flex-1.flex.flex-vertical#last-fm-details
+		a#last-fm-user-name(target='_blank', href=user.url)= user.name
+		#last-fm-subdetails
+			if user.realname
+				span= user.realname
+			span Play count: #{user.playcount}

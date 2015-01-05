@@ -44,15 +44,16 @@ define(['player', 'events', 'settings', 'lyrics/ui', 'lyrics/loader'], function 
 	ui.button.addEventListener('click', function () {
 		var enabled = ui.isShown();
 
-		logger('clicked on lyrics link');
+		logger('clicked on lyrics link. is enabled: %s', enabled);
 
 		chrome.runtime.sendMessage({
 			permissions: {
 				origins: providersOrigins
 			},
-			type: enabled ? 'remove' : 'request'
+			type: 'request'
 		}, function (granted) {
 			if (!granted) {
+				logger('permission not granted');
 				return;
 			}
 

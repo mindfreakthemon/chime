@@ -1,4 +1,4 @@
-define(['settings', 'lastfm'], function (settings, lastfm) {
+define(['settings', 'lastfm', 'templates'], function (settings, lastfm, templates) {
 	lastfm.session(function (error, sessionID) {
 		if (error) {
 			return;
@@ -20,18 +20,17 @@ define(['settings', 'lastfm'], function (settings, lastfm) {
 			var json = JSON.parse(xhr.responseText),
 				user = json.user;
 
-			if (!user) {
-				return;
+			document.getElementById('last-fm-loading').classList.add('hidden');
+
+			if (user) {
+				document.getElementById('last-fm-account').innerHTML = templates.scrobbling({
+					user: user
+				});
+
+				document.getElementById('last-fm-profile').classList.remove('hidden');
+			} else {
+				document.getElementById('last-fm-not-connected').classList.remove('hidden');
 			}
-
-			var image = document.getElementById('last-fm-user-image'),
-				username = document.getElementById('last-fm-user-name');
-
-			username.innerText = user.name;
-			image.src = user.image[1]['#text'];
-
-			document.getElementById('last-fm-profile').removeAttribute('hidden');
-			document.getElementById('last-fm-not-connected').setAttribute('hidden', 'hidden');
 		};
 
 		xhr.send();
