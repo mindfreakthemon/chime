@@ -1,11 +1,11 @@
-define(['events', 'settings', 'notifications/display'], function (events, settings, display) {
+define(['player/player', 'settings', 'notifications/display'], function (player, settings, display) {
 	var logger = getLogger('notifications');
 
-	events.addEventListener('chime-playing', function (e) {
-		var track = e.detail.playingTrack;
+	player.onPlaying.addListener(function (data) {
+		var track = data.playingTrack;
 
 		if (settings.get('notify_playing')) {
-			logger(e.type, e);
+			logger('on playing');
 
 			display('play-pause', {
 				type: 'basic',
@@ -16,11 +16,11 @@ define(['events', 'settings', 'notifications/display'], function (events, settin
 		}
 	});
 
-	events.addEventListener('chime-resumed', function (e) {
-		var track = e.detail.playingTrack;
+	player.onResumed.addListener(function (data) {
+		var track = data.playingTrack;
 
 		if (settings.get('notify_resumed')) {
-			logger(e.type, e);
+			logger('on resumed');
 
 			display('play-pause', {
 				type: 'progress',
@@ -32,11 +32,11 @@ define(['events', 'settings', 'notifications/display'], function (events, settin
 		}
 	});
 
-	events.addEventListener('chime-seeking', function (e) {
-		var track = e.detail.playingTrack;
+	player.onSeeking.addListener(function (data) {
+		var track = data.playingTrack;
 
 		if (settings.get('notify_seeking')) {
-			logger(e.type, e);
+			logger('on seeking');
 
 			display('play-pause', {
 				type: 'progress',
@@ -48,11 +48,11 @@ define(['events', 'settings', 'notifications/display'], function (events, settin
 		}
 	});
 
-	events.addEventListener('chime-paused', function (e) {
-		var track = e.detail.playingTrack;
+	player.onPaused.addListener(function (data) {
+		var track = data.playingTrack;
 
 		if (settings.get('notify_paused')) {
-			logger(e.type, e);
+			logger('on paused');
 
 			display('play-pause', {
 				type: 'progress',
@@ -64,11 +64,11 @@ define(['events', 'settings', 'notifications/display'], function (events, settin
 		}
 	});
 
-	events.addEventListener('chime-stopped', function (e) {
-		var track = e.detail.playingTrack;
+	player.onStopped.addListener(function (data) {
+		var track = data.playingTrack;
 
 		if (settings.get('notify_stopped')) {
-			logger(e.type, e);
+			logger('on stopped');
 
 			display('stop', {
 				type: 'basic',
@@ -79,9 +79,9 @@ define(['events', 'settings', 'notifications/display'], function (events, settin
 		}
 	});
 
-	events.addEventListener('chime-finished', function (e) {
+	player.onFinished.addListener(function () {
 		if (settings.get('notify_finished')) {
-			logger(e.type, e);
+			logger('on finished');
 
 			display('finish', {
 				type: 'basic',

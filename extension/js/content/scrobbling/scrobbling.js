@@ -1,13 +1,13 @@
-define(['player', 'events', 'lastfm', 'settings'], function (player, events, lastfm, settings) {
+define(['player/player', 'lastfm', 'settings'], function (player, lastfm, settings) {
 	var logger = getLogger('lastfm');
 
 	var scrobbleTimeout,
 		scrobbledFlag = false,
 		scrobbleMinDuration = settings.get('scrobbling_min_length'),
-		scrobblePercent = settings.get('scrobbling_min_percent');
+		scrobblePercent = 0.01;// settings.get('scrobbling_min_percent');
 
-	function sendScrobble(e) {
-		var track = e.detail.playingTrack;
+	function sendScrobble(data) {
+		var track = data.playingTrack;
 
 		if (!settings.get('scrobbling_enabled')) {
 			logger('scrobbling is disabled');
@@ -22,23 +22,25 @@ define(['player', 'events', 'lastfm', 'settings'], function (player, events, las
 
 		scrobbledFlag = true;
 
-		events.addEventListener('chime-stopped', function _handleStopped() {
-			// only once
-			events.removeEventListener('chime-stopped', _handleStopped);
+		logger('going to scrobble this track on stop');
 
-			lastfm.scrobble(e.detail.playingTimestamp, track, function (error) {
+		player.onStopped.addListener(function _handleStopped() {
+			// only once
+			player.onStopped.removeListener(_handleStopped);
+
+			lastfm.scrobble(data.playingTimestamp, track, function (error) {
 				if (error) {
-					logger('scrobbling error:', error, track);
+					logger('scrobbling error:', error);
 					return;
 				}
 
-				logger('scrobbling:', track);
+				logger('scrobbling');
 			});
-		});
+		})
 	}
 
-	events.addEventListener('chime-playing chime-resumed', function (e) {
-		var track = e.detail.playingTrack;
+	function onGoing(data) {
+		var track = data.playingTrack;
 
 		if (!settings.get('scrobbling_now_playing')) {
 			logger('now.playing is disabled');
@@ -47,37 +49,42 @@ define(['player', 'events', 'lastfm', 'settings'], function (player, events, las
 
 		lastfm.nowPlaying(track, function (error) {
 			if (error) {
-				logger('now.playing error:', error, track);
+				logger('now.playing error:', error);
 				return;
 			}
 
-			logger('now.playing:', track);
+			logger('now.playing sent');
 		});
-	});
+	}
 
-	events.addEventListener('chime-resumed', function (e) {
-		var track = e.detail.playingTrack;
+	player.onPlaying.addListener(onGoing);
+	player.onResumed.addListener(onGoing);
+
+	player.onResumed.addListener(function (data) {
+		var track = data.playingTrack;
 
 		if (!scrobbledFlag) {
-			scrobbleTimeout = setTimeout(sendScrobble.bind(null, e),
-				Math.floor(track.duration * scrobblePercent - e.detail.playedTime));
+			scrobbleTimeout = setTimeout(sendScrobble.bind(null, data),
+				Math.floor(track.duration * scrobblePercent - data.playedTime));
 		}
 	});
 
-	events.addEventListener('chime-playing', function (e) {
-		var track = e.detail.playingTrack;
+	player.onPlaying.addListener(function (data) {
+		var track = data.playingTrack;
 
 		if (track.duration > scrobbleMinDuration) {
 			scrobbledFlag = false;
-			scrobbleTimeout = setTimeout(sendScrobble.bind(null, e),
+			scrobbleTimeout = setTimeout(sendScrobble.bind(null, data),
 				Math.floor(track.duration  * scrobblePercent));
 		} else {
+			logger('scrobbling: track too small');
+
 			// track is too small to scrobble it
 			scrobbledFlag = true;
 		}
 	});
 
-	events.addEventListener('chime-stopped', function (e) {
+	player.onStopped.addListener(function () {
 		clearTimeout(scrobbleTimeout);
 		scrobbleTimeout = null;
 		scrobbledFlag = false;

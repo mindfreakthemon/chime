@@ -1,9 +1,17 @@
-define(['events'], function (events) {
+define(['player/observer'], function (observer) {
+	var onPlaying = new chrome.Event(),
+		onResumed = new chrome.Event(),
+		onStopped = new chrome.Event(),
+		onPaused = new chrome.Event(),
+		onFinished = new chrome.Event(),
+		onSeeking = new chrome.Event();
+
 	var playingTimestamp = +new Date(),
 		playingLastTimestamp = +new Date(),
 		playedTime = 0, // how much time played
 		playingTrack, // currently playing track
-		playingTrackId; // G-id
+		playingTrackId, // G-id
+		playingTrackCleaned = false;
 
 	try {
 		// if track was playing while
@@ -72,9 +80,18 @@ define(['events'], function (events) {
 			playingLastTimestamp = +new Date();
 
 			// track was resumed
-			events.dispatchEvent('chime-resumed', playingParams(track));
+			onResumed.dispatch(playingParams(track));
 		} else {
+			if (!playingTrackCleaned) {
+				// track wasn't cleaned and looks like
+				// handlePausing won't be called anymore
+
+				// track has just finished
+				onStopped.dispatch(playingParams());
+			}
+
 			// first time setup
+			playingTrackCleaned = false;
 			playingTimestamp = +new Date();
 			playingLastTimestamp = playingTimestamp;
 			playedTime = 0;
@@ -87,11 +104,12 @@ define(['events'], function (events) {
 			}
 
 			// track was started
-			events.dispatchEvent('chime-playing', playingParams(track));
+			onPlaying.dispatch(playingParams(track));
 		}
 	}
 
 	function handlePausing() {
+		console.log('PAUSING');
 		playedTime += +new Date() - playingLastTimestamp;
 
 		try {
@@ -100,7 +118,11 @@ define(['events'], function (events) {
 
 			if (trackSign(playingTrack) !== trackSign(track)) {
 				// track has just finished
-				events.dispatchEvent('chime-stopped', playingParams());
+				onStopped.dispatch(playingParams());
+
+				// marking this so that onStopped
+				// won't be called twice
+				playingTrackCleaned = true;
 
 				// no need to do anything
 				// because track will be playing now
@@ -108,12 +130,17 @@ define(['events'], function (events) {
 			}
 
 			// playback was paused
-			events.dispatchEvent('chime-paused', playingParams(track));
+			onPaused.dispatch(playingParams(track));
 		} catch (e) {
 			// track has just finished
-			events.dispatchEvent('chime-stopped', playingParams());
+			onStopped.dispatch(playingParams());
+
+			// marking this so that onStopped
+			// won't be called twice
+			playingTrackCleaned = true;
+
 			// playlist was finished
-			events.dispatchEvent('chime-finished', playingParams());
+			onFinished.dispatch(playingParams());
 
 			playingTrack = null;
 			playingTrackId = null;
@@ -129,17 +156,25 @@ define(['events'], function (events) {
 		slider.addEventListener('click', function () {
 			if (playingTrack) {
 				// user has clicked on slider
-				events.dispatchEvent('chime-seeking', playingParams(currentTrack()));
+				onSeeking.dispatch(playingParams(currentTrack()));
 			}
 		});
 	});
+
+	observer.onPlaying.addListener(handlePlaying);
+	observer.onPausing.addListener(handlePausing);
 
 	return {
 		currentTrack: currentTrack,
 		trackSign: trackSign,
 		currentStatus: currentStatus,
 		playingParams: playingParams,
-		handlePlaying: handlePlaying,
-		handlePausing: handlePausing
+
+		onPlaying: onPlaying,
+		onResumed: onResumed,
+		onStopped: onStopped,
+		onPaused: onPaused,
+		onFinished: onFinished,
+		onSeeking: onSeeking
 	};
 });

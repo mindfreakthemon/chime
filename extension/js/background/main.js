@@ -5,6 +5,6 @@ require.config({
 	},
 	deps: [
 		'settings',
-		'messenger'
+		'receiver'
 	]
 });

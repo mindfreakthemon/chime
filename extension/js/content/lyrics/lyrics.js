@@ -1,4 +1,4 @@
-define(['player', 'events', 'settings', 'lyrics/ui', 'lyrics/loader'], function (player, events, settings, ui, loader) {
+define(['player/player', 'settings', 'lyrics/ui', 'lyrics/loader'], function (player, settings, ui, loader) {
 	var logger = getLogger('lyrics'),
 		providers = [],
 		providersOrigins = [];
@@ -46,6 +46,11 @@ define(['player', 'events', 'settings', 'lyrics/ui', 'lyrics/loader'], function 
 
 		logger('clicked on lyrics link. is enabled: %s', enabled);
 
+		if (enabled) {
+			ui.toggleShown();
+			return;
+		}
+
 		chrome.runtime.sendMessage({
 			permissions: {
 				origins: providersOrigins
@@ -58,16 +63,25 @@ define(['player', 'events', 'settings', 'lyrics/ui', 'lyrics/loader'], function 
 			}
 
 			ui.toggleShown();
+			callLoader();
+		});
+	});
 
-			if (!enabled) {
-				callLoader();
-			}
+
+	window.addEventListener('beforeunload', function () {
+		chrome.runtime.sendMessage({
+			permissions: {
+				origins: providersOrigins
+			},
+			type: 'remove'
+		}, function (removed) {
+			logger('lyrics permissions removed: %s', removed);
 		});
 	});
 
 	ui.toggle(settings.get('lyrics_enabled'));
 
-	events.addEventListener('chime-playing', function () {
+	player.onPlaying.addListener(function () {
 		if (ui.isShown()) {
 			callLoader();
 		}

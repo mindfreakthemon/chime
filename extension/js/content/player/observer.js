@@ -1,4 +1,7 @@
-define(['player'], function (player) {
+define([], function () {
+	var onPlaying = new chrome.Event(),
+		onPausing = new chrome.Event();
+
 	var observer = new MutationObserver(function (mutations) {
 		mutations.forEach(attrModified);
 	});
@@ -16,11 +19,13 @@ define(['player'], function (player) {
 					oldValue !== newValue) {
 
 					if (self.classList.contains('playing')) {
+						console.log('fokin played');
 						// playing
-						player.handlePlaying();
+						onPlaying.dispatch();
 					} else {
+						console.log('fokin paused');
 						// paused
-						player.handlePausing();
+						onPausing.dispatch();
 					}
 				}
 				break;
@@ -39,4 +44,9 @@ define(['player'], function (player) {
 			attributeFilter: ['class', 'disabled', 'value']
 		});
 	});
+
+	return {
+		onPlaying: onPlaying,
+		onPausing: onPausing
+	};
 });

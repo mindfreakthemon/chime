@@ -9,6 +9,18 @@
 		};
 	}
 
+	function css(url) {
+		var link = document.createElement('link');
+
+		link.type = 'text/css';
+		link.rel = 'stylesheet';
+		link.href = url;
+
+		document.querySelector('head').appendChild(link);
+
+		return link;
+	}
+
 	define({
 		normalize: function (name, normalize) {
 			var parts = parse(name);
@@ -44,6 +56,10 @@
 							}
 						});
 					});
+					break;
+
+				case 'css':
+					onload(css(chrome.runtime.getURL(parts.module)));
 					break;
 			}
 		}

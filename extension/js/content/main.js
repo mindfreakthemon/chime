@@ -23,8 +23,8 @@ require.config({
 		templates: '../templates/content'
 	},
 	deps: [
-		'observer',
 		'receiver',
+		'sender',
 		'loader!optional:theme/theme:theme_enabled',
 		'loader!optional:lyrics/lyrics:lyrics_loaded',
 		'loader!optional:scrobbling/scrobbling:scrobbling_loaded',

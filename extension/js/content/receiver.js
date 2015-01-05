@@ -1,4 +1,4 @@
-define(['player'], function (player) {
+define(['player/player'], function (player) {
 	var logger = getLogger('receiver');
 
 	logger('received enabled');
