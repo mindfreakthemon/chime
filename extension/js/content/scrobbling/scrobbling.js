@@ -4,7 +4,7 @@ define(['player/player', 'lastfm', 'settings'], function (player, lastfm, settin
 	var scrobbleTimeout,
 		scrobbledFlag = false,
 		scrobbleMinDuration = settings.get('scrobbling_min_length'),
-		scrobblePercent = 0.01;// settings.get('scrobbling_min_percent');
+		scrobblePercent = settings.get('scrobbling_min_percent');
 
 	function sendScrobble(data) {
 		var track = data.playingTrack;
