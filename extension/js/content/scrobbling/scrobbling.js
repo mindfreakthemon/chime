@@ -36,7 +36,7 @@ define(['player/player', 'lastfm', 'settings'], function (player, lastfm, settin
 
 				logger('scrobbling');
 			});
-		})
+		});
 	}
 
 	function onGoing(data) {
