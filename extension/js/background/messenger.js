@@ -1,6 +1,12 @@
 define(['sandbox', 'remote'], function (sandbox, remote) {
 	chrome.runtime.onMessage.addListener(
 		function (request, sender, callback) {
+			if (request.insertCSS) {
+				chrome.tabs.insertCSS(sender.tab.id, request.insertCSS, function () {
+					callback.apply(null, arguments);
+				});
+			}
+
 			if (request.remote) {
 				remote(request.remote, callback);
 			}

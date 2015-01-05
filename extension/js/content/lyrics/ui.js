@@ -1,5 +1,13 @@
-define(['templates', 'loader!css:styles/lyrics.css'], function (templates) {
+define(['templates'], function (templates) {
 	var logger = getLogger('lyrics/ui');
+
+	chrome.runtime.sendMessage({
+		insertCSS: {
+			file: 'styles/lyrics.css'
+		}
+	}, function () {
+		logger('styles added');
+	});
 
 	var button = document.createElement('a'),
 		text = document.createElement('span'),
