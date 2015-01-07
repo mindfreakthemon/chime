@@ -10,7 +10,6 @@ require.config({
 	},
 	deps: [
 		'resizer',
-		'requester',
 		'loader!required:controls'
 	]
 });

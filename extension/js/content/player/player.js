@@ -109,7 +109,6 @@ define(['player/observer'], function (observer) {
 	}
 
 	function handlePausing() {
-		console.log('PAUSING');
 		playedTime += +new Date() - playingLastTimestamp;
 
 		try {

@@ -141,7 +141,7 @@ define(['requester', 'settings'], function (requester, settings) {
 	track_cover.addEventListener('click', function () {
 		switch (album_art_action) {
 			case 'navigate':
-				requester.activate();
+					requester.activate();
 			/* fall through */
 			case 'close':
 				window.close();

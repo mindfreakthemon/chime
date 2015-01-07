@@ -9,6 +9,9 @@ define(function () {
 			if (request.register && !module.tab) {
 				module.tab = sender.tab;
 
+				// in order to save tab.id
+				location.hash = '#' + module.tab.id;
+
 				sendResponse({});
 
 				module.onReady.dispatch(module.tab);
@@ -33,6 +36,14 @@ define(function () {
 			active: true
 		});
 	};
+
+	if (location.hash.length > 1) {
+		module.tab = {
+			id: +location.hash.slice(1)
+		};
+
+		module.onReady.dispatch(module.tab);
+	}
 
 	return module;
 });

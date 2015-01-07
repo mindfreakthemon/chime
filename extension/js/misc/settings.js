@@ -33,7 +33,7 @@ define(function () {
 		],
 		lyrics_filters: ['[\\(\\[](explicit|live|remastered)[^\\)]*[\\)\\]]'],
 
-		player_loaded: true,
+		player_loaded: false,
 		player_enabled: true,
 		player_width: 400,
 		player_height: 220,

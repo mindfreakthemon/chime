@@ -10,12 +10,15 @@ define(['settings'], function (settings) {
 	window.addEventListener('beforeunload', close);
 
 	function addButton() {
-		miniPlayer = document.querySelector('[data-id=show-miniplayer]');
-		miniPlayer.addEventListener('click', click);
+		setTimeout(function () {
+			miniPlayer = document.querySelector('[data-id=show-miniplayer]');
+			miniPlayer.addEventListener('click', click);
+		}, 2000);
 	}
 
 	function click(e) {
 		if (!settings.get('player_enabled')) {
+			logger('click wasted');
 			return;
 		}
 
