@@ -4,7 +4,8 @@ require.config({
 		jade: '../../vendor/jade/js/runtime',
 		md5: '../../vendor/blueimp-md5/js/md5.min',
 		settings: '../misc/settings',
-		lastfm: '../misc/lastfm',
+		lastfm: '../lastfm/api',
+		'lastfm-core': '../lastfm/core',
 		loader: '../misc/loader',
 		templates: '../templates/options'
 	},

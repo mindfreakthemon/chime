@@ -1,46 +1,8 @@
 define(['settings', 'lastfm', 'templates'], function (settings, lastfm, templates) {
 	var loading = document.getElementById('last-fm-loading');
 
-	var promise = new Promise(function (fullfil, reject) {
-		lastfm.session(function (error, sessionID) {
-			if (error) {
-				reject();
-				return;
-			}
-
-			var params = {
-					method: 'user.getInfo',
-					api_key: settings.get('scrobbling_api_key'),
-					sk: sessionID,
-					format: 'json'
-				},
-				api_sig = lastfm.sign(params),
-				url = settings.get('scrobbling_api_url') + queryString(params) + '&api_sig=' + api_sig;
-
-			var xhr = new XMLHttpRequest();
-
-			xhr.open('GET', url);
-
-			xhr.onerror = xhr.ontimeout = function () {
-				reject();
-			};
-
-			xhr.timeout = 10000;
-
-			xhr.onload = function () {
-				var json = JSON.parse(xhr.responseText),
-					user = json.user;
-
-				if (user) {
-					fullfil(user);
-				} else {
-					reject();
-				}
-			};
-
-			xhr.send();
-		});
-	});
+	var promise = lastfm.getProfile(),
+		connect = document.getElementById('last-fm-connect');
 
 	promise
 		.then(
@@ -65,9 +27,13 @@ define(['settings', 'lastfm', 'templates'], function (settings, lastfm, template
 			});
 		});
 
-	document.getElementById('last-fm-connect')
+	connect
 		.addEventListener('click', function () {
-			lastfm.authorize(function () {
+			connect.disabled = true;
+
+			loading.classList.remove('hidden');
+
+			lastfm.core.authorize(function () {
 				location.reload();
 			});
 		});

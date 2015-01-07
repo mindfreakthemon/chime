@@ -149,7 +149,7 @@ define(['player/observer'], function (observer) {
 		}
 	}
 
-	window.addEventListener('load', function () {
+	function load() {
 		var slider = document.getElementById('slider');
 
 		slider.addEventListener('click', function () {
@@ -158,7 +158,13 @@ define(['player/observer'], function (observer) {
 				onSeeking.dispatch(playingParams(currentTrack()));
 			}
 		});
-	});
+	}
+
+	if (document.readyState === 'complete') {
+		load();
+	} else {
+		window.addEventListener('load', load);
+	}
 
 	observer.onPlaying.addListener(handlePlaying);
 	observer.onPausing.addListener(handlePausing);

@@ -1,0 +1,8 @@
+if user
+		a#last-fm-user-name(target='_blank', href=user.url, title='Connected as ' + user.name)
+			img#last-fm-user-image(src=user.image[1]['#text'] || chrome.runtime.getURL('/images/default_user.png'))
+		.flex-1.flex#last-fm-details
+			if scrobbling
+				.flex-1(title='Scrobbling is enabled') [S]
+			if nowPlaying
+				.flex-1(title='Now playing is enabled') [N]

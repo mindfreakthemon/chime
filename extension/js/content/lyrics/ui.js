@@ -20,12 +20,12 @@ define(['templates', 'loader!css:styles/lyrics.css'], function (templates) {
 		chimeSourceLink = container.querySelector('#chime-source-link');
 
 	if (document.readyState === 'complete') {
-		addButton();
+		load();
 	} else {
-		window.addEventListener('load', addButton);
+		window.addEventListener('load', load);
 	}
 
-	function addButton() {
+	function load() {
 		var nav = document.getElementById('nav-content-container');
 
 		logger('lyrics button was added');

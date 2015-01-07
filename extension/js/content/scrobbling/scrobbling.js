@@ -1,10 +1,10 @@
-define(['player/player', 'lastfm', 'settings'], function (player, lastfm, settings) {
+define(['player/player', 'lastfm', 'settings', 'scrobbling/ui'], function (player, lastfm, settings, ui) {
 	var logger = getLogger('lastfm');
 
+	var scrobbleUser = null;
+
 	var scrobbleTimeout,
-		scrobbledFlag = false,
-		scrobbleMinDuration = settings.get('scrobbling_min_length'),
-		scrobblePercent = settings.get('scrobbling_min_percent');
+		scrobbledFlag = false;
 
 	function sendScrobble(data) {
 		var track = data.playingTrack;
@@ -28,14 +28,12 @@ define(['player/player', 'lastfm', 'settings'], function (player, lastfm, settin
 			// only once
 			player.onStopped.removeListener(_handleStopped);
 
-			lastfm.scrobble(data.playingTimestamp, track, function (error) {
-				if (error) {
+			lastfm.scrobble(data.playingTimestamp, track)
+				.then(function () {
+					logger('scrobbling');
+				}, function (error) {
 					logger('scrobbling error:', error);
-					return;
-				}
-
-				logger('scrobbling');
-			});
+				});
 		});
 	}
 
@@ -50,17 +48,17 @@ define(['player/player', 'lastfm', 'settings'], function (player, lastfm, settin
 
 		if (!scrobbledFlag) {
 			scrobbleTimeout = setTimeout(sendScrobble.bind(null, data),
-				Math.floor(track.duration * scrobblePercent - data.playedTime));
+				Math.floor(track.duration * settings.get('scrobbling_min_percent') - data.playedTime));
 		}
 	});
 
 	player.onPlaying.addListener(function (data) {
 		var track = data.playingTrack;
 
-		if (track.duration > scrobbleMinDuration) {
+		if (track.duration > settings.get('scrobbling_min_length')) {
 			scrobbledFlag = false;
 			scrobbleTimeout = setTimeout(sendScrobble.bind(null, data),
-				Math.floor(track.duration * scrobblePercent));
+				Math.floor(track.duration * settings.get('scrobbling_min_percent')));
 		} else {
 			logger('scrobbling: track too small');
 
@@ -84,16 +82,45 @@ define(['player/player', 'lastfm', 'settings'], function (player, lastfm, settin
 			return;
 		}
 
-		lastfm.nowPlaying(track, function (error) {
-			if (error) {
+		lastfm.nowPlaying(track)
+			.then(function () {
+				logger('now.playing sent');
+			}, function (error) {
 				logger('now.playing error:', error);
-				return;
-			}
-
-			logger('now.playing sent');
-		});
+			});
 	}
 
 	player.onPlaying.addListener(onGoing);
 	player.onResumed.addListener(onGoing);
+
+	function updateUser() {
+		lastfm.getProfile().then(function (user) {
+			scrobbleUser = user;
+			updateUI();
+		}, function () {
+			scrobbleUser = null;
+			updateUI();
+		});
+	}
+
+	function updateUI() {
+		ui.update({
+			user: scrobbleUser,
+			scrobbling: settings.get('scrobbling_enabled'),
+			nowPlaying: settings.get('scrobbling_now_playing'),
+			scrobbled: scrobbledFlag
+		});
+
+		ui.toggle(!!scrobbleUser);
+	}
+
+	settings.onUpdate.addListener(function (changes) {
+		if (changes.scrobbling_sessionID) {
+			updateUser();
+		} else if (changes.scrobbling_enabled || changes.scrobbling_now_playing) {
+			updateUI();
+		}
+	});
+
+	updateUser();
 });

@@ -36,7 +36,7 @@ define([], function () {
 		}
 	}
 
-	window.addEventListener('load', function () {
+	function load() {
 		var player = document.getElementById('player'),
 			buttons = player.querySelector('div.player-middle');
 
@@ -47,7 +47,13 @@ define([], function () {
 			subtree: true,
 			attributeFilter: ['class', 'disabled', 'value']
 		});
-	});
+	}
+
+	if (document.readyState === 'complete') {
+		load();
+	} else {
+		window.addEventListener('load', load);
+	}
 
 	return {
 		onPlaying: onPlaying,
