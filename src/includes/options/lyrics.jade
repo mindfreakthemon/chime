@@ -10,7 +10,9 @@ section
 		.row
 			ul#lyrics-providers.highlightable.editable
 	article
-		h4: button.open-modal(data-id='lyrics-provider', type='button') Add lyrics provider
+		button.open-modal(data-id='lyrics-provider', type='button') Add lyrics provider
+		span &nbsp;
+		button#lyrics-clear-permissions(type='button') Clear permissions
 
 		div#lyrics-provider.overlay.hidden
 			div.page
@@ -31,6 +33,5 @@ section
 						div.button-strip
 							button#lyrics-button-add(type='button') Add
 							button.close(type='button') Close
-	article
-		h4: button#lyrics-clear-permissions(type='button') Clear permissions
+
 

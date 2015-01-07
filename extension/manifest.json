@@ -50,7 +50,8 @@
 		"js/*.js",
 		"vendor/*.js",
 		"styles/*.css",
-		"images/*.png"
+		"images/*.png",
+		"pages/options.html"
 	],
 	"manifest_version": 2
 }

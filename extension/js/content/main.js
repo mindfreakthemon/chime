@@ -26,6 +26,7 @@ require.config({
 	deps: [
 		'receiver',
 		'sender',
+		'options',
 		'loader!optional:theme/theme:theme_enabled',
 		'loader!optional:lyrics/lyrics:lyrics_loaded',
 		'loader!optional:scrobbling/scrobbling:scrobbling_loaded',
