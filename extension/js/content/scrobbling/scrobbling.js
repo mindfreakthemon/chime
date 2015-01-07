@@ -39,6 +39,43 @@ define(['player/player', 'lastfm', 'settings'], function (player, lastfm, settin
 		});
 	}
 
+	player.onPaused.addListener(function () {
+		if (scrobbleTimeout) {
+			clearTimeout(scrobbleTimeout);
+		}
+	});
+
+	player.onResumed.addListener(function (data) {
+		var track = data.playingTrack;
+
+		if (!scrobbledFlag) {
+			scrobbleTimeout = setTimeout(sendScrobble.bind(null, data),
+				Math.floor(track.duration * scrobblePercent - data.playedTime));
+		}
+	});
+
+	player.onPlaying.addListener(function (data) {
+		var track = data.playingTrack;
+
+		if (track.duration > scrobbleMinDuration) {
+			scrobbledFlag = false;
+			scrobbleTimeout = setTimeout(sendScrobble.bind(null, data),
+				Math.floor(track.duration * scrobblePercent));
+		} else {
+			logger('scrobbling: track too small');
+
+			// track is too small to scrobble it
+			scrobbledFlag = true;
+		}
+	});
+
+	player.onStopped.addListener(function () {
+		clearTimeout(scrobbleTimeout);
+		scrobbleTimeout = null;
+		scrobbledFlag = false;
+	});
+
+	/* now playing */
 	function onGoing(data) {
 		var track = data.playingTrack;
 
@@ -59,34 +96,4 @@ define(['player/player', 'lastfm', 'settings'], function (player, lastfm, settin
 
 	player.onPlaying.addListener(onGoing);
 	player.onResumed.addListener(onGoing);
-
-	player.onResumed.addListener(function (data) {
-		var track = data.playingTrack;
-
-		if (!scrobbledFlag) {
-			scrobbleTimeout = setTimeout(sendScrobble.bind(null, data),
-				Math.floor(track.duration * scrobblePercent - data.playedTime));
-		}
-	});
-
-	player.onPlaying.addListener(function (data) {
-		var track = data.playingTrack;
-
-		if (track.duration > scrobbleMinDuration) {
-			scrobbledFlag = false;
-			scrobbleTimeout = setTimeout(sendScrobble.bind(null, data),
-				Math.floor(track.duration  * scrobblePercent));
-		} else {
-			logger('scrobbling: track too small');
-
-			// track is too small to scrobble it
-			scrobbledFlag = true;
-		}
-	});
-
-	player.onStopped.addListener(function () {
-		clearTimeout(scrobbleTimeout);
-		scrobbleTimeout = null;
-		scrobbledFlag = false;
-	});
 });
