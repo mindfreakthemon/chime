@@ -1,3 +1,34 @@
+abbr {
+	border-bottom: 1px dotted black;
+}
+
+.image {
+	position: relative;
+
+	img {
+		display: none;
+	}
+
+	abbr:hover {
+		cursor: pointer;
+	}
+
+	abbr:hover + img {
+		display: inline-block;
+		position: absolute;
+		top: calc(100% + 10px);
+		left: 0;
+		z-index: 2;
+		max-width: 300px;
+		background: #eee;
+		border: 3px solid #eee;
+		border-radius: 5px;
+		padding: 5px;
+		box-sizing: border-box;
+		box-shadow: -1px 1px 10px #000;
+	}
+}
+
 #last-fm-details {
 	margin: 0 20px;
 
@@ -61,4 +92,12 @@ label.form-control-static {
 
 .hidden {
 	display: none !important;
+}
+
+.chrome-bootstrap .frame .mainview > .selected {
+	height: 100%;
+
+	.content {
+		min-height: calc(100% - 55px);
+	}
 }
