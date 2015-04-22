@@ -75,7 +75,8 @@ define(['player/observer'], function (observer) {
 			track = currentTrack();
 
 		// scrobbling stuff
-		if (trackSign(playingTrack) === trackSign(track)) {
+		if (trackSign(playingTrack) === trackSign(track) &&
+			!playingTrackCleaned) {
 			// already was playing this track
 			playingLastTimestamp = +new Date();
 
@@ -115,7 +116,7 @@ define(['player/observer'], function (observer) {
 			// trows exception if finished playing
 			var track = currentTrack();
 
-			if (trackSign(playingTrack) !== trackSign(track)) {
+			if (trackSign(playingTrack) !== trackSign(track) || track.position === 0) {
 				// track has just finished
 				onStopped.dispatch(playingParams());
 
