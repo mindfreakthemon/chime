@@ -23,16 +23,16 @@ html
 				input#range-control(type='range', min='0', value='0', max='100', step='1')
 				#controls-buttons.flex
 					.btn-group
-						button.btn.btn-default(type='button', title='Rewind', data-command='rewind')
+						button.btn.btn-default(type='button', title=i18n('pages_player_rewind'), data-command='rewind')
 							span#rewind-icon.glyphicon.glyphicon-backward
-						button.btn.btn-default(type='button', title='Play', data-command='play-pause')
+						button.btn.btn-default(type='button', title=i18n('pages_player_play'), data-command='play-pause')
 							span#play-icon.glyphicon
-						button.btn.btn-default(type='button', title='Forward', data-command='forward')
+						button.btn.btn-default(type='button', title=i18n('pages_player_forward'), data-command='forward')
 							span#forward-icon.glyphicon.glyphicon-forward
 					.btn-group
-						button.btn.btn-default(type='button', title='Shuffle', data-command='shuffle')
+						button.btn.btn-default(type='button', title=i18n('pages_player_shuffle'), data-command='shuffle')
 							span#shuffle-icon.glyphicon.glyphicon-random.disabled
-						button.btn.btn-default(type='button', title='Repeat', data-command='repeat')
+						button.btn.btn-default(type='button', title=i18n('pages_player_repeat'), data-command='repeat')
 							span#repeat-icon.glyphicon.glyphicon-retweet.disabled
 					#length-screen.flex.flex-center
 						span#position-value 0:00

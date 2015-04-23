@@ -169,8 +169,6 @@ module.exports = function(grunt) {
 		}
 	});
 
-
-
 	grunt.registerTask('vendor-assets', function () {
 		if (grunt.file.isDir('extension/vendor')) {
 			grunt.log.ok();

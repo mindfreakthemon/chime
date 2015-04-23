@@ -20,8 +20,8 @@ require.config({
 		settings: '../misc/settings',
 		lastfm: '../lastfm/api',
 		'lastfm-core': '../lastfm/core',
-		loader: '../misc/loader',
-		templates: '../templates/content'
+		loader: '../misc/loader'
+		//templates: '../templates/content'
 	},
 	deps: [
 		'receiver',

@@ -15,16 +15,16 @@ body.chrome-bootstrap
 					sup beta
 			ul.menu
 				li.selected
-					a(href='#features') Features
+					a(href='#features')= i18n('pages_options_features')
 				li
-					a(href='#help') Help
+					a(href='#help')= i18n('pages_options_help')
 				li
-					a(href='#about') About
+					a(href='#about')= i18n('pages_options_about')
 		form#form.form-horizontal
 			.mainview.view
 				#features.selected
 					header
-						h1 Features
+						h1= i18n('pages_options_features')
 					.content
 						include ../includes/options/theme
 						include ../includes/options/notifications
@@ -33,30 +33,30 @@ body.chrome-bootstrap
 						//include ../includes/options/player
 				#help
 					header
-						h1 Help
+						h1= i18n('pages_options_help')
 					.content
 						section
-							h3 Help
+							h3= i18n('pages_options_help')
 							.alert.row
-								| You can quickly navigate to this page by clicking&nbsp;
+								| #{i18n('pages_options_help_descr_1')} #{''}
 								span.image
-									abbr on chime link in the settings.
+									abbr #{i18n('pages_options_help_descr_2')}
 									image(src='/images/options.png')
 						section
-							h3 Debug:
+							h3= i18n('pages_options_debug')
 							article
 								label.form-control-static
 									input(type='checkbox', name='debug')
-									| enable log outputs in console
+									| #{i18n('pages_options_debug_descr')}
 								br
 								p
-									button#debug-reset(type='button') Reset settings to defaults
+									button#debug-reset(type='button')= i18n('pages_options_reset')
 				#about
 					header
-						h1 About
+						h1= i18n('pages_options_about')
 					.content
 						section
-							h3 Source code
+							h3= i18n('pages_options_source_code')
 							article
 								p
 									a(href='https://github.com/mindfreakthemon/chime') Github
