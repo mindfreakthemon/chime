@@ -1,0 +1,52 @@
+.frame
+	.navigation
+		h1
+			a(href='') Chime #{''}
+				sup beta
+		ul.menu
+			li.selected
+				a(href='#features')= i18n('pages_options_features')
+			li
+				a(href='#help')= i18n('pages_options_help')
+			li
+				a(href='#about')= i18n('pages_options_about')
+	form#form.form-horizontal
+		.mainview.view
+			#features.selected
+				header
+					h1= i18n('pages_options_features')
+				.content
+					include ../../includes/options/theme
+					include ../../includes/options/notifications
+					include ../../includes/options/scrobbling
+					include ../../includes/options/lyrics
+					//include ../../includes/options/player
+			#help
+				header
+					h1= i18n('pages_options_help')
+				.content
+					section
+						h3= i18n('pages_options_help')
+						.alert.row
+							| #{i18n('pages_options_help_descr_1')} #{''}
+							span.image
+								abbr #{i18n('pages_options_help_descr_2')}
+								image(src='/images/options.png')
+					section
+						h3= i18n('pages_options_debug')
+						article
+							label.form-control-static
+								input(type='checkbox', name='debug')
+								| #{i18n('pages_options_debug_descr')}
+							br
+							p
+								button#debug-reset(type='button')= i18n('pages_options_reset')
+			#about
+				header
+					h1= i18n('pages_options_about')
+				.content
+					section
+						h3= i18n('pages_options_source_code')
+						article
+							p
+								a(href='https://github.com/mindfreakthemon/chime') Github

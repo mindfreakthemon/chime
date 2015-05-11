@@ -4,6 +4,10 @@
     <exclude-output />
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/build" />
+      <excludeFolder url="file://$MODULE_DIR$/extension/js/templates" />
+      <excludeFolder url="file://$MODULE_DIR$/extension/pages" />
+      <excludeFolder url="file://$MODULE_DIR$/extension/styles" />
+      <excludeFolder url="file://$MODULE_DIR$/extension/vendor" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="chime node_modules" level="project" />

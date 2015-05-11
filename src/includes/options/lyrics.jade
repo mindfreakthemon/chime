@@ -1,29 +1,29 @@
 section
 	h3
-		| Lyrics:
+		| #{i18n('includes_options_lyrics')}:
 	article
 		.alert.row
-			| Lyrics button is located in the&nbsp;
+			| #{i18n('includes_options_lyrics_help_desc_1')} #{''}
 			span.image
-				abbr left navigation menu
+				abbr= i18n('includes_options_lyrics_help_desc_2')
 				image(src='/images/lyrics.png')
-			| &nbsp;toggling lyrics panel on the right side of the page.
+			| #{''} #{i18n('includes_options_lyrics_help_desc_3')}
 	article
 		label.form-control-static
 			input(type='checkbox', name='lyrics_enabled')
-			| enables lyrics fetching
+			| #{i18n('includes_options_lyrics_enable')}
 	article
-		h4 Lyrics providers
+		h4 #{i18n('includes_options_lyrics_providers')}
 		.row
 			ul#lyrics-providers.highlightable.editable
 	article
-		button.open-modal(data-id='lyrics-provider', type='button') Add lyrics provider
+		button.open-modal(data-id='lyrics-provider', type='button')= i18n('includes_options_lyrics_providers_add')
 		span &nbsp;
-		button#lyrics-clear-permissions(type='button') Clear permissions
+		button#lyrics-clear-permissions(type='button')= i18n('includes_options_clear_permissions')
 
 		div#lyrics-provider.overlay.hidden
 			div.page
-				h1 Add lyrics provider
+				h1= i18n('includes_options_lyrics_providers_add')
 				div.close-button.close
 				div.content-area
 					.row
@@ -38,7 +38,7 @@ section
 				div.action-area
 					div.action-area-right
 						div.button-strip
-							button#lyrics-button-add(type='button') Add
-							button.close(type='button') Close
+							button#lyrics-button-add(type='button')= i18n('misc_add')
+							button.close(type='button')= i18n('misc_close')
 
 

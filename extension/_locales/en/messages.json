@@ -1,73 +1,189 @@
 {
-  "content_lyrics_title": {
-    "message": "Lyrics"
-  },
-  "content_lyrics_loading": {
-    "message": "Loading..."
-  },
-  "content_lyrics_no_lyrics_found": {
-    "message": "No lyrics found."
-  },
-  "content_lyrics_source_link": {
-    "message": "Source can be found at"
-  },
-  "content_scrobbling_connected_as_title": {
-    "message": "Connected as $username$",
-    "placeholders": {
-      "username": {
-        "content": "$1"
-      }
-    }
-  },
-  "content_scrobbling_scrobbling_enabled": {
-    "message": "Scrobbling is enabled"
-  },
-  "content_scrobbling_now_playing_enabled": {
-    "message": "Now playing is enabled"
-  },
-  "pages_player_rewind": {
-    "message": "Rewind"
-  },
-  "pages_player_play": {
-    "message": "Play"
-  },
-  "pages_player_forward": {
-    "message": "Forward"
-  },
-  "pages_player_shuffle": {
-    "message": "Shuffle"
-  },
-  "pages_player_repeat": {
-    "message": "Repeat"
-  },
-  "pages_options_features": {
-    "message": "Features"
-  },
-  "pages_options_help": {
-    "message": "Help"
-  },
-  "pages_options_about": {
-    "message": "About"
-  },
-  "pages_options_source_code": {
-    "message": "Source code"
-  },
-  "pages_options_help_descr_1": {
-    "message": "You can quickly navigate to this page by clicking"
-  },
-  "pages_options_help_descr_2": {
-    "message": "on chime link in the settings."
-  },
-  "pages_options_debug": {
-    "message": "Debug"
-  },
-  "pages_options_debug_descr": {
-    "message": "enable log outputs in console"
-  },
-  "pages_options_reset": {
-    "message": "Reset settings to defaults"
-  },
-  "pages_options_": {
-    "message": ""
-  }
+	"content_lyrics_title": {
+		"message": "Lyrics"
+	},
+	"content_lyrics_loading": {
+		"message": "Loading..."
+	},
+	"content_lyrics_no_lyrics_found": {
+		"message": "No lyrics found."
+	},
+	"content_lyrics_source_link": {
+		"message": "Source can be found at"
+	},
+	"content_scrobbling_connected_as_title": {
+		"message": "Connected as $username$",
+		"placeholders": {
+			"username": {
+				"content": "$1"
+			}
+		}
+	},
+	"content_scrobbling_scrobbling_enabled": {
+		"message": "Scrobbling is enabled"
+	},
+	"content_scrobbling_now_playing_enabled": {
+		"message": "Now playing is enabled"
+	},
+	"pages_player_rewind": {
+		"message": "Rewind"
+	},
+	"pages_player_play": {
+		"message": "Play"
+	},
+	"pages_player_forward": {
+		"message": "Forward"
+	},
+	"pages_player_shuffle": {
+		"message": "Shuffle"
+	},
+	"pages_player_repeat": {
+		"message": "Repeat"
+	},
+	"pages_options_features": {
+		"message": "Features"
+	},
+	"pages_options_help": {
+		"message": "Help"
+	},
+	"pages_options_about": {
+		"message": "About"
+	},
+	"pages_options_source_code": {
+		"message": "Source code"
+	},
+	"pages_options_help_descr_1": {
+		"message": "You can quickly navigate to this page by clicking"
+	},
+	"pages_options_help_descr_2": {
+		"message": "on chime link in the settings."
+	},
+	"pages_options_debug": {
+		"message": "Debug"
+	},
+	"pages_options_debug_descr": {
+		"message": "enable log outputs in console"
+	},
+	"pages_options_reset": {
+		"message": "Reset settings to defaults"
+	},
+	"includes_options_lyrics": {
+		"message": "Lyrics"
+	},
+	"includes_options_lyrics_help_desc_1": {
+		"message": "Lyrics button is located in the"
+	},
+	"includes_options_lyrics_help_desc_2": {
+		"message": "left navigation menu"
+	},
+	"includes_options_lyrics_help_desc_3": {
+		"message": "toggling lyrics panel on the right side of the page."
+	},
+	"includes_options_lyrics_enable": {
+		"message": "enables lyrics fetching"
+	},
+	"includes_options_lyrics_providers": {
+		"message": "Lyrics providers"
+	},
+	"includes_options_lyrics_providers_add": {
+		"message": "Add lyrics provider"
+	},
+	"includes_options_clear_permissions": {
+		"message": "Clear permissions"
+	},
+	"includes_options_scrobbling": {
+		"message": "Enable last.fm scrobbling"
+	},
+	"includes_options_scrobbling_help_desc_1": {
+		"message": "By connecting your last.fm profile you can scrobble all songs you play and send \"now playing\" notifications. If everything is set correctly,"
+	},
+	"includes_options_scrobbling_help_desc_2": {
+		"message": "you will see your avatar near player controls."
+	},
+	"includes_options_scrobbling_enabled": {
+		"message": "scrobbling"
+	},
+	"includes_options_scrobbling_now_playing": {
+		"message": "now playing update"
+	},
+	"includes_options_scrobbling_min_percent": {
+		"message": "minimum scrobbling percent"
+	},
+	"includes_options_notifications_enable": {
+		"message": "Enable playing notifications:"
+	},
+	"includes_options_notifications_enable_desc_1": {
+		"message": "Regular"
+	},
+	"includes_options_notifications_enable_desc_2": {
+		"message": "chrome notifaction."
+	},
+	"includes_options_notifications_notify_enable": {
+		"message": "enable notifications"
+	},
+	"includes_options_notifications_notify_resumed": {
+		"message": "track resume"
+	},
+	"includes_options_notifications_notify_playing": {
+		"message": "track start"
+	},
+	"includes_options_notifications_notify_paused": {
+		"message": "track pause"
+	},
+	"includes_options_notifications_notify_seeking": {
+		"message": "track seeking"
+	},
+	"includes_options_notifications_notify_stopped": {
+		"message": "track finish"
+	},
+	"includes_options_notifications_notify_finished": {
+		"message": "playlist finish"
+	},
+	"includes_options_notifications_notify_timeout": {
+		"message": "notification timeout (ms)"
+	},
+	"includes_options_theme_header": {
+		"message": "Theme:"
+	},
+	"includes_options_theme_descr": {
+		"message": "In this theme top bar is removed and search field is placed instead of Google Music logo, most of the orange would be black."
+	},
+	"includes_options_theme_enabled_1": {
+		"message": "enable"
+	},
+	"includes_options_theme_enabled_2": {
+		"message": "black theme"
+	},
+	"includes_options_theme_enabled_3": {
+		"message": "(requires refresh of music tab to apply)"
+	},
+	"templates_options_lyrics_no_providers": {
+		"message": "no providers defined"
+	},
+	"templates_options_scrobbling_play_count": {
+		"message": "Play count: $count$",
+		"placeholders": {
+			"count": {
+				"content": "$1"
+			}
+		}
+	},
+	"misc_l_delete": {
+		"message": "delete"
+	},
+	"misc_add": {
+		"message": "Add"
+	},
+	"misc_close": {
+		"message": "Close"
+	},
+	"misc_loading": {
+		"message": "Loading.."
+	},
+	"misc_disconnect": {
+		"message": "Disconnect"
+	},
+	"misc_connect": {
+		"message": "Connect"
+	}
 }

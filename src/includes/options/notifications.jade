@@ -1,40 +1,40 @@
 section
-	h3 Enable playing notifications:
+	h3= i18n('includes_options_notifications_enable')
 	article
 		.alert.row
-			| Regular&nbsp;
+			| #{i18n('includes_options_notifications_enable_desc_1')} #{''}
 			span.image
-				abbr chrome notifaction.
+				abbr= i18n('includes_options_notifications_enable_desc_1')
 				image(src='/images/notifications.png')
 	article
 		label.form-control-static
 			input(type='checkbox', name='notify_enabled')
-			| enable notifications
+			= i18n('includes_options_notifications_notify_enable')
 		br
 		label.form-control-static
 			input(type='checkbox', name='notify_resumed')
-			| track resume
+			= i18n('includes_options_notifications_notify_resumed')
 		br
 		label.form-control-static
 			input(type='checkbox', name='notify_playing')
-			| track start
+			= i18n('includes_options_notifications_notify_playing')
 		br
 		label.form-control-static
 			input(type='checkbox', name='notify_paused')
-			| track pause
+			= i18n('includes_options_notifications_notify_paused')
 		br
 		label.form-control-static
 			input(type='checkbox', name='notify_seeking')
-			| track seeking
+			= i18n('includes_options_notifications_notify_seeking')
 		br
 		label.form-control-static
 			input(type='checkbox', name='notify_stopped')
-			| track finish
+			= i18n('includes_options_notifications_notify_stopped')
 		br
 		label.form-control-static
 			input(type='checkbox', name='notify_finished')
-			| playlist finish
+			= i18n('includes_options_notifications_notify_finished')
 		br
 		label.form-control-static
 			input(type='number', min=1000, max=10000, step=100, name='notify_timeout')
-			| notification timeout (ms)
+			= i18n('includes_options_notifications_notify_timeout')

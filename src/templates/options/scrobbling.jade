@@ -5,4 +5,4 @@
 		#last-fm-subdetails
 			if user.realname
 				span= user.realname
-			span Play count: #{user.playcount}
+			span= i18n('templates_options_scrobbling_play_count', user.playcount)

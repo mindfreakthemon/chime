@@ -108,7 +108,7 @@ module.exports = function(grunt) {
 			},
 
 			templates: {
-				files: ['src/templates/**/*.jade'],
+				files: ['src/templates/**/*.jade', 'src/includes/**/*.jade'],
 				tasks: ['jade:templates'],
 				options: {
 					atBegin: true

@@ -7,7 +7,9 @@ require.config({
 		lastfm: '../lastfm/api',
 		'lastfm-core': '../lastfm/core',
 		loader: '../misc/loader',
-		templates: '../templates/options'
+		'templates-root': '../templates/options',
+		templates: '../misc/templates',
+		body: '../misc/body'
 	},
 	deps: [
 		'navigation',

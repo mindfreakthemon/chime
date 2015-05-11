@@ -1,15 +1,15 @@
 section
 	h3
-		| Theme:
+		= i18n('includes_options_theme_header')
 	article
 		.alert.row
-			| In this theme top bar is removed and search field is placed instead of Google Music logo, most of the orange would be black.
+			= i18n('includes_options_theme_descr')
 	article
 		label.form-control-static
 			input(type='checkbox', name='theme_enabled')
-			| enable&nbsp;
+			| #{i18n('includes_options_theme_enabled_1')} #{''}
 			span.image
-				abbr black theme
+				abbr= i18n('includes_options_theme_enabled_2')
 				img(src='/images/theme.png')
-			| &nbsp;(requires refresh of music tab to apply)
+			| #{''} #{i18n('includes_options_theme_enabled_3')}
 

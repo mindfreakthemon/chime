@@ -1,31 +1,30 @@
 section
-	h3 Enable last.fm scrobbling:
+	h3 #{i18n('includes_options_scrobbling')}:
 	article
 		.alert.row
-			| By connecting your last.fm profile you can scrobble all songs you play and send "now playing" notifications.
-			| If everything is set correctly,&nbsp;
+			| #{i18n('includes_options_scrobbling_help_desc_1')} #{''}
 			span.image
-				abbr you will see your avatar near player controls.
+				abbr= i18n('includes_options_scrobbling_help_desc_2')
 				img(src='/images/scrobbling.png')
 	article#last-fm-loading.flex
-		h5.flex-1 Loading..
+		h5.flex-1= i18n('misc_loading')
 	article#last-fm-profile.hidden
 		#last-fm-account
 		.row
 			label.form-control-static
 				input#input-last_fm(type='checkbox', name='scrobbling_enabled')
-				| scrobbling
+				= i18n('includes_options_scrobbling_enabled')
 		.row
 			label.form-control-static
 				input#input-last_fm_now_playing(type='checkbox', name='scrobbling_now_playing')
-				| now playing update
+				= i18n('includes_options_scrobbling_now_playing')
 		.row
 			label.form-control-static
 				input(type='number', min='0.5', max='1', step='0.01', name='scrobbling_min_percent')
-				| minimum scrobbling percent
+				= i18n('includes_options_scrobbling_min_percent')
 
 		p
-			button#last-fm-disconnect(type='button') Disconnect
+			button#last-fm-disconnect(type='button')= i18n('misc_disconnect')
 	article#last-fm-not-connected.hidden
 		p
-			button#last-fm-connect(type='button') Connect
+			button#last-fm-connect(type='button')= i18n('misc_connect')
