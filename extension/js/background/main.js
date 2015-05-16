@@ -5,6 +5,7 @@ require.config({
 	},
 	deps: [
 		'settings',
-		'receiver'
+		'receiver',
+		'update'
 	]
 });
