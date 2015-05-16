@@ -8,6 +8,7 @@ define([
 			host = document.getElementById('lyrics-host'),
 			body = document.getElementById('lyrics-body'),
 			add = document.getElementById('lyrics-button-add'),
+			defaults = document.getElementById('lyrics-default-list'),
 			clearPermissions = document.getElementById('lyrics-clear-permissions'),
 			providers = settings.get('lyrics_providers'),
 			providersOrigins = [];
@@ -51,6 +52,12 @@ define([
 				removeHost(target.dataset.host);
 				saveHosts();
 			}
+		});
+
+		defaults.addEventListener('click', function () {
+			settings.remove('lyrics_providers', function () {
+				location.reload();
+			});
 		});
 
 		add.addEventListener('click', function () {

@@ -32,7 +32,7 @@ define(['player/observer'], function (observer) {
 
 	function currentStatus() {
 		var player = document.getElementById('player'),
-			play = document.querySelector('button[data-id=play-pause]'),
+			play = document.querySelector('[data-id=play-pause]'),
 			shuffle = player.querySelector('[data-id="shuffle"]'),
 			repeat = player.querySelector('[data-id="repeat"]');
 
@@ -51,8 +51,8 @@ define(['player/observer'], function (observer) {
 			artist = player.querySelector('#player-artist'),
 			album = player.querySelector('.player-album'),
 			cover = player.querySelector('#playingAlbumArt'),
-			title = player.querySelector('#playerSongTitle'),
-			slider = document.getElementById('slider');
+			title = player.querySelector('#player-song-title'),
+			slider = document.getElementById('material-player-progress');
 
 		return {
 			title: title ? title.innerText : null,
@@ -151,7 +151,7 @@ define(['player/observer'], function (observer) {
 	}
 
 	function load() {
-		var slider = document.getElementById('slider');
+		var slider = document.getElementById('material-player-progress');
 
 		slider.addEventListener('click', function () {
 			if (playingTrack) {

@@ -2,15 +2,18 @@ define(['templates', 'loader!css:styles/lyrics.css'], function (templates) {
 	var logger = getLogger('lyrics/ui');
 
 	var button = document.createElement('a'),
-		text = document.createElement('span'),
-		container = document.createElement('div');
+		container = document.createElement('core-header-panel');
 
-	text.innerText = 'Lyrics';
-	text.classList.add('text');
-	button.appendChild(text);
+	button.innerHTML = templates.button({
+		icon: 'sj:music-note',
+		title: 'Lyrics'
+	});
 	button.setAttribute('id', 'chime-lyrics-button');
 	button.classList.add('nav-item-container', 'tooltip', 'hidden');
+
 	container.setAttribute('id', 'lyrics-container');
+	container.setAttribute('mode', 'scroll');
+	container.setAttribute('main', 'true');
 	container.innerHTML = templates.lyrics();
 
 	var chimeLyrics = container.querySelector('#chime-lyrics'),
@@ -26,12 +29,10 @@ define(['templates', 'loader!css:styles/lyrics.css'], function (templates) {
 	}
 
 	function load() {
-		var nav = document.getElementById('nav-content-container');
-
 		logger('lyrics button was added');
 
 		document.getElementById('nav_collections').appendChild(button);
-		nav.insertBefore(container, nav.firstChild);
+		document.getElementById('drawer-panel').appendChild(container);
 	}
 
 	function hideAll() {

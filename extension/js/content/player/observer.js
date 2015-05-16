@@ -17,7 +17,7 @@ define([], function () {
 		switch (self.dataset.id) {
 			case 'play-pause':
 				if (name === 'class' &&
-					self.classList.contains('flat-button') &&
+					//self.classList.contains('flat-button') &&
 					oldValue !== newValue) {
 
 					if (self.classList.contains('playing')) {
@@ -38,7 +38,7 @@ define([], function () {
 
 	function load() {
 		var player = document.getElementById('player'),
-			buttons = player.querySelector('div.player-middle');
+			buttons = player.querySelector('div.material-player-middle');
 
 		// observing changes to player's buttons
 		observer.observe(buttons, {

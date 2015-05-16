@@ -19,6 +19,8 @@ section
 	article
 		button.open-modal(data-id='lyrics-provider', type='button')= i18n('includes_options_lyrics_providers_add')
 		span &nbsp;
+		button#lyrics-default-list(type='button')= i18n('includes_options_lyrics_providers_defaults')
+		span &nbsp;
 		button#lyrics-clear-permissions(type='button')= i18n('includes_options_clear_permissions')
 
 		div#lyrics-provider.overlay.hidden

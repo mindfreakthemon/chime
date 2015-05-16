@@ -23,7 +23,7 @@ define(['templates', 'loader!css:styles/scrobbling.css'], function (templates) {
 	}
 
 	function load() {
-		var rightWrapper = document.getElementById('player-right-wrapper');
+		var rightWrapper = document.getElementById('material-player-right-wrapper');
 
 		rightWrapper.parentNode.insertBefore(wrapper, rightWrapper);
 		wrapper.appendChild(panel);

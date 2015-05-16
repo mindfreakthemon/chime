@@ -88,6 +88,9 @@
 	"includes_options_lyrics_providers_add": {
 		"message": "Add lyrics provider"
 	},
+	"includes_options_lyrics_providers_defaults": {
+		"message": "Reset list to default"
+	},
 	"includes_options_clear_permissions": {
 		"message": "Clear permissions"
 	},

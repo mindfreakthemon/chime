@@ -1,38 +1,30 @@
-/* fixing content */
-.cluster .header,
-.settings-cluster .header,
-.cluster .lane-content,
-.settings-cluster .lane-content {
-	width: 100% !important;
-}
-
-/* lyrics container */
-#nav-content-container {
+html /deep/ #main {
 	display: flex;
-
-	#nav-container {
-		width: 220px;
-	}
-
-	#content-container {
-		flex: 1;
-		margin: 0;
-	}
-
-	#lyrics-container {
-		width: 370px;
-		order: 3;
-	}
 }
 
+html /deep/ core-header-panel#content-container {
+	flex: 1;
+}
 
 #lyrics-container {
-	margin: 0;
 	display: none;
+
+	position: relative;
+	z-index: 100;
+
+	background-color: #fff;
+
+	core-toolbar {
+		background-color: #ef6c00;
+	}
+
+	width: 300px;
+	margin: 0;
+
+	flex-direction: column;
 
 	&.visible {
 		display: flex;
-		flex-direction: column;
 	}
 
 	.music-banner {

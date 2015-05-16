@@ -1,7 +1,7 @@
 if user
 		a#last-fm-user-name(target='_blank', href=user.url, title=i18n('content_scrobbling_connected_as_title', user.name))
 			img#last-fm-user-image(src=user.image[1]['#text'] || chrome.runtime.getURL('/images/default_user.png'))
-		.flex-1.flex#last-fm-details
+		.flex#last-fm-details
 			if scrobbling
 				.flex-1(title=i18n('content_scrobbling_scrobbling_enabled')) [S]
 			if nowPlaying

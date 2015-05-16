@@ -29,7 +29,7 @@ define(function () {
 		lyrics_providers: [
 			['songlyrics.com', "var div = document.createElement('div'); div.innerHTML = response.split('id=\"songLyricsDiv-outer\">')[1].split('</div>')[0].trim(); return div.firstChild.innerHTML;"],
 			['metrolyrics.com', "return response.split('id=\"lyrics-body-text\">')[1].split('</div>')[0];"],
-			['azlyrics.com', "return response.split('<!-- start of lyrics -->')[1].split('<!-- end of lyrics -->')[0].trim();"]
+			['azlyrics.com', "return response.split('<!-- Usage of azlyrics.com content by any third-party lyrics provider is prohibited by our licensing agreement. Sorry about that. -->')[1].split('<!-- MxM banner -->')[0].trim();"]
 		],
 		lyrics_filters: ['[\\(\\[](explicit|live|remastered)[^\\)]*[\\)\\]]'],
 
@@ -64,6 +64,9 @@ define(function () {
 			save[key] = value;
 
 			chrome.storage.sync.set(save, callback);
+		},
+		remove: function (key, callback) {
+			chrome.storage.sync.remove(key, callback);
 		},
 		getAll: function () {
 			return extend({}, defaults, settings);
