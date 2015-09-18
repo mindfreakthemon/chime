@@ -1,55 +1,33 @@
-$color = #000
+$color = #212121
 
 html {
 	#doc {
 		height: 100% !important;
 	}
 
-	#oneGoogleWrapper {
-		display: none;
-	}
-
-	.music-banner {
-		background-color: $color;
-	}
-
-	.button.primary,
-	.simple-dialog-buttons button.goog-buttonset-default {
-		background-color: $color;
-	}
-
-	#nav_collections .nav-item-container.selected,
-	.nav-item-container.selected {
-		color: $color;
-	}
-
-	#volume_slider {
-		background-color: $color;
-	}
-
-	#slider .goog-slider-thumb,
-	#player .flat-button {
-		-webkit-filter: grayscale();
-	}
-
-	.header-tab-title.selected {
-		border-bottom-color: $color;
-	}
-
-	.button.primary:focus, .button.primary:hover, .simple-dialog-buttons button.goog-buttonset-default:hover {
-		background-color: #737373;
-	}
-
-	#time_container_current {
-		background-color: $color;
-	}
-
-	#slider .played-progress {
-		background: $color;
-	}
-
 	#current-loading-progress {
 		background: $color;
+	}
+
+	#nav,
+	.material .nav-toolbar {
+		background: $color;
+	}
+
+	.material .nav-item-container {
+		color: #ff;
+	}
+
+	#nav_collections .nav-item-container:focus, .nav-item-container:focus, .nav-item-container:hover {
+		color: #212121;
+	}
+
+	#nav .material .nav-item-container .fade-out::after, .material .nav-item-container .fade-out::after, .material .nav-item-container .fade-out::after {
+		background: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(33, 33, 33, 1))
+	}
+
+	#nav .material .nav-item-container:focus .fade-out::after, .material .nav-item-container:hover .fade-out::after, .material .nav-item-container.selected .fade-out::after {
+		background: linear-gradient(to right,rgba(240,240,240,0),rgba(240,240,240,1));
 	}
 }
 
