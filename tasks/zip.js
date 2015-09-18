@@ -3,7 +3,7 @@ var gulp = require('gulp'),
 
 gulp.task('zip', function () {
 	return gulp.src([
-		'extension/*'
+		'extension/**/*'
 	], { base: 'extension/' })
 		.pipe(zip('chime.zip'))
 		.pipe(gulp.dest('build'));
