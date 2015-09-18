@@ -6,13 +6,11 @@ dependencies:
   cache_directories:
     - "extension/vendor"
   post:
-    - npm install -g grunt-cli
-    - grunt vendor-assets
-    - grunt assets
+    - npm install -g gulp
+    - gulp assets
 test:
   override:
-    - grunt test
+    - gulp lint
   post:
-    - echo $CHIME_KEY | sed 's/\\n/\n/g' > key.pem
-    - grunt chrome-extension
-    - grunt crx-extension
+    - echo $CHIME_KEY | sed 's/\\n/\n/g' > extension/key.pem
+    - gulp zip crx

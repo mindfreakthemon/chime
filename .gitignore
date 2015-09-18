@@ -42,4 +42,4 @@ bower_components
 extension/vendor
 
 # Google Web Store key
-key.pem
+extension/key.pem
