@@ -1,6 +1,24 @@
 $color = #212121
+$anti-color = #fff
 
 html {
+	body.material {
+		background-color: $color;
+		color: #fff;
+	}
+
+	.material {
+		a, .simple-dialog a {
+			color: $anti-color;
+		}
+
+		.hover, .selected-song-row {
+			a, .simple-dialog a {
+				color: $color;
+			}
+		}
+	}
+
 	#doc {
 		height: 100% !important;
 	}
@@ -14,21 +32,116 @@ html {
 		background: $color;
 	}
 
+	.material-card {
+		background-color: $color;
+
+		.title {
+			color: $anti-color;
+		}
+	}
+
+	/* song table */
+	.material-album-container {
+		background-color: $color;
+	}
+
+	.material .song-table {
+		&.mini, & {
+			[data-col="song-details"] .song-title,
+			[data-col="title"],
+			th {
+				color: $anti-color;
+			}
+
+			.hover, .selected-song-row {
+				[data-col="song-details"] .song-title,
+				[data-col="title"],
+				th {
+					color: $color;
+				}
+			}
+		}
+	}
+
+	.material {
+		.song-row {
+			.song-indicator,
+			.title-right-items,
+			.content,
+			.song-indicator[data-playback-status="paused"],
+			.song-indicator[data-playback-status="loading"],
+			[data-col="index"] .hover-button[data-id="play"],
+			[data-col="track"] .hover-button[data-id="play"],
+			td {
+				background-color: $color;
+				color: $anti-color;
+			}
+
+			&.hover, &.selected-song-row {
+				.song-indicator,
+				.title-right-items,
+				.content,
+				.song-indicator[data-playback-status="paused"],
+				.song-indicator[data-playback-status="loading"],
+				[data-col="index"] .hover-button[data-id="play"],
+				[data-col="track"] .hover-button[data-id="play"],
+				td {
+					color: $color;
+				}
+			}
+		}
+
+		.upload-progress-row td {
+			background-color: $color;
+			color: $anti-color;
+		}
+	}
+
+	/* ---- */
+
 	.material .nav-item-container {
-		color: #ff;
+		color: $anti-color;
 	}
 
 	#nav_collections .nav-item-container:focus, .nav-item-container:focus, .nav-item-container:hover {
-		color: #212121;
+		color: $color;
 	}
 
-	#nav .material .nav-item-container .fade-out::after, .material .nav-item-container .fade-out::after, .material .nav-item-container .fade-out::after {
+	.song-row .fade-out::after,
+	.fade-out::after {
 		background: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(33, 33, 33, 1))
 	}
 
-	#nav .material .nav-item-container:focus .fade-out::after, .material .nav-item-container:hover .fade-out::after, .material .nav-item-container.selected .fade-out::after {
-		background: linear-gradient(to right,rgba(240,240,240,0),rgba(240,240,240,1));
+	.material .nav-item-container:focus .fade-out::after, .material .nav-item-container:hover .fade-out::after, .material .nav-item-container.selected .fade-out::after {
+		background: linear-gradient(to right, rgba(240, 240, 240, 0), rgba(240, 240, 240, 1));
 	}
+
+	#player.material {
+		background-color: $color;
+		color: $anti-color;
+	}
+
+	/* rating bar near player controls */
+	#player.material .now-playing-actions sj-icon-button, #player.material .now-playing-actions paper-icon-button {
+		color: $anti-color;
+	}
+	#player.material .player-rating-container {
+		background-color: $color;
+	}
+	/* ---- */
+
+	/* player controls */
+	#material-app-bar {
+		background-color: $color;
+		color: $anti-color;
+	}
+	/* ---- */
+
+	/* queue overlay */
+	#queue-overlay {
+		background-color: $color;
+	}
+	/* ---- */
 }
 
 ::selection {
