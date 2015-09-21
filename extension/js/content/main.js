@@ -15,7 +15,7 @@ require.config({
 	baseUrl: chrome.extension.getURL('/js/content'),
 	skipDataMain: true,
 	paths: {
-		jade: '../../vendor/jade/js/runtime',
+		jade: '../../vendor/jade/runtime',
 		md5: '../../vendor/blueimp-md5/js/md5.min',
 		settings: '../misc/settings',
 		lastfm: '../lastfm/api',

@@ -1,6 +1,6 @@
 {
 	"name": "Chime",
-	"version": "0.0.15",
+	"version": "0.1.0",
 	"author": "Monday Freelem <mfthemon@gmail.com>",
 	"description": "Adds new features to Google Music Web Player",
 	"default_locale": "en",
@@ -34,14 +34,16 @@
 	"options_page": "pages/options.html",
 	"content_scripts": [
 		{
-			"matches": ["https://play.google.com/music/*"],
+			"matches": [
+				"https://play.google.com/music/*"
+			],
 			"css": [
 				"styles/flexible.css",
 				"styles/content.css"
 			],
 			"js": [
 				"js/misc/utils.js",
-				"vendor/requirejs/js/require.js",
+				"vendor/requirejs/require.js",
 				"js/content/main.js"
 			],
 			"run_at": "document_end"
@@ -56,4 +58,3 @@
 	],
 	"manifest_version": 2
 }
-

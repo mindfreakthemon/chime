@@ -36,10 +36,12 @@ extension/js/templates
 
 # Idea workspace
 *.iws
+*.iml
+*.ipr
 
 # Bower
 bower_components
 extension/vendor
 
 # Google Web Store key
-key.pem
+extension/key.pem

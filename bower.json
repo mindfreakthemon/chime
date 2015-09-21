@@ -1,27 +1,11 @@
 {
   "name": "chime",
-  "version": "0.0.15",
+  "version": "0.1.0",
   "private": true,
   "dependencies": {
     "requirejs": "~2.1.14",
     "blueimp-md5": "~1.1.0",
     "jade": "~1.5.0",
     "bootstrap": "~3.3.1"
-  },
-  "exportsOverride": {
-    "bootstrap": {
-      "js": "dist/js/*.js",
-      "css": "dist/css/*.css",
-      "fonts": "dist/fonts/*.*"
-    },
-    "requirejs": {
-      "js": "require.js"
-    },
-    "blueimp-md5": {
-      "js": "js/md5.min.js"
-    },
-    "jade": {
-      "js": "runtime.js"
-    }
   }
 }
