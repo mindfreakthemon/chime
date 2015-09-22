@@ -1,4 +1,4 @@
-define(['theme/search', 'loader!css:styles/theme.css'], function () {
+define(['loader!css:styles/theme.css'], function () {
 	var doc = document.getElementById('doc');
 
 	// remove height from doc
