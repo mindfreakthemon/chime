@@ -32,9 +32,11 @@ html {
 		background: $color;
 	}
 
+	.settings-card,
 	.material-card {
 		background-color: $color;
 
+		.music-source-empty-message,
 		.title {
 			color: $anti-color;
 		}
@@ -176,6 +178,15 @@ html {
 
 	.material .cluster-text-protection {
 		&, &::before {
+			background-color: $color;
+		}
+	}
+
+	/* lyrics extension */
+	#lyrics-container {
+		background-color: $color;
+
+		core-toolbar {
 			background-color: $color;
 		}
 	}
