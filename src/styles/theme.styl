@@ -63,7 +63,34 @@ html {
 		}
 	}
 
+	.cluster.material-cluster .header h2.title {
+		color: $anti-color;
+	}
+
+	.material-playlist-container {
+		background-color: $color;
+	}
+
+	.material-detail-view {
+		.top-tracks,
+		.artist-details {
+			background-color: $color;
+
+			.bio-wrapper .bio {
+				color: $anti-color;
+			}
+		}
+
+		.material-container-details .info .description {
+			color: $anti-color;
+		}
+	}
+
 	.material {
+		.songlist-container {
+			background: transparent;
+		}
+
 		.song-row {
 			.song-indicator,
 			.title-right-items,
@@ -140,12 +167,22 @@ html {
 	/* queue overlay */
 	#queue-overlay {
 		background-color: $color;
+
+		&::after {
+			border-color: transparent transparent $color $color;
+		}
 	}
 	/* ---- */
+
+	.material .cluster-text-protection {
+		&, &::before {
+			background-color: $color;
+		}
+	}
 }
 
 ::selection {
 	background: rgba(0, 0, 0, .4);
-	color: $color;
+	color: $anti-color;
 }
 
