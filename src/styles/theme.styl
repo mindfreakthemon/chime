@@ -7,18 +7,6 @@ html {
 		color: #fff;
 	}
 
-	.material {
-		a, .simple-dialog a {
-			color: $anti-color;
-		}
-
-		.hover, .selected-song-row {
-			a, .simple-dialog a {
-				color: $color;
-			}
-		}
-	}
-
 	#doc {
 		height: 100% !important;
 	}
@@ -35,6 +23,10 @@ html {
 	.settings-card,
 	.material-card {
 		background-color: $color;
+
+		&[data-size="small"][data-type="imfl"] .title {
+			color: $anti-color;
+		}
 
 		.music-source-empty-message,
 		.title {
@@ -55,7 +47,7 @@ html {
 				color: $anti-color;
 			}
 
-			.hover, .selected-song-row {
+			:hover, .selected-song-row {
 				[data-col="song-details"] .song-title,
 				[data-col="title"],
 				th {
@@ -74,6 +66,7 @@ html {
 	}
 
 	.material-detail-view {
+		.station-container-content-wrapper .material-container-details,
 		.top-tracks,
 		.artist-details {
 			background-color: $color;
@@ -94,6 +87,10 @@ html {
 		}
 
 		.song-row {
+			.text {
+				color: $anti-color;
+			}
+
 			.song-indicator,
 			.title-right-items,
 			.content,
@@ -106,10 +103,11 @@ html {
 				color: $anti-color;
 			}
 
-			&.hover, &.selected-song-row {
+			&:hover, &.selected-song-row {
 				.song-indicator,
 				.title-right-items,
 				.content,
+				.text,
 				.song-indicator[data-playback-status="paused"],
 				.song-indicator[data-playback-status="loading"],
 				[data-col="index"] .hover-button[data-id="play"],
@@ -128,6 +126,12 @@ html {
 
 	/* ---- */
 
+	#loading-overlay.material[data-type="full-loading-overlay"], #loading-overlay.material[data-type="regular-loading-overlay"],
+	.core-overlay-backdrop.core-opened {
+		background-color: $color;
+		opacity: .25;
+	}
+
 	.material .nav-item-container {
 		color: $anti-color;
 	}
@@ -137,7 +141,8 @@ html {
 	}
 
 	.song-row .fade-out::after,
-	.fade-out::after {
+	.fade-out::after,
+	.material .fade-out.gray::after {
 		background: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(33, 33, 33, 1))
 	}
 
@@ -189,6 +194,15 @@ html {
 		core-toolbar {
 			background-color: $color;
 		}
+	}
+
+	.material .nav-section-divider {
+		border-bottom: 1px solid #000;
+	}
+
+	paper-dialog /deep/ #scroller {
+    background-color: $color;
+    color: $anti-color;
 	}
 }
 
