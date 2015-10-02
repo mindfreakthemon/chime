@@ -13,6 +13,8 @@ define(function () {
 		notify_timeout: 3000,
 		notify_default_icon: 'images/icon.png',
 
+		hero_hidden: false,
+
 		scrobbling_loaded: true,
 		scrobbling_enabled: false,
 		scrobbling_now_playing: false,

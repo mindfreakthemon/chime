@@ -145,6 +145,15 @@
 	"includes_options_notifications_notify_timeout": {
 		"message": "notification timeout (ms)"
 	},
+	"includes_options_modifications_header": {
+		"message": "Modifications:"
+	},
+	"includes_options_modifications_descr": {
+		"message": "These miscellaneous options affect how the player looks & feels."
+	},
+	"includes_options_modifications_hero_hidden": {
+		"message": "Hide hero image (usually displaying artists photos)"
+	},
 	"includes_options_theme_header": {
 		"message": "Theme:"
 	},

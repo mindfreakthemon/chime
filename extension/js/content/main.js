@@ -27,6 +27,7 @@ require.config({
 		'receiver',
 		'sender',
 		'options',
+		'loader!optional:modifications/hero:hero_hidden',
 		'loader!optional:theme/theme:theme_enabled',
 		'loader!optional:lyrics/lyrics:lyrics_loaded',
 		'loader!optional:scrobbling/scrobbling:scrobbling_loaded',
