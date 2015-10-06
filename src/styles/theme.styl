@@ -7,6 +7,10 @@ html {
 		color: #fff;
 	}
 
+	.material a {
+		color: $anti-color;
+	}
+
 	#doc {
 		height: 100% !important;
 	}
@@ -43,14 +47,14 @@ html {
 		&.mini, & {
 			[data-col="song-details"] .song-title,
 			[data-col="title"],
-			th {
+			th, a {
 				color: $anti-color;
 			}
 
-			:hover, .selected-song-row {
+			.song-row:hover, .selected-song-row {
 				[data-col="song-details"] .song-title,
 				[data-col="title"],
-				th {
+				th, a {
 					color: $color;
 				}
 			}
