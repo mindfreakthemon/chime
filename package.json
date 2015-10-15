@@ -1,7 +1,7 @@
 {
   "name": "chime",
   "private": true,
-  "version": "0.2.1",
+  "version": "0.2.2",
   "devDependencies": {
     "crx": "^3.0.3",
     "del": "^2.0.2",
