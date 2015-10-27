@@ -5,10 +5,10 @@ define(['templates', 'loader!css:styles/scrobbling.css'], function (templates) {
 		wrapper = document.createElement('div');
 
 	panel.id = 'player-scrobbling-status';
-	panel.classList.add('hidden', 'flex', 'flex-vertical', 'flex-center');
+	panel.classList.add('hidden', 'chime-flex', 'chime-flex-vertical', 'chime-flex-center');
 
 	wrapper.id = 'player-right-scrobbling-wrapper';
-	wrapper.classList.add('flex', 'flex-1');
+	wrapper.classList.add('chime-flex', 'chime-flex-1');
 
 	function show() {
 		panel.classList.remove('hidden');
