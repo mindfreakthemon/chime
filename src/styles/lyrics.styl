@@ -1,16 +1,14 @@
-html /deep/ #main {
-	display: flex;
-}
-
-html /deep/ core-header-panel#content-container {
-	flex: 1;
-}
-
 #lyrics-container {
 	display: none;
 
-	position: relative;
+	position: absolute;
+	top: 120px;
+	right: 0;
 	z-index: 100;
+
+	padding: 10px;
+	box-shadow: -1px 0 10px rgba(0, 0, 0, .5);
+	max-height: calc(100% - 200px);
 
 	background-color: #fff;
 
@@ -25,6 +23,11 @@ html /deep/ core-header-panel#content-container {
 
 	&.visible {
 		display: flex;
+	}
+
+	.music-banner-title {
+		margin-bottom: 10px;
+		text-align: center;
 	}
 
 	.music-banner {
