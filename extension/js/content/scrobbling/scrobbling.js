@@ -1,126 +1,90 @@
-define(['player/player', 'lastfm', 'settings', 'scrobbling/ui'], function (player, lastfm, settings, ui) {
-	var logger = getLogger('lastfm');
+'use strict';
 
-	var scrobbleUser = null;
+define(['player/player', 'player/clock', 'lastfm', 'scrobbling/ui', 'settings'], function (_player, _clock, _lastfm, _ui, _settings) {
+	var player = _interopRequireWildcard(_player);
 
-	var scrobbleTimeout,
-		scrobbledFlag = false;
+	var clock = _interopRequireWildcard(_clock);
 
-	function sendScrobble(data) {
-		var track = data.playingTrack;
+	var lastfm = _interopRequireWildcard(_lastfm);
 
-		if (!settings.get('scrobbling_enabled')) {
-			logger('scrobbling is disabled');
-			return;
-		}
+	var ui = _interopRequireWildcard(_ui);
 
-		if (scrobbledFlag) {
-			// if already scrobbled
-			logger('already scrobbled');
-			return;
-		}
+	var _settings2 = _interopRequireDefault(_settings);
 
-		scrobbledFlag = true;
-
-		logger('going to scrobble this track on stop');
-
-		player.onStopped.addListener(function _handleStopped() {
-			// only once
-			player.onStopped.removeListener(_handleStopped);
-
-			lastfm.scrobble(data.playingTimestamp, track)
-				.then(function () {
-					logger('scrobbling');
-				}, function (error) {
-					logger('scrobbling error:', error);
-				});
-		});
+	function _interopRequireDefault(obj) {
+		return obj && obj.__esModule ? obj : {
+			default: obj
+		};
 	}
 
-	player.onPaused.addListener(function () {
-		if (scrobbleTimeout) {
-			clearTimeout(scrobbleTimeout);
-		}
-	});
-
-	player.onResumed.addListener(function (data) {
-		var track = data.playingTrack;
-
-		if (!scrobbledFlag) {
-			scrobbleTimeout = setTimeout(sendScrobble.bind(null, data),
-				Math.floor(track.duration * settings.get('scrobbling_min_percent') - data.playedTime));
-		}
-	});
-
-	player.onPlaying.addListener(function (data) {
-		var track = data.playingTrack;
-
-		if (track.duration > settings.get('scrobbling_min_length')) {
-			scrobbledFlag = false;
-			scrobbleTimeout = setTimeout(sendScrobble.bind(null, data),
-				Math.floor(track.duration * settings.get('scrobbling_min_percent')));
+	function _interopRequireWildcard(obj) {
+		if (obj && obj.__esModule) {
+			return obj;
 		} else {
-			logger('scrobbling: track too small');
+			var newObj = {};
 
-			// track is too small to scrobble it
-			scrobbledFlag = true;
+			if (obj != null) {
+				for (var key in obj) {
+					if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];
+				}
+			}
+
+			newObj.default = obj;
+			return newObj;
 		}
-	});
+	}
 
-	player.onStopped.addListener(function () {
+	let logger = getLogger('lastfm');
+	let scrobbleTimeout;
+
+	const SCROBBLING_MIN_PERCENT = _settings2.default.get('scrobbling_min_percent'),
+	      SCROBBLING_MIN_LENGTH = _settings2.default.get('scrobbling_min_length'),
+	      SCROBBLING_NOW_PLAYING = _settings2.default.get('scrobbling_now_playing'),
+	      SCROBBLING_ENABLED = _settings2.default.get('scrobbling_enabled');
+
+	function sendScrobble(track) {
+		let timestamp = clock.getStartTimestamp();
+		logger('going to scrobble this track on stop');
+		clearScrobblingTimeout();
+		player.onResumed.removeListener(setScrobblingTimeout);
+		player.onStopped.addListener(function _handleStopped() {
+			player.onStopped.removeListener(_handleStopped);
+			lastfm.scrobble(timestamp, track).then(() => logger('scrobbled')).catch(error => logger('scrobbling error:', error));
+		});
+	}
+
+	function setScrobblingTimeout(track) {
+		let halftime = Math.floor(track.duration * SCROBBLING_MIN_PERCENT - clock.getPlayedTime());
+		scrobbleTimeout = setTimeout(sendScrobble.bind(null, track), halftime);
+	}
+
+	function clearScrobblingTimeout() {
 		clearTimeout(scrobbleTimeout);
-		scrobbleTimeout = null;
-		scrobbledFlag = false;
-	});
-
-	/* now playing */
-	function onGoing(data) {
-		var track = data.playingTrack;
-
-		if (!settings.get('scrobbling_now_playing')) {
-			logger('now.playing is disabled');
-			return;
-		}
-
-		lastfm.nowPlaying(track)
-			.then(function () {
-				logger('now.playing sent');
-			}, function (error) {
-				logger('now.playing error:', error);
-			});
 	}
 
-	player.onPlaying.addListener(onGoing);
-	player.onResumed.addListener(onGoing);
-
-	function updateUser() {
-		lastfm.getProfile().then(function (user) {
-			scrobbleUser = user;
-			updateUI();
-		}, function () {
-			scrobbleUser = null;
-			updateUI();
+	if (SCROBBLING_ENABLED) {
+		player.onPaused.addListener(clearScrobblingTimeout);
+		player.onStopped.addListener(clearScrobblingTimeout);
+		player.onPlaying.addListener(track => {
+			if (track.duration > SCROBBLING_MIN_LENGTH) {
+				setScrobblingTimeout(track);
+				player.onResumed.addListener(setScrobblingTimeout);
+			}
 		});
 	}
 
-	function updateUI() {
+	if (SCROBBLING_NOW_PLAYING) {
+		player.onPlaying.addListener(lastfm.nowPlaying);
+		player.onResumed.addListener(lastfm.nowPlaying);
+	}
+
+	lastfm.getProfile().then(user => {
 		ui.update({
-			user: scrobbleUser,
-			scrobbling: settings.get('scrobbling_enabled'),
-			nowPlaying: settings.get('scrobbling_now_playing'),
-			scrobbled: scrobbledFlag
+			user: user,
+			scrobbling: SCROBBLING_ENABLED,
+			nowPlaying: SCROBBLING_NOW_PLAYING
 		});
-
-		ui.toggle(!!scrobbleUser);
-	}
-
-	settings.onUpdate.addListener(function (changes) {
-		if (changes.scrobbling_sessionID) {
-			updateUser();
-		} else if (changes.scrobbling_enabled || changes.scrobbling_now_playing) {
-			updateUI();
-		}
+		ui.show();
 	});
-
-	updateUser();
 });
+//# sourceMappingURL=scrobbling.js.map

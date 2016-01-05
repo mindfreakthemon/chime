@@ -1,36 +1,27 @@
-define(['templates'], function (templates) {
-	var menuItem = document.createElement('a');
+'use strict';
 
+define(['templates'], function (_templates) {
+	var _templates2 = _interopRequireDefault(_templates);
+
+	function _interopRequireDefault(obj) {
+		return obj && obj.__esModule ? obj : {
+			default: obj
+		};
+	}
+
+	let menuItem = document.createElement('a');
 	menuItem.id = 'chime-options-button';
 	menuItem.classList.add('nav-item-container', 'tooltip');
 	menuItem.setAttribute('data-type', 'chimeoptions');
-	menuItem.innerHTML = templates.button({
+	menuItem.innerHTML = _templates2.default.button({
 		icon: 'settings',
 		title: 'Chime Settings'
 	});
-
-	menuItem.addEventListener('click', function () {
+	menuItem.addEventListener('click', () => {
 		window.open(chrome.runtime.getURL('/pages/options.html'));
 	});
-
-	function load() {
-		//var container = document.getElementById('extra-links-container');
-
-		//container.addEventListener('click', function handler() {
-		//	container.removeEventListener('click', handler);
-
-			setTimeout(function () {
-				var menu = document.querySelector('#nav .nav-section.material:last-child');
-
-
-				menu.appendChild(menuItem);
-			}, 100);
-		//});
-	}
-
-	if (document.readyState === 'complete') {
-		load();
-	} else {
-		window.addEventListener('load', load);
-	}
+	window.addEventListener('load', () => {
+		setTimeout(() => document.querySelector('#nav .nav-section.material:last-child').appendChild(menuItem), 100);
+	});
 });
+//# sourceMappingURL=options.js.map

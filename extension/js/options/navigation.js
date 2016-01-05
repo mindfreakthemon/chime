@@ -1,47 +1,44 @@
-define([
-		'body'
-	],
-	function () {
-		var _array = Array.prototype,
-			views = _array.slice.call(document.querySelector('.mainview').childNodes),
-			links = _array.slice.call(document.querySelectorAll('.menu li'));
+'use strict';
 
-		function scrollView(href) {
-			var currentView = document.querySelector(href),
-				currentLink = document.querySelector('.menu a[href="' + href + '"]');
+define(['body'], function () {
+	var _array = Array.prototype,
+	    views = _array.slice.call(document.querySelector('.mainview').childNodes),
+	    links = _array.slice.call(document.querySelectorAll('.menu li'));
 
-			_array.forEach.call(_array.concat.call(views, links), function (node) {
-				if (node.nodeType !== 1) {
-					return;
-				}
+	function scrollView(href) {
+		var currentView = document.querySelector(href),
+		    currentLink = document.querySelector('.menu a[href="' + href + '"]');
 
-				node.classList.remove('selected');
-			});
-
-			currentLink.parentNode.classList.add('selected');
-			currentView.classList.add('selected');
-
-			document.documentElement.scrollTop = 0;
-		}
-
-		document.body.addEventListener('click', function (e) {
-			if (!e.target.webkitMatchesSelector('.menu a')) {
+		_array.forEach.call(_array.concat.call(views, links), function (node) {
+			if (node.nodeType !== 1) {
 				return;
 			}
 
-			scrollView(e.target.getAttribute('href'));
+			node.classList.remove('selected');
 		});
 
-		window.addEventListener('popstate', function (e) {
-			var hash = location.hash;
+		currentLink.parentNode.classList.add('selected');
+		currentView.classList.add('selected');
+		document.documentElement.scrollTop = 0;
+	}
 
-			if (hash.length > 1) {
-				scrollView(hash);
-			}
-		});
+	document.body.addEventListener('click', e => {
+		if (!e.target.webkitMatchesSelector('.menu a')) {
+			return;
+		}
 
-		// if navigated directly or after the refresh
-		if (location.hash.length > 1) {
-			scrollView(location.hash);
+		scrollView(e.target.getAttribute('href'));
+	});
+	window.addEventListener('popstate', () => {
+		var hash = location.hash;
+
+		if (hash.length > 1) {
+			scrollView(hash);
 		}
 	});
+
+	if (location.hash.length > 1) {
+		scrollView(location.hash);
+	}
+});
+//# sourceMappingURL=navigation.js.map

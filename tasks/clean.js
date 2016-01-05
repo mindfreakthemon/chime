@@ -6,7 +6,7 @@ gulp.task('clean', function (callback) {
 		'build',
 		'extension/pages',
 		'extension/styles',
-		'extension/js/templates',
+		'extension/js',
 		'extension/vendor'
 	], callback);
 });

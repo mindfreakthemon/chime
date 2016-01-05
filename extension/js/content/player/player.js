@@ -1,186 +1,96 @@
-define(['player/observer'], function (observer) {
-	var onPlaying = new chrome.Event(),
-		onResumed = new chrome.Event(),
-		onStopped = new chrome.Event(),
-		onPaused = new chrome.Event(),
-		onFinished = new chrome.Event(),
-		onSeeking = new chrome.Event();
+'use strict';
 
-	var playingTimestamp = +new Date(),
-		playingLastTimestamp = +new Date(),
-		playedTime = 0, // how much time played
-		playingTrack, // currently playing track
-		playingTrackId, // G-id
-		playingTrackCleaned = true;
+define(['exports', 'player/observer', 'player/clock', 'track/track.factory'], function (exports, _observer, _clock, _track) {
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.onSeeking = exports.onFinished = exports.onPaused = exports.onStopped = exports.onResumed = exports.onPlaying = undefined;
 
-	try {
-		// if track was playing while
-		// script was injected
-		playingTrack = currentTrack();
-	} catch (e) {
-		console.log('no initial track was playing');
-	}
+	var observer = _interopRequireWildcard(_observer);
 
-	function playingParams(track) {
-		return {
-			playingTrack: track || playingTrack,
-			playingTrackId: playingTrackId,
-			playingTimestamp: playingTimestamp,
-			playedTime: playedTime
+	var clock = _interopRequireWildcard(_clock);
+
+	var _track2 = _interopRequireDefault(_track);
+
+	function _interopRequireDefault(obj) {
+		return obj && obj.__esModule ? obj : {
+			default: obj
 		};
 	}
 
-	function currentStatus() {
-		var player = document.getElementById('player'),
-			play = document.querySelector('[data-id=play-pause]'),
-			shuffle = player.querySelector('[data-id="shuffle"]'),
-			repeat = player.querySelector('[data-id="repeat"]');
-
-		return {
-			playing: play.classList.contains('playing'),
-			play_enabled: !play.disabled,
-			shuffle: shuffle.disabled ? 'DISABLED' : shuffle.value,
-			repeat: repeat.value,
-			forward_enabled: !player.querySelector('[data-id="forward"]').disabled,
-			rewind_enabled: !player.querySelector('[data-id="rewind"]').disabled
-		};
-	}
-
-	function currentTrack() {
-		var player = document.getElementById('player'),
-			artist = player.querySelector('#player-artist'),
-			album = player.querySelector('.player-album'),
-			cover = player.querySelector('#playingAlbumArt'),
-			title = player.querySelector('#player-song-title'),
-			slider = document.getElementById('material-player-progress');
-
-		return {
-			title: title ? title.innerText : null,
-			artist: artist ? artist.innerText : null,
-			album: album ? album.innerText : null,
-			cover: cover ? cover.src : cover,
-			duration: +slider.getAttribute('aria-valuemax'),
-			position: +slider.getAttribute('aria-valuenow'),
-			id: playingTrackId
-		};
-	}
-
-	function trackSign(track) {
-		return track ?
-			track.title + track.artist + track.album + track.cover + track.duration : Number.NaN;
-	}
-
-	function handlePlaying() {
-		var main = document.getElementById('main'),
-			track = currentTrack();
-
-		// scrobbling stuff
-		if (trackSign(playingTrack) === trackSign(track) &&
-			!playingTrackCleaned) {
-			// already was playing this track
-			playingLastTimestamp = +new Date();
-
-			// track was resumed
-			onResumed.dispatch(playingParams(track));
+	function _interopRequireWildcard(obj) {
+		if (obj && obj.__esModule) {
+			return obj;
 		} else {
-			if (!playingTrackCleaned) {
-				// track wasn't cleaned and looks like
-				// handlePausing won't be called anymore
+			var newObj = {};
 
-				// track has just finished
-				onStopped.dispatch(playingParams());
+			if (obj != null) {
+				for (var key in obj) {
+					if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];
+				}
 			}
 
-			// first time setup
-			playingTrackCleaned = false;
-			playingTimestamp = +new Date();
-			playingLastTimestamp = playingTimestamp;
-			playedTime = 0;
-			playingTrack = track;
-
-			try {
-				playingTrackId = main.querySelector('.song-row.currently-playing').dataset.id;
-			} catch (e) {
-				console.log('couldn\'t get track id on play start');
-			}
-
-			// track was started
-			onPlaying.dispatch(playingParams(track));
+			newObj.default = obj;
+			return newObj;
 		}
 	}
 
-	function handlePausing() {
-		playedTime += +new Date() - playingLastTimestamp;
+	let onPlaying = exports.onPlaying = new chrome.Event();
+	let onResumed = exports.onResumed = new chrome.Event();
+	let onStopped = exports.onStopped = new chrome.Event();
+	let onPaused = exports.onPaused = new chrome.Event();
+	let onFinished = exports.onFinished = new chrome.Event();
+	let onSeeking = exports.onSeeking = new chrome.Event();
+	let playingTrack,
+	    playingTrackWasCleaned = true;
+	observer.onSeeking.addListener(() => {
+		if (playingTrack) {
+			onSeeking.dispatch(playingTrack);
+		}
+	});
+	observer.onPlaying.addListener(() => {
+		let track = _track2.default.extract();
+
+		if (track.equals(playingTrack) && !playingTrackWasCleaned) {
+			clock.adjust();
+			onResumed.dispatch(track);
+		} else {
+			if (!playingTrackWasCleaned) {
+				onStopped.dispatch(playingTrack);
+			}
+
+			playingTrackWasCleaned = false;
+			playingTrack = track;
+			clock.reset();
+			onPlaying.dispatch(track);
+		}
+	});
+	observer.onPausing.addListener(() => {
+		clock.count();
 
 		try {
-			// trows exception if finished playing
-			var track = currentTrack();
+			let track = _track2.default.extract();
 
-			if (trackSign(playingTrack) !== trackSign(track) || track.position === 0) {
-				// track has just finished
-				onStopped.dispatch(playingParams());
-
-				// marking this so that onStopped
-				// won't be called twice
-				playingTrackCleaned = true;
-
-				// no need to do anything
-				// because track will be playing now
+			if (!track.equals(playingTrack) || track.position === 0) {
+				onStopped.dispatch(playingTrack);
+				playingTrackWasCleaned = true;
 				return;
 			}
 
-			// playback was paused
-			onPaused.dispatch(playingParams(track));
+			onPaused.dispatch(track);
 		} catch (e) {
-			// track has just finished
-			onStopped.dispatch(playingParams());
-
-			// marking this so that onStopped
-			// won't be called twice
-			playingTrackCleaned = true;
-
-			// playlist was finished
-			onFinished.dispatch(playingParams());
-
+			onStopped.dispatch(playingTrack);
+			onFinished.dispatch(playingTrack);
+			playingTrackWasCleaned = true;
 			playingTrack = null;
-			playingTrackId = null;
-			playingTimestamp = null;
-			playingLastTimestamp = null;
-			playedTime = 0;
+			clock.reset();
 		}
-	}
-
-	function load() {
-		var slider = document.getElementById('material-player-progress');
-
-		slider.addEventListener('click', function () {
-			if (playingTrack) {
-				// user has clicked on slider
-				onSeeking.dispatch(playingParams(currentTrack()));
-			}
-		});
-	}
-
-	if (document.readyState === 'complete') {
-		load();
-	} else {
-		window.addEventListener('load', load);
-	}
-
-	observer.onPlaying.addListener(handlePlaying);
-	observer.onPausing.addListener(handlePausing);
-
-	return {
-		currentTrack: currentTrack,
-		trackSign: trackSign,
-		currentStatus: currentStatus,
-		playingParams: playingParams,
-
-		onPlaying: onPlaying,
-		onResumed: onResumed,
-		onStopped: onStopped,
-		onPaused: onPaused,
-		onFinished: onFinished,
-		onSeeking: onSeeking
-	};
+	});
+	window.addEventListener('load', () => {
+		try {
+			playingTrack = _track2.default.extract();
+			clock.reset();
+		} catch (e) {}
+	});
 });
+//# sourceMappingURL=player.js.map

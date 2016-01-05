@@ -6,7 +6,7 @@ require.config({
 		settings: '../misc/settings',
 		lastfm: '../lastfm/api',
 		'lastfm-core': '../lastfm/core',
-		loader: '../misc/loader',
+		loader: '../misc/loader.raw',
 		'templates-root': '../templates/options',
 		templates: '../misc/templates',
 		body: '../misc/body'

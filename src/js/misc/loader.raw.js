@@ -36,7 +36,7 @@
 					 * module is required and needs to be loaded after the settings init
 					 */
 					req(['settings'], function (settings) {
-						settings.promise.then(function () {
+						settings.default.promise.then(function () {
 							req([parts.module], onload);
 						});
 					});
@@ -48,8 +48,8 @@
 					 * so that specific setting could be checked
 					 */
 					req(['settings'], function (settings) {
-						settings.promise.then(function () {
-							if (settings.get(parts.options[0])) {
+						settings.default.promise.then(function () {
+							if (settings.default.get(parts.options[0])) {
 								req([parts.module], onload);
 							} else {
 								onload(null);

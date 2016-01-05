@@ -1,26 +1,36 @@
-define(['templates', 'loader!css:styles/lyrics.css'], function (templates) {
+'use strict';
+
+define(['exports', 'templates', 'loader!css:styles/lyrics.css'], function (exports, _templates) {
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _templates2 = _interopRequireDefault(_templates);
+
+	function _interopRequireDefault(obj) {
+		return obj && obj.__esModule ? obj : {
+			default: obj
+		};
+	}
+
 	var logger = getLogger('lyrics/ui');
-
 	var button = document.createElement('a'),
-		container = document.createElement('core-header-panel');
-
-	button.innerHTML = templates.button({
+	    container = document.createElement('core-header-panel');
+	button.innerHTML = _templates2.default.button({
 		icon: 'sj:music-note',
 		title: 'Lyrics'
 	});
 	button.setAttribute('id', 'chime-lyrics-button');
 	button.classList.add('nav-item-container', 'tooltip', 'hidden');
-
 	container.setAttribute('id', 'lyrics-container');
 	container.setAttribute('mode', 'scroll');
 	container.setAttribute('main', 'true');
-	container.innerHTML = templates.lyrics();
-
+	container.innerHTML = _templates2.default.lyrics();
 	var chimeLyrics = container.querySelector('#chime-lyrics'),
-		chimeError = container.querySelector('#chime-error'),
-		chimeLoading = container.querySelector('#chime-loading'),
-		chimeSource = container.querySelector('#chime-source'),
-		chimeSourceLink = container.querySelector('#chime-source-link');
+	    chimeError = container.querySelector('#chime-error'),
+	    chimeLoading = container.querySelector('#chime-loading'),
+	    chimeSource = container.querySelector('#chime-source'),
+	    chimeSourceLink = container.querySelector('#chime-source-link');
 
 	if (document.readyState === 'complete') {
 		load();
@@ -30,7 +40,6 @@ define(['templates', 'loader!css:styles/lyrics.css'], function (templates) {
 
 	function load() {
 		logger('lyrics button was added');
-
 		document.getElementById('nav_collections').appendChild(button);
 		document.getElementById('drawer-panel').appendChild(container);
 	}
@@ -42,7 +51,7 @@ define(['templates', 'loader!css:styles/lyrics.css'], function (templates) {
 		chimeSource.classList.remove('visible');
 	}
 
-	return {
+	exports.default = {
 		container: container,
 		button: button,
 
@@ -86,3 +95,4 @@ define(['templates', 'loader!css:styles/lyrics.css'], function (templates) {
 		}
 	};
 });
+//# sourceMappingURL=ui.js.map

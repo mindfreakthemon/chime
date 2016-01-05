@@ -1,22 +1,11 @@
-define([], function () {
-	var frame = document.getElementById('sandbox'),
-		hash = {};
+'use strict';
 
-	window.addEventListener('message', function (e) {
-		var callback;
-
-		if (e.data.id in hash) {
-			callback = hash[e.data.id];
-
-			// empty hash val
-			delete hash[e.data.id];
-
-			// run callback
-			callback(e.data);
-		}
+define(['exports'], function (exports) {
+	Object.defineProperty(exports, "__esModule", {
+		value: true
 	});
 
-	return function (message, callback) {
+	exports.default = function (message, callback) {
 		if (!message.id) {
 			message.id = Date.now() + '' + Math.random();
 		}
@@ -25,4 +14,17 @@ define([], function () {
 
 		frame.contentWindow.postMessage(message, '*');
 	};
+
+	var frame = document.getElementById('sandbox'),
+	    hash = {};
+	window.addEventListener('message', function (e) {
+		var callback;
+
+		if (e.data.id in hash) {
+			callback = hash[e.data.id];
+			delete hash[e.data.id];
+			callback(e.data);
+		}
+	});
 });
+//# sourceMappingURL=sandbox.js.map

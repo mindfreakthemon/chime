@@ -1,9 +1,13 @@
-define([], function () {
-	var logger = getLogger('remote');
+'use strict';
 
-	return function (data, callback) {
+define(['exports'], function (exports) {
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	exports.default = function (data, callback) {
 		var url = data.url,
-			xhr = new XMLHttpRequest();
+		    xhr = new XMLHttpRequest();
 
 		xhr.onload = function () {
 			logger('got response on request to %s', url);
@@ -36,4 +40,7 @@ define([], function () {
 		xhr.open('GET', url, true);
 		xhr.send();
 	};
+
+	var logger = getLogger('remote');
 });
+//# sourceMappingURL=remote.js.map

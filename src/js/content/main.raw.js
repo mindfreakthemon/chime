@@ -20,13 +20,13 @@ require.config({
 		settings: '../misc/settings',
 		lastfm: '../lastfm/api',
 		'lastfm-core': '../lastfm/core',
-		loader: '../misc/loader'
-		//templates: '../templates/content'
+		loader: '../misc/loader.raw'
 	},
 	deps: [
 		'receiver',
 		'sender',
 		'options',
+		'player/logger',
 		'loader!optional:modifications/hero:hero_hidden',
 		'loader!optional:theme/theme:theme_enabled',
 		'loader!optional:lyrics/lyrics:lyrics_loaded',

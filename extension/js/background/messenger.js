@@ -1,11 +1,17 @@
-define(['sandbox', 'remote'], function (sandbox, remote) {
-	return function (request, sender, callback) {
+'use strict';
+
+define(['exports', 'sandbox', 'remote'], function (exports, _sandbox, _remote) {
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	exports.default = function (request, sender, callback) {
 		if (request.remote) {
-			remote(request.remote, callback);
+			(0, _remote2.default)(request.remote, callback);
 		}
 
 		if (request.sandbox) {
-			sandbox(request.sandbox, callback);
+			(0, _sandbox2.default)(request.sandbox, callback);
 		}
 
 		if (request.permissions) {
@@ -35,9 +41,19 @@ define(['sandbox', 'remote'], function (sandbox, remote) {
 				default:
 					chrome.windows[request.type](request.windows, callback);
 			}
-
 		}
 
 		return true;
 	};
+
+	var _sandbox2 = _interopRequireDefault(_sandbox);
+
+	var _remote2 = _interopRequireDefault(_remote);
+
+	function _interopRequireDefault(obj) {
+		return obj && obj.__esModule ? obj : {
+			default: obj
+		};
+	}
 });
+//# sourceMappingURL=messenger.js.map

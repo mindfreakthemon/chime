@@ -1,115 +1,92 @@
-define(['md5', 'settings'], function (md5, settings) {
+'use strict';
+
+define(['exports', 'md5', 'settings'], function (exports, _md, _settings) {
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.sign = sign;
+	exports.authorize = authorize;
+	exports.session = session;
+
+	var _md2 = _interopRequireDefault(_md);
+
+	var _settings2 = _interopRequireDefault(_settings);
+
+	function _interopRequireDefault(obj) {
+		return obj && obj.__esModule ? obj : {
+			default: obj
+		};
+	}
+
 	function sign(params) {
 		var keys = Object.keys(params),
-			result = '';
-
-		// alphabetical sort
+		    result = '';
 		keys.sort();
 		keys.forEach(function (key) {
-			if (key == 'format' || key == 'callback')
-				return;
-
+			if (key == 'format' || key == 'callback') return;
 			result += key + params[key];
 		});
-
-		return md5(result + settings.get('scrobbling_api_secret'));
+		return (0, _md2.default)(result + _settings2.default.get('scrobbling_api_secret'));
 	}
 
 	function authorize(callback) {
 		clearInterval(authorize.interval);
-
 		var params = {
-				method: 'auth.getToken',
-				api_key: settings.get('scrobbling_api_key'),
-				format: 'json'
-			},
-			url = settings.get('scrobbling_api_url') + queryString(params),
-			xhr = new XMLHttpRequest();
-
-		xhr.open('GET', url);
-		xhr.timeout = 10000;
-		xhr.onerror = xhr.ontimeout = function () {
-			callback(true);
-		};
-		xhr.onload = function () {
-			var json = JSON.parse(xhr.responseText);
-
-			if (!json.error) {
-				var win = window.open('https://www.last.fm/api/auth/?api_key=' +
-					settings.get('scrobbling_api_key') + '&token=' + json.token,
-					'lastfm_popup',
-					'width=1024,height=475');
-
-				if (callback) {
-					authorize.interval = setInterval(function () {
-						if (win.closed) {
-							clearInterval(authorize.interval);
-							settings.set('scrobbling_token', json.token);
-							callback(null, json.token);
-						}
-					}, 100);
-				}
+			method: 'auth.getToken',
+			api_key: _settings2.default.get('scrobbling_api_key'),
+			format: 'json'
+		},
+		    url = _settings2.default.get('scrobbling_api_url') + queryString(params);
+		return fetch(url).then(response => response.json()).then(json => {
+			if (json.error) {
+				throw json.error;
 			}
-		};
 
-		xhr.send();
+			var win = window.open('https://www.last.fm/api/auth/?api_key=' + _settings2.default.get('scrobbling_api_key') + '&token=' + json.token, 'lastfm_popup', 'width=1024,height=475');
+
+			if (callback) {
+				authorize.interval = setInterval(function () {
+					if (win.closed) {
+						clearInterval(authorize.interval);
+						console.log(json.token);
+
+						_settings2.default.set('scrobbling_token', json.token);
+
+						callback(null, json.token);
+					}
+				}, 100);
+			}
+		}).catch(callback);
 	}
 
 	function session() {
-		return new Promise(function (fullfil, reject) {
-			var sessionID = settings.get('scrobbling_sessionID'),
-				token = settings.get('scrobbling_token');
+		var sessionID = _settings2.default.get('scrobbling_sessionID'),
+		    token = _settings2.default.get('scrobbling_token');
 
-			if (!token) {
-				// do nothing
-				reject('no token');
-				return;
+		if (!token) {
+			return Promise.reject('no token');
+		}
+
+		if (sessionID) {
+			return Promise.resolve(sessionID);
+		}
+
+		var params = {
+			method: 'auth.getsession',
+			api_key: _settings2.default.get('scrobbling_api_key'),
+			token: token,
+			format: 'json'
+		},
+		    url = _settings2.default.get('scrobbling_api_url') + queryString(params) + '&api_sig=' + sign(params);
+		return fetch(url).then(response => response.json()).then(json => {
+			if (json.error) {
+				throw json.error;
 			}
 
-			if (sessionID) {
-				// already got session key
-				fullfil(sessionID);
-				return;
-			}
+			_settings2.default.set('scrobbling_sessionID', json.session.key);
 
-			var params = {
-					method: 'auth.getsession',
-					api_key: settings.get('scrobbling_api_key'),
-					token: token,
-					format: 'json'
-				},
-				url = settings.get('scrobbling_api_url') + queryString(params) + '&api_sig=' + sign(params),
-				xhr = new XMLHttpRequest();
-
-			xhr.open('GET', url);
-			xhr.timeout = 10000;
-			xhr.onerror = xhr.ontimeout = function () {
-				reject('timeout');
-			};
-			xhr.setRequestHeader('Content-Type', 'application/json');
-			xhr.onload = function () {
-				var json = JSON.parse(xhr.responseText);
-
-				if (json.error) {
-					reject(json.error);
-				} else {
-					sessionID = json.session.key;
-					settings.set('scrobbling_sessionID', sessionID);
-
-					fullfil(sessionID);
-				}
-			};
-
-			xhr.send();
+			return json.session.key;
 		});
 	}
-
-	return {
-		// core
-		session: session,
-		authorize: authorize,
-		sign: sign
-	};
 });
-
-
+//# sourceMappingURL=core.js.map

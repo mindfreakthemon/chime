@@ -32,7 +32,7 @@ node_modules
 build
 extension/styles
 extension/pages
-extension/js/templates
+extension/js
 
 # Idea workspace
 *.iws
@@ -44,4 +44,4 @@ bower_components
 extension/vendor
 
 # Google Web Store key
-extension/key.pem
+key.pem

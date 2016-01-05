@@ -1,46 +1,4 @@
 /**
- *
- * @param target
- * @returns {*}
- */
-function extend(target) {
-	Array.prototype.splice.call(arguments, 1)
-		.forEach(function (object) {
-			if (!object) {
-				return;
-			}
-
-			for (var i = 0, k = Object.keys(object), l = k.length; i < l; ++i) {
-				target[k[i]] = object[k[i]];
-			}
-		});
-
-	return target;
-}
-
-/**
- * Returns closest element (including self) that matches selector
- * @param elem
- * @param selector
- * @returns {*}
- */
-function closest(elem, selector) {
-	while (elem) {
-		try {
-			if (elem.matches(selector)) {
-				return elem;
-			} else {
-				elem = elem.parentNode;
-			}
-		} catch (e) {
-			return null;
-		}
-	}
-
-	return null;
-}
-
-/**
  * https://code.google.com/p/form-serialize/
  * @param form
  * @returns {object}
@@ -247,7 +205,7 @@ function getLogger(label) {
 		/* global requirejs */
 		var settings = requirejs.s.contexts._.defined.settings;
 
-		if (!settings || !settings.get('debug')) {
+		if (!settings || !settings.default.get('debug')) {
 			return;
 		}
 

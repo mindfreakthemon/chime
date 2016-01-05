@@ -1,6 +1,10 @@
-define(function () {
-	var logger = getLogger('settings');
+'use strict';
 
+define(['exports'], function (exports) {
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	var logger = getLogger('settings');
 	var defaults = {
 		notify_loaded: true,
 		notify_enabled: false,
@@ -12,9 +16,7 @@ define(function () {
 		notify_finished: false,
 		notify_timeout: 3000,
 		notify_default_icon: 'images/icon.png',
-
 		hero_hidden: false,
-
 		scrobbling_loaded: true,
 		scrobbling_enabled: false,
 		scrobbling_now_playing: false,
@@ -25,39 +27,28 @@ define(function () {
 		scrobbling_sessionID: null,
 		scrobbling_min_length: 30000,
 		scrobbling_min_percent: 0.5,
-
 		lyrics_loaded: true,
 		lyrics_enabled: true,
-		lyrics_providers: [
-			['songlyrics.com', "var div = document.createElement('div'); div.innerHTML = response.split('id=\"songLyricsDiv-outer\">')[1].split('</div>')[0].trim(); return div.firstChild.innerHTML;"],
-			['metrolyrics.com', "return response.split('id=\"lyrics-body-text\">')[1].split('</div>')[0];"],
-			['azlyrics.com', "return response.split('<!-- Usage of azlyrics.com content by any third-party lyrics provider is prohibited by our licensing agreement. Sorry about that. -->')[1].split('<!-- MxM banner -->')[0].trim();"]
-		],
+		lyrics_providers: [['songlyrics.com', "var div = document.createElement('div'); div.innerHTML = response.split('id=\"songLyricsDiv-outer\">')[1].split('</div>')[0].trim(); return div.firstChild.innerHTML;"], ['metrolyrics.com', "return response.split('id=\"lyrics-body-text\">')[1].split('</div>')[0];"], ['azlyrics.com', "return response.split('<!-- Usage of azlyrics.com content by any third-party lyrics provider is prohibited by our licensing agreement. Sorry about that. -->')[1].split('<form')[0].trim();"]],
 		lyrics_filters: ['[\\(\\[](explicit|live|remastered)[^\\)]*[\\)\\]]'],
-
 		player_loaded: false,
 		player_enabled: true,
 		player_width: 400,
 		player_height: 220,
 		player_album_art_action: 'nothing',
-
 		theme_enabled: true,
-
 		debug: false
-	}, settings = {}, onUpdateEvent = new chrome.Event();
-
+	},
+	    settings = {},
+	    onUpdateEvent = new chrome.Event();
 	chrome.storage.onChanged.addListener(function (changes) {
-		Object.keys(changes)
-			.forEach(function (key) {
-				logger('%s key updated', key);
-
-				settings[key] = changes[key].newValue;
-			});
-
+		Object.keys(changes).forEach(function (key) {
+			logger('%s key updated', key);
+			settings[key] = changes[key].newValue;
+		});
 		onUpdateEvent.dispatch(changes);
 	});
-
-	return {
+	exports.default = {
 		get: function (key) {
 			return key in settings ? settings[key] : defaults[key];
 		},
@@ -71,7 +62,7 @@ define(function () {
 			chrome.storage.sync.remove(key, callback);
 		},
 		getAll: function () {
-			return extend({}, defaults, settings);
+			return Object.assign({}, defaults, settings);
 		},
 
 		onUpdate: onUpdateEvent,
@@ -86,3 +77,4 @@ define(function () {
 		})
 	};
 });
+//# sourceMappingURL=settings.js.map

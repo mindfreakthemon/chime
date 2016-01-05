@@ -1,10 +1,12 @@
+'use strict';
+
 define([], function () {
 	document.addEventListener('click', function (e) {
 		var target = e.target,
-			modal;
+		    modal;
 
 		if (target.matches('.close')) {
-			modal = closest(target, '.overlay');
+			modal = target.closest('.overlay');
 
 			if (modal) {
 				modal.classList.add('hidden');
@@ -18,3 +20,4 @@ define([], function () {
 		}
 	});
 });
+//# sourceMappingURL=modals.js.map

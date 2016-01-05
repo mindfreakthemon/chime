@@ -1,107 +1,108 @@
-define(['settings'], function (settings) {
-	var logger = getLogger('lyrics/loader');
+'use strict';
 
-	var filters = settings.get('lyrics_filters'),
-		providers = settings.get('lyrics_providers'),
-		providersHash = {},
-		providersKeys = [],
-		providersQuery = [];
+define(['exports', 'settings'], function (exports, _settings) {
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
 
-	providers
-		.forEach(function (provider) {
-			providersHash[provider[0]] = provider[1];
-			providersKeys.push(provider[0]);
-			providersQuery.push('site:' + provider[0]);
-		});
+	exports.default = function (track, callback) {
+		return new Promise((resolve, reject) => {
+			if (!track.title || !track.artist) {
+				reject(true);
+				return;
+			}
 
-	function clearTitle(title) {
-		filters.forEach(function (filter) {
-			var regexp = new RegExp(filter, 'gi');
-
-			title = title.replace(regexp, '');
-		});
-
-		return title;
-	}
-
-	return function (track, callback) {
-		if (!track.title || !track.artist) {
-			callback(true);
-			return;
-		}
-
-		var xhr = new XMLHttpRequest(),
-			params = {
+			var params = {
 				hl: 'en',
 				q: clearTitle(track.title) + ' ' + track.artist + ' Lyrics AND (' + providersQuery.join(' OR ') + ')'
 			};
 
-		xhr.ontimeout = function () {
-			callback('timeout');
-		};
+			logger('making request %s (timeout %s)', 'https://www.google.com/search?' + queryString(params));
 
-		xhr.onerror = function (e) {
-			callback(e.toString());
-		};
+			return fetch('https://www.google.com/search?' + queryString(params)).then(response => response.text()).then(text => {
+				var url, host;
 
-		xhr.onload = function () {
-			var response = xhr.responseText,
-				url,
-				host;
+				logger('got response from the search');
 
-			logger('got response from the search');
+				try {
+					url = text.split(' id="search"')[1].split('<a href="')[1].split('"')[0];
+					host = url.match(/^https?:\/\/(?:www\.)?([^\/]+)/i)[1];
+				} catch (e) {
+					logger('error parsing query results: %s', e.toString());
 
-			try {
-				url = response.split(' id="search"')[1].split('<a href="')[1].split('"')[0];
-				host = url.match(/^https?:\/\/(?:www\.)?([^\/]+)/i)[1];
-			} catch (e) {
-				logger('error parsing query results: %s', e.toString());
-				callback(e.toString());
-				return;
-			}
-
-			logger('parsed host: %s', host);
-
-			chrome.runtime.sendMessage({
-				remote: {
-					url: url,
-					timeout: 10
-				}
-			}, function (data) {
-				if (data.error) {
-					logger('error fetching lyrics on %s: %s', host, data.error);
-					callback(data.error);
+					reject(e.toString());
 					return;
 				}
 
+				logger('parsed host: %s', host);
+
 				chrome.runtime.sendMessage({
-					sandbox: {
-						command: 'run',
-						arguments: 'response',
-						body: providersHash[host],
-						apply: [data.response]
+					remote: {
+						url: url,
+						timeout: 10
 					}
 				}, function (data) {
 					if (data.error) {
-						logger('error parsing lyrics on %s: %s', host, data.error);
-						callback(data.error);
+						logger('error fetching lyrics on %s: %s', host, data.error);
+
+						reject(data.error);
 						return;
 					}
 
-					callback(null, {
-						url: url,
-						host: host,
-						content: data.result
+					chrome.runtime.sendMessage({
+						sandbox: {
+							command: 'run',
+							arguments: 'response',
+							body: providersHash[host],
+							apply: [data.response]
+						}
+					}, function (data) {
+						if (data.error) {
+							logger('error parsing lyrics on %s: %s', host, data.error);
+
+							reject(data.error);
+							return;
+						}
+
+						resolve({
+							url: url,
+							host: host,
+							content: data.result
+						});
 					});
 				});
 			});
-		};
-
-		xhr.timeout = 10000;
-
-		logger('making request %s (timeout %s)', 'https://www.google.com/search?' + queryString(params), xhr.timeout);
-
-		xhr.open('GET', 'https://www.google.com/search?' + queryString(params));
-		xhr.send();
+		});
 	};
+
+	var _settings2 = _interopRequireDefault(_settings);
+
+	function _interopRequireDefault(obj) {
+		return obj && obj.__esModule ? obj : {
+			default: obj
+		};
+	}
+
+	var logger = getLogger('lyrics/loader');
+
+	var filters = _settings2.default.get('lyrics_filters'),
+	    providers = _settings2.default.get('lyrics_providers'),
+	    providersHash = {},
+	    providersKeys = [],
+	    providersQuery = [];
+
+	providers.forEach(function (provider) {
+		providersHash[provider[0]] = provider[1];
+		providersKeys.push(provider[0]);
+		providersQuery.push('site:' + provider[0]);
+	});
+
+	function clearTitle(title) {
+		filters.forEach(function (filter) {
+			var regexp = new RegExp(filter, 'gi');
+			title = title.replace(regexp, '');
+		});
+		return title;
+	}
 });
+//# sourceMappingURL=loader.js.map

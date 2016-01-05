@@ -1,25 +1,23 @@
-define([
-		'settings',
-		'body'
-	],
-	function (settings) {
-		var form = document.getElementById('form');
+'use strict';
 
-		form.addEventListener('change', function (e) {
-			var data = objectify(form);
+define(['settings', 'body'], function (_settings) {
+	var _settings2 = _interopRequireDefault(_settings);
 
-			chrome.storage.sync.set(data, function () {
-				//notify('Chime Settings', 'All Settings were saved!', 1000);
-			});
-		});
+	function _interopRequireDefault(obj) {
+		return obj && obj.__esModule ? obj : {
+			default: obj
+		};
+	}
 
-		document.getElementById('debug-reset')
-			.addEventListener('click', function () {
-				chrome.storage.sync.clear();
-
-				location.reload();
-			});
-
-		// set inputs according to current Settings
-		deobjectify(form, settings.getAll());
+	var form = document.getElementById('form');
+	form.addEventListener('change', function (e) {
+		var data = objectify(form);
+		chrome.storage.sync.set(data, function () {});
 	});
+	document.getElementById('debug-reset').addEventListener('click', function () {
+		chrome.storage.sync.clear();
+		location.reload();
+	});
+	deobjectify(form, _settings2.default.getAll());
+});
+//# sourceMappingURL=form.js.map

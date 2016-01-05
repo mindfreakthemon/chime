@@ -5,7 +5,8 @@ html
 		link(rel='stylesheet', type='text/css', href='../styles/chrome.css')
 		link(rel='stylesheet', type='text/css', href='../styles/flexible.css')
 		link(rel='stylesheet', type='text/css', href='../styles/options.css')
-		script(src='../js/misc/utils.js')
-		script(data-main='../js/options/main.js', src='../vendor/requirejs/require.js')
+		script(src='../vendor/babel-polyfill/browser-polyfill.js')
+		script(src='../js/misc/utils.raw.js')
+		script(data-main='../js/options/main.raw.js', src='../vendor/requirejs/require.js')
 	body.chrome-bootstrap
 
