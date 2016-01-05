@@ -1,5 +1,5 @@
-import templates from 'templates';
-import 'loader!css:styles/scrobbling.css';
+import templates from 'templates.js';
+import 'styles/scrobbling.css!';
 
 let logger = getLogger('scrobbling/ui');
 

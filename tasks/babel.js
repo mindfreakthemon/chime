@@ -12,7 +12,7 @@ gulp.task('babel', function () {
 				'transform-es2015-parameters',
 				'transform-es2015-classes',
 				'transform-es2015-object-super',
-				'transform-es2015-modules-amd',
+				'transform-es2015-modules-systemjs',
 				'transform-es2015-destructuring',
 				'syntax-async-functions',
 				'syntax-async-generators',

@@ -1,4 +1,4 @@
-import 'loader!css:styles/theme.css';
+import 'styles/theme.css!';
 
 var doc = document.getElementById('doc');
 

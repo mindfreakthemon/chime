@@ -1,4 +1,4 @@
-import settings from 'settings';
+import settings from 'settings.js';
 
 chrome.runtime.onInstalled.addListener(function (details) {
 	var providers;

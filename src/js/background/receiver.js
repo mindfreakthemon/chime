@@ -1,4 +1,4 @@
-import messenger from 'messenger';
+import messenger from 'messenger.js';
 
 chrome.runtime.onMessage.addListener(messenger);
 

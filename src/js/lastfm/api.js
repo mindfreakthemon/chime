@@ -1,5 +1,5 @@
-import * as core from 'lastfm-core';
-import settings from 'settings';
+import * as core from 'lastfm/core.js';
+import settings from 'settings.js';
 
 export { core };
 

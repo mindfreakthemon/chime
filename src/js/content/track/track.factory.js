@@ -1,4 +1,4 @@
-import Track from 'track/track';
+import Track from 'track/track.js';
 
 export default class TrackFactory {
 	static extract() {

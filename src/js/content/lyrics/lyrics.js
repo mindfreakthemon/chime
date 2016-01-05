@@ -1,9 +1,9 @@
-import * as player from 'player/player';
-import settings from 'settings';
-import ui from 'lyrics/ui';
-import loader from 'lyrics/loader';
+import * as player from 'player/player.js';
+import settings from 'settings.js';
+import ui from 'lyrics/ui.js';
+import loader from 'lyrics/loader.js';
 
-import TrackFactory from 'track/track.factory';
+import TrackFactory from 'track/track.factory.js';
 
 var logger = getLogger('lyrics'),
 	providers = [],

@@ -1,5 +1,5 @@
-import templates from 'templates';
-import 'loader!css:styles/lyrics.css';
+import templates from 'templates.js';
+import 'styles/lyrics.css!';
 
 var logger = getLogger('lyrics/ui');
 

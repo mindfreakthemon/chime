@@ -1,6 +1,4 @@
-import settings from 'settings';
-import 'body';
-
+import settings from 'settings.js';
 
 var form = document.getElementById('form');
 

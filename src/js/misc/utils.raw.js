@@ -202,13 +202,6 @@ function getLogger(label) {
 	}
 
 	return function () {
-		/* global requirejs */
-		var settings = requirejs.s.contexts._.defined.settings;
-
-		if (!settings || !settings.default.get('debug')) {
-			return;
-		}
-
 		var argv = Array.prototype.slice.call(arguments),
 			arg0 = argv.shift() || '',
 			args = [label + ':' + (arg0 ? ' ' + arg0 : '')].concat(argv);

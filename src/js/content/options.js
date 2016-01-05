@@ -1,4 +1,4 @@
-import templates from 'templates';
+import templates from 'templates.js';
 
 let menuItem = document.createElement('a');
 

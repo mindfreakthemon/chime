@@ -1,4 +1,4 @@
-import * as player from 'player/player';
+import * as player from 'player/player.js';
 
 let playedTime = 0,
 	playingTimestamp = 0,

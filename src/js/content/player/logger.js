@@ -1,6 +1,6 @@
-import * as observer from 'player/observer';
-import * as player from 'player/player';
-import * as clock from 'player/clock';
+import * as observer from 'player/observer.js';
+import * as player from 'player/player.js';
+import * as clock from 'player/clock.js';
 
 let logger = getLogger('player/logger');
 

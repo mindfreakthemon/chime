@@ -1,8 +1,8 @@
-import * as player from 'player/player';
-import * as clock from 'player/clock';
-import * as lastfm from 'lastfm';
-import * as ui from 'scrobbling/ui';
-import settings from 'settings';
+import * as player from 'player/player.js';
+import * as clock from 'player/clock.js';
+import * as lastfm from 'lastfm.js';
+import * as ui from 'scrobbling/ui.js';
+import settings from 'settings.js';
 
 let logger = getLogger('lastfm');
 

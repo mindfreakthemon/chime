@@ -1,5 +1,5 @@
-import TrackFactory from 'track/track.factory';
-import StatusFactory from 'status/status.factory';
+import TrackFactory from 'track/track.factory.js';
+import StatusFactory from 'status/status.factory.js';
 
 var logger = getLogger('receiver');
 

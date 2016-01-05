@@ -4,4 +4,5 @@ html
 		iframe#sandbox(src='/pages/sandbox.html')
 		script(src='../vendor/babel-polyfill/browser-polyfill.js')
 		script(src='../js/misc/utils.raw.js')
-		script(data-main='../js/background/main.raw.js', src='../vendor/requirejs/require.js')
+		script(src='../vendor/system.js/dist/system-csp-production.js')
+		script(src='../js/background/main.raw.js')

@@ -1,21 +1,25 @@
-require.config({
-	baseUrl: chrome.extension.getURL('/js/options'),
+System.config({
+	baseURL: chrome.extension.getURL('/js/options'),
 	paths: {
-		jade: '../../vendor/jade/runtime',
-		md5: '../../vendor/blueimp-md5/js/md5.min',
-		settings: '../misc/settings',
-		lastfm: '../lastfm/api',
-		'lastfm-core': '../lastfm/core',
-		loader: '../misc/loader.raw',
-		'templates-root': '../templates/options',
-		templates: '../misc/templates',
-		body: '../misc/body'
-	},
-	deps: [
-		'navigation',
-		'modals',
-		'loader!required:form',
-		'loader!required:scrobbling',
-		'loader!required:lyrics'
-	]
+		'settings.js': chrome.extension.getURL('/js/misc/settings.js'),
+		jade: chrome.extension.getURL('/vendor/jade/runtime.js'),
+		md5: chrome.extension.getURL('/vendor/blueimp-md5/js/md5.min.js'),
+		'lastfm.js': chrome.extension.getURL('/js/lastfm/api.js'),
+		'lastfm/core.js': chrome.extension.getURL('/js/lastfm/core.js'),
+		'styles/*': chrome.extension.getURL('/styles/*'),
+		'templates-root': chrome.extension.getURL('/js/templates/options.js'),
+		'templates.js': chrome.extension.getURL('/js/misc/templates.js')
+	}
 });
+
+Promise.all([
+		System.import('settings.js'),
+		System.import('body.js')
+	])
+	.then(() => {
+		System.import('navigation.js');
+		System.import('modals.js');
+		System.import('form.js');
+		System.import('scrobbling.js');
+		System.import('lyrics.js');
+	});

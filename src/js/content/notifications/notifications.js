@@ -1,6 +1,6 @@
-import * as player from 'player/player';
-import settings from 'settings';
-import display from 'notifications/display';
+import * as player from 'player/player.js';
+import settings from 'settings.js';
+import display from 'notifications/display.js';
 
 var logger = getLogger('notifications');
 

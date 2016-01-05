@@ -1,5 +1,3 @@
-import 'body';
-
 var _array = Array.prototype,
 	views = _array.slice.call(document.querySelector('.mainview').childNodes),
 	links = _array.slice.call(document.querySelectorAll('.menu li'));

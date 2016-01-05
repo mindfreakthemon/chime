@@ -1,36 +1,26 @@
-require.load = function (context, moduleName, url) {
-	var xhr = new XMLHttpRequest();
-
-	xhr.onload = function () {
-		/* jshint evil:true */
-		eval(xhr.responseText);
-		context.completeLoad(moduleName);
-	};
-
-	xhr.open('GET', url, true);
-	xhr.send(null);
-};
-
-require.config({
-	baseUrl: chrome.extension.getURL('/js/content'),
-	skipDataMain: true,
-	paths: {
-		jade: '../../vendor/jade/runtime',
-		md5: '../../vendor/blueimp-md5/js/md5.min',
-		settings: '../misc/settings',
-		lastfm: '../lastfm/api',
-		'lastfm-core': '../lastfm/core',
-		loader: '../misc/loader.raw'
+System.config({
+	baseURL: chrome.extension.getURL('/js/content'),
+	map: {
+		css: chrome.extension.getURL('/js/misc/system.css.raw.js')
 	},
-	deps: [
-		'receiver',
-		'sender',
-		'options',
-		'player/logger',
-		'loader!optional:modifications/hero:hero_hidden',
-		'loader!optional:theme/theme:theme_enabled',
-		'loader!optional:lyrics/lyrics:lyrics_loaded',
-		'loader!optional:scrobbling/scrobbling:scrobbling_loaded',
-		'loader!optional:notifications/notifications:notify_loaded'
-	]
+	paths: {
+		'settings.js': chrome.extension.getURL('/js/misc/settings.js'),
+		jade: chrome.extension.getURL('/vendor/jade/runtime.js'),
+		md5: chrome.extension.getURL('/vendor/blueimp-md5/js/md5.min.js'),
+		'lastfm.js': chrome.extension.getURL('/js/lastfm/api.js'),
+		'lastfm/core.js': chrome.extension.getURL('/js/lastfm/core.js'),
+		'styles/*': chrome.extension.getURL('/styles/*'),
+		'templates-root': chrome.extension.getURL('/js/templates/content.js'),
+		'templates.js': chrome.extension.getURL('/js/misc/templates.js')
+	}
 });
+
+System.import('receiver.js');
+System.import('sender.js');
+System.import('options.js');
+System.import('player/logger.js');
+System.import('scrobbling/scrobbling.js');
+System.import('lyrics/lyrics.js');
+System.import('notifications/notifications.js');
+System.import('modifications/hero.js');
+System.import('theme/theme.js');

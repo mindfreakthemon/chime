@@ -1,5 +1,5 @@
 import md5 from 'md5';
-import settings from 'settings';
+import settings from 'settings.js';
 
 export function sign(params) {
 	var keys = Object.keys(params),

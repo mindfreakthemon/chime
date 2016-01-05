@@ -1,6 +1,5 @@
-import settings from 'settings';
-import templates from 'templates';
-import 'body';
+import settings from 'settings.js';
+import templates from 'templates.js';
 
 var providersList = document.getElementById('lyrics-providers'),
 	host = document.getElementById('lyrics-host'),

@@ -1,5 +1,5 @@
-import sandbox from 'sandbox';
-import remote from 'remote';
+import sandbox from 'sandbox.js';
+import remote from 'remote.js';
 
 export default function (request, sender, callback) {
 	if (request.remote) {

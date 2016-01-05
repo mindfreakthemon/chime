@@ -43,7 +43,7 @@
 			],
 			"js": [
 				"vendor/babel-polyfill/browser-polyfill.js",
-				"vendor/requirejs/require.js",
+				"vendor/system.js/dist/system.src.js",
 				"js/misc/utils.raw.js",
 				"js/content/main.raw.js"
 			],

@@ -1,4 +1,4 @@
-import 'loader!css:styles/hero.css';
+import 'styles/hero.css!';
 
 var cc = document.getElementById('content-container');
 

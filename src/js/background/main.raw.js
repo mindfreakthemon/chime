@@ -1,11 +1,9 @@
-require.config({
-	baseUrl: chrome.extension.getURL('/js/background'),
+System.config({
+	baseURL: chrome.extension.getURL('/js/background'),
 	paths: {
-		settings: '../misc/settings'
-	},
-	deps: [
-		'settings',
-		'receiver',
-		'update'
-	]
+		'settings.js': chrome.extension.getURL('/js/misc/settings.js')
+	}
 });
+
+System.import('receiver.js');
+System.import('update.js');
