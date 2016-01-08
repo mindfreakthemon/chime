@@ -1,4 +1,3 @@
-import storage from 'utils/storage.js';
 import 'styles/theme.css!';
 
 var doc = document.getElementById('doc');
