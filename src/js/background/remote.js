@@ -1,37 +1,8 @@
 import * as logger from 'utils/logger.js';
 
-export default function (data, callback) {
-	var url = data.url,
-		xhr = new XMLHttpRequest();
+export default function (data) {
+	logger.info('making GET request to %s (timeout on %s)', data.url, data.timeout);
 
-	xhr.onload = function () {
-		logger.info('got response on request to %s', url);
-
-		callback({
-			response: xhr.responseText
-		});
-	};
-
-	xhr.ontimeout = function () {
-		logger.info('remote request to %s timed out', url);
-
-		callback({
-			error: 'timeout'
-		});
-	};
-
-	xhr.onerror = function (e) {
-		logger.info('error on request to %s: %s', url, e.toString());
-
-		callback({
-			error: e.toString()
-		});
-	};
-
-	xhr.timeout = (data.timeout || 30) * 1000;
-
-	logger.info('making GET request to %s (timeout on %s)', url, xhr.timeout);
-
-	xhr.open('GET', url, true);
-	xhr.send();
+	return fetch(data.url)
+		.then((response) => response.text());
 }

@@ -19,4 +19,4 @@ document.getElementById('debug-reset')
 	});
 
 // set inputs according to current Settings
-form.deobjectify(form, storage.getAll());
+forms.deobjectify(form, storage.getAll());

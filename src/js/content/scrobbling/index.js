@@ -40,17 +40,15 @@ function clearScrobblingTimeout() {
 	clearTimeout(scrobbleTimeout);
 }
 
-if (SCROBBLING_ENABLED) {
-	player.onPaused.addListener(clearScrobblingTimeout);
-	player.onStopped.addListener(clearScrobblingTimeout);
+player.onPaused.addListener(clearScrobblingTimeout);
+player.onStopped.addListener(clearScrobblingTimeout);
 
-	player.onPlaying.addListener((track) => {
-		if (track.duration > SCROBBLING_MIN_LENGTH) {
-			setScrobblingTimeout(track);
-			player.onResumed.addListener(setScrobblingTimeout);
-		}
-	});
-}
+player.onPlaying.addListener((track) => {
+	if (track.duration > SCROBBLING_MIN_LENGTH) {
+		setScrobblingTimeout(track);
+		player.onResumed.addListener(setScrobblingTimeout);
+	}
+});
 
 if (SCROBBLING_NOW_PLAYING) {
 	player.onPlaying.addListener(lastfm.nowPlaying);

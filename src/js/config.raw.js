@@ -7,5 +7,25 @@ System.config({
 	},
 	paths: {
 		'styles/*': chrome.extension.getURL('/styles/*')
+	},
+	packages: {
+		'content/lyrics': {
+			main: 'index.js'
+		},
+		'content/scrobbling': {
+			main: 'index.js'
+		},
+		'content/notifications': {
+			main: 'index.js'
+		},
+		'content/hero': {
+			main: 'index.js'
+		},
+		'content/theme': {
+			main: 'index.js'
+		},
+		'content/transmitter': {
+			main: 'index.js'
+		}
 	}
 });

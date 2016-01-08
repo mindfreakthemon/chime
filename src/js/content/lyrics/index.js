@@ -6,8 +6,6 @@ import * as logger from 'utils/logger.js';
 
 import TrackFactory from 'content/track/track.factory.js';
 
-const LYRICS_ENABLED = storage.get('lyrics_enabled');
-
 let providers = storage.get('lyrics_providers'),
 	providersOrigins = providers.map(p => 'http://*.' + p[0] + '/*')
 		.concat(providers.map(p => 'https://*.' + p[0] + '/*'));
@@ -70,6 +68,6 @@ window.addEventListener('beforeunload', () => {
 	});
 });
 
-ui.toggle(LYRICS_ENABLED);
+ui.toggle(true);
 
 player.onPlaying.addListener(callLoader);

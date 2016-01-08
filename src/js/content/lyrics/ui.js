@@ -9,7 +9,6 @@ button.innerHTML = templates.button({
 	icon: 'sj:music-note',
 	title: 'Lyrics'
 });
-button.setAttribute('data-type', 'none');
 button.setAttribute('id', 'chime-lyrics-button');
 button.classList.add('nav-item-container', 'tooltip', 'hidden');
 
@@ -32,8 +31,6 @@ function hideAll() {
 }
 
 window.addEventListener('load', () => {
-	logger.info('lyrics button was added');
-
 	document.getElementById('nav_collections').appendChild(button);
 	document.getElementById('drawer-panel').appendChild(container);
 });

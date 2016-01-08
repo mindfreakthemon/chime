@@ -107,7 +107,7 @@
 		"message": "scrobbling"
 	},
 	"includes_options_scrobbling_now_playing": {
-		"message": "now playing update"
+		"message": "now playing update (only when scrobbling enabled)"
 	},
 	"includes_options_scrobbling_min_percent": {
 		"message": "minimum scrobbling percent"

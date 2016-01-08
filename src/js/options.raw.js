@@ -2,6 +2,7 @@ Promise.all([
 		System.import('utils/storage.js'),
 		System.import('options/body.js')
 	])
+	.then(([storage]) => storage.default.promise)
 	.then(() => {
 		System.import('options/navigation.js');
 		System.import('options/modals.js');

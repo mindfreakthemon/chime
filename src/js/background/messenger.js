@@ -3,7 +3,10 @@ import remote from 'background/remote.js';
 
 export default function (request, sender, callback) {
 	if (request.remote) {
-		remote(request.remote, callback);
+		remote(request.remote)
+			.then((text) => ({ response: text }))
+			.catch(e => ({ error: e.toString() }))
+			.then(callback, callback);
 	}
 
 	if (request.sandbox) {
