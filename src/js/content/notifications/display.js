@@ -1,14 +1,14 @@
-import settings from 'settings.js';
+import storage from 'utils/storage.js';
+import * as logger from 'utils/logger.js';
 
-var logger = getLogger('notifications/display'),
-	clearer = {};
+var clearer = {};
 
 function clear(id) {
 	chrome.runtime.sendMessage({
 		notifications: {},
 		id: 'chime-notification-' + id,
 		type: 'clear'
-	}, () => logger('notification was cleared: %s', id));
+	}, () => logger.info('notification was cleared: %s', id));
 }
 
 export default function (type, params) {
@@ -17,13 +17,13 @@ export default function (type, params) {
 		delete clearer[type];
 	}
 
-	params.iconUrl = params.iconUrl || settings.get('notify_default_icon');
+	params.iconUrl = params.iconUrl || chrome.extension.getURL(storage.get('notify_default_icon'));
 
-	logger('notification was sent: %s', type);
+	logger.info('notification was sent: %s', type);
 
 	chrome.runtime.sendMessage({
 		notifications: params,
 		id: 'chime-notification-' + type,
 		type: 'create'
-	}, () => clearer[type] = setTimeout(clear.bind(null, type), settings.get('notify_timeout')));
+	}, () => clearer[type] = setTimeout(clear.bind(null, type), storage.get('notify_timeout')));
 }

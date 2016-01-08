@@ -1,11 +1,11 @@
-var logger = getLogger('remote');
+import * as logger from 'utils/logger.js';
 
 export default function (data, callback) {
 	var url = data.url,
 		xhr = new XMLHttpRequest();
 
 	xhr.onload = function () {
-		logger('got response on request to %s', url);
+		logger.info('got response on request to %s', url);
 
 		callback({
 			response: xhr.responseText
@@ -13,7 +13,7 @@ export default function (data, callback) {
 	};
 
 	xhr.ontimeout = function () {
-		logger('remote request to %s timed out', url);
+		logger.info('remote request to %s timed out', url);
 
 		callback({
 			error: 'timeout'
@@ -21,7 +21,7 @@ export default function (data, callback) {
 	};
 
 	xhr.onerror = function (e) {
-		logger('error on request to %s: %s', url, e.toString());
+		logger.info('error on request to %s: %s', url, e.toString());
 
 		callback({
 			error: e.toString()
@@ -30,7 +30,7 @@ export default function (data, callback) {
 
 	xhr.timeout = (data.timeout || 30) * 1000;
 
-	logger('making GET request to %s (timeout on %s)', url, xhr.timeout);
+	logger.info('making GET request to %s (timeout on %s)', url, xhr.timeout);
 
 	xhr.open('GET', url, true);
 	xhr.send();

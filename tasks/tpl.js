@@ -17,7 +17,7 @@ function modify() {
 
 		var funcName = path.basename(file.path, '.js'),
 			contents = file.contents.toString()
-				.replace('function template(locals) {', 'tpl.' + funcName + ' = function (locals) {');
+				.replace('function template(locals) {', 'tpl.' + funcName + ' = decorate.default(function (locals) {') + ')';
 
 		file.contents = new Buffer(contents);
 
@@ -40,8 +40,8 @@ function process(src, filename, dest) {
 		.pipe(concat(filename))
 		.pipe(insert.prepend('var tpl = {};'))
 		.pipe(wrap({
-			deps: ['jade'],
-			params: ['jade'],
+			deps: ['jade', 'utils/templates.js'],
+			params: ['jade', 'decorate'],
 			exports: 'tpl'
 		}))
 		.pipe(gulp.dest(dest));

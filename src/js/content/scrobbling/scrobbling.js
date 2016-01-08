@@ -1,22 +1,21 @@
-import * as player from 'player/player.js';
-import * as clock from 'player/clock.js';
-import * as lastfm from 'lastfm.js';
-import * as ui from 'scrobbling/ui.js';
-import settings from 'settings.js';
-
-let logger = getLogger('lastfm');
+import * as player from 'content/player/player.js';
+import * as clock from 'content/player/clock.js';
+import * as lastfm from 'lastfm/api.js';
+import * as ui from 'content/scrobbling/ui.js';
+import storage from 'utils/storage.js';
+import * as logger from 'utils/logger.js';
 
 let scrobbleTimeout;
 
-const SCROBBLING_MIN_PERCENT = settings.get('scrobbling_min_percent'),
-	SCROBBLING_MIN_LENGTH = settings.get('scrobbling_min_length'),
-	SCROBBLING_NOW_PLAYING = settings.get('scrobbling_now_playing'),
-	SCROBBLING_ENABLED = settings.get('scrobbling_enabled');
+const SCROBBLING_MIN_PERCENT = storage.get('scrobbling_min_percent'),
+	SCROBBLING_MIN_LENGTH = storage.get('scrobbling_min_length'),
+	SCROBBLING_NOW_PLAYING = storage.get('scrobbling_now_playing'),
+	SCROBBLING_ENABLED = storage.get('scrobbling_enabled');
 
 function sendScrobble(track) {
 	let timestamp = clock.getStartTimestamp();
 
-	logger('going to scrobble this track on stop');
+	logger.info('going to scrobble this track on stop');
 
 	clearScrobblingTimeout();
 	player.onResumed.removeListener(setScrobblingTimeout);
@@ -26,8 +25,8 @@ function sendScrobble(track) {
 		player.onStopped.removeListener(_handleStopped);
 
 		lastfm.scrobble(timestamp, track)
-			.then(() => logger('scrobbled'))
-			.catch((error) => logger('scrobbling error:', error));
+			.then(() => logger.info('scrobbled'))
+			.catch((error) => logger.info('scrobbling error:', error));
 	});
 }
 

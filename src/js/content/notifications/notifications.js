@@ -1,21 +1,20 @@
-import * as player from 'player/player.js';
-import settings from 'settings.js';
-import display from 'notifications/display.js';
+import * as player from 'content/player/player.js';
+import storage from 'utils/storage.js';
+import display from 'content/notifications/display.js';
+import * as logger from 'utils/logger.js';
 
-var logger = getLogger('notifications');
-
-const NOTIFY_ENABLED = settings.get('notify_enabled'),
-	NOTIFY_PLAYING = settings.get('notify_playing'),
-	NOTIFY_RESUMED = settings.get('notify_resumed'),
-	NOTIFY_SEEKING = settings.get('notify_seeking'),
-	NOTIFY_PAUSED = settings.get('notify_paused'),
-	NOTIFY_STOPPED = settings.get('notify_stopped'),
-	NOTIFY_FINISHED = settings.get('notify_finished');
+const NOTIFY_ENABLED = storage.get('notify_enabled'),
+	NOTIFY_PLAYING = storage.get('notify_playing'),
+	NOTIFY_RESUMED = storage.get('notify_resumed'),
+	NOTIFY_SEEKING = storage.get('notify_seeking'),
+	NOTIFY_PAUSED = storage.get('notify_paused'),
+	NOTIFY_STOPPED = storage.get('notify_stopped'),
+	NOTIFY_FINISHED = storage.get('notify_finished');
 
 if (NOTIFY_ENABLED) {
 	if (NOTIFY_PLAYING) {
 		player.onPlaying.addListener(function (track) {
-			logger('on playing');
+			logger.info('on playing');
 
 			display('play-pause', {
 				type: 'basic',
@@ -28,7 +27,7 @@ if (NOTIFY_ENABLED) {
 
 	if (NOTIFY_RESUMED) {
 		player.onResumed.addListener(function (track) {
-			logger('on resumed');
+			logger.info('on resumed');
 
 			display('play-pause', {
 				type: 'progress',
@@ -42,7 +41,7 @@ if (NOTIFY_ENABLED) {
 
 	if (NOTIFY_SEEKING) {
 		player.onSeeking.addListener(function (track) {
-			logger('on seeking');
+			logger.info('on seeking');
 
 			display('play-pause', {
 				type: 'progress',
@@ -56,7 +55,7 @@ if (NOTIFY_ENABLED) {
 
 	if (NOTIFY_PAUSED) {
 		player.onPaused.addListener(function (track) {
-			logger('on paused');
+			logger.info('on paused');
 
 			display('play-pause', {
 				type: 'progress',
@@ -70,7 +69,7 @@ if (NOTIFY_ENABLED) {
 
 	if (NOTIFY_STOPPED) {
 		player.onStopped.addListener(function (track) {
-			logger('on stopped');
+			logger.info('on stopped');
 
 			display('stop', {
 				type: 'basic',
@@ -83,7 +82,7 @@ if (NOTIFY_ENABLED) {
 
 	if (NOTIFY_FINISHED) {
 		player.onFinished.addListener(function () {
-			logger('on finished');
+			logger.info('on finished');
 
 			display('finish', {
 				type: 'basic',

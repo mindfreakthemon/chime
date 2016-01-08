@@ -1,26 +1,22 @@
-import * as player from 'player/player.js';
-import settings from 'settings.js';
-import ui from 'lyrics/ui.js';
-import loader from 'lyrics/loader.js';
+import * as player from 'content/player/player.js';
+import storage from 'utils/storage.js';
+import ui from 'content/lyrics/ui.js';
+import loader from 'content/lyrics/loader.js';
+import * as logger from 'utils/logger.js';
 
-import TrackFactory from 'track/track.factory.js';
+import TrackFactory from 'content/track/track.factory.js';
 
-var logger = getLogger('lyrics'),
-	providers = [],
-	providersOrigins = [];
+const LYRICS_ENABLED = storage.get('lyrics_enabled');
 
-function fillProviders() {
-	logger('providers list was updated');
-
-	providers = settings.get('lyrics_providers');
-
-	providers
-		.forEach(function (provider) {
-			providersOrigins.push('http://*.' + provider[0] + '/*', 'https://*.' + provider[0] + '/*');
-		});
-}
+let providers = storage.get('lyrics_providers'),
+	providersOrigins = providers.map(p => 'http://*.' + p[0] + '/*')
+		.concat(providers.map(p => 'https://*.' + p[0] + '/*'));
 
 async function callLoader() {
+	if (!ui.isShown()) {
+		return;
+	}
+
 	ui.clearLyrics();
 	ui.showLoading();
 
@@ -34,12 +30,13 @@ async function callLoader() {
 	}
 }
 
-fillProviders();
+ui.button.addEventListener('click', (e) => {
+	// no one must know
+	e.stopPropagation();
 
-ui.button.addEventListener('click', function () {
 	var enabled = ui.isShown();
 
-	logger('clicked on lyrics link. is enabled: %s', enabled);
+	logger.info('clicked on lyrics link. is enabled: %s', enabled);
 
 	if (enabled) {
 		ui.toggleShown();
@@ -51,9 +48,9 @@ ui.button.addEventListener('click', function () {
 			origins: providersOrigins
 		},
 		type: 'request'
-	}, function (granted) {
+	}, (granted) => {
 		if (!granted) {
-			logger('permission not granted');
+			logger.info('permission not granted');
 			return;
 		}
 
@@ -62,21 +59,17 @@ ui.button.addEventListener('click', function () {
 	});
 });
 
-window.addEventListener('beforeunload', function () {
+window.addEventListener('beforeunload', () => {
 	chrome.runtime.sendMessage({
 		permissions: {
 			origins: providersOrigins
 		},
 		type: 'remove'
-	}, function (removed) {
-		logger('lyrics permissions removed: %s', removed);
+	}, (removed) => {
+		logger.info('lyrics permissions removed: %s', removed);
 	});
 });
 
-ui.toggle(settings.get('lyrics_enabled'));
+ui.toggle(LYRICS_ENABLED);
 
-player.onPlaying.addListener(function () {
-	if (ui.isShown()) {
-		callLoader();
-	}
-});
+player.onPlaying.addListener(callLoader);

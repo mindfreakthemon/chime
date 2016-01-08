@@ -1,8 +1,13 @@
-import 'styles/theme.css!';
+import storage from 'utils/storage.js';
 
-var doc = document.getElementById('doc');
+const THEME_ENABLED = storage.get('theme_enabled');
 
-// remove height from doc
-window.addEventListener('load', function () {
-	doc.style.height = '';
-});
+if (THEME_ENABLED) {
+	System.import('styles/theme.css!');
+
+	var doc = document.getElementById('doc');
+
+	window.addEventListener('load', () => {
+		doc.style.height = '';
+	});
+}

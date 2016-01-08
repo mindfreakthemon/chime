@@ -1,5 +1,6 @@
 import md5 from 'md5';
-import settings from 'settings.js';
+import storage from 'utils/storage.js';
+import * as querystring from 'utils/querystring.js';
 
 export function sign(params) {
 	var keys = Object.keys(params),
@@ -14,7 +15,7 @@ export function sign(params) {
 		result += key + params[key];
 	});
 
-	return md5(result + settings.get('scrobbling_api_secret'));
+	return md5(result + storage.get('scrobbling_api_secret'));
 }
 
 export function authorize(callback) {
@@ -22,10 +23,10 @@ export function authorize(callback) {
 
 	var params = {
 			method: 'auth.getToken',
-			api_key: settings.get('scrobbling_api_key'),
+			api_key: storage.get('scrobbling_api_key'),
 			format: 'json'
 		},
-		url = settings.get('scrobbling_api_url') + queryString(params);
+		url = storage.get('scrobbling_api_url') + querystring.stringify(params);
 
 	return fetch(url)
 		.then((response) => response.json())
@@ -35,7 +36,7 @@ export function authorize(callback) {
 			}
 
 			var win = window.open('https://www.last.fm/api/auth/?api_key=' +
-				settings.get('scrobbling_api_key') + '&token=' + json.token,
+				storage.get('scrobbling_api_key') + '&token=' + json.token,
 				'lastfm_popup',
 				'width=1024,height=475');
 
@@ -44,7 +45,7 @@ export function authorize(callback) {
 					if (win.closed) {
 						clearInterval(authorize.interval);
 						console.log(json.token);
-						settings.set('scrobbling_token', json.token);
+						storage.set('scrobbling_token', json.token);
 						callback(null, json.token);
 					}
 				}, 100);
@@ -54,8 +55,8 @@ export function authorize(callback) {
 }
 
 export function session() {
-	var sessionID = settings.get('scrobbling_sessionID'),
-		token = settings.get('scrobbling_token');
+	var sessionID = storage.get('scrobbling_sessionID'),
+		token = storage.get('scrobbling_token');
 
 	if (!token) {
 		// do nothing
@@ -69,11 +70,11 @@ export function session() {
 
 	var params = {
 			method: 'auth.getsession',
-			api_key: settings.get('scrobbling_api_key'),
+			api_key: storage.get('scrobbling_api_key'),
 			token: token,
 			format: 'json'
 		},
-		url = settings.get('scrobbling_api_url') + queryString(params) + '&api_sig=' + sign(params);
+		url = storage.get('scrobbling_api_url') + querystring.stringify(params) + '&api_sig=' + sign(params);
 
 	return fetch(url)
 		.then((response) => response.json())
@@ -82,7 +83,7 @@ export function session() {
 				throw json.error;
 			}
 
-			settings.set('scrobbling_sessionID', json.session.key);
+			storage.set('scrobbling_sessionID', json.session.key);
 
 			return json.session.key;
 		});

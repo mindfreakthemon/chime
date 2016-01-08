@@ -1,4 +1,4 @@
-import Status from 'status/status.js';
+import Status from 'content/status/status.js';
 
 export default class StatusFactory {
 	static extract() {

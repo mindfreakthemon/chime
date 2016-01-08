@@ -15,6 +15,7 @@
 		"https://play.google.com/music/*",
 		"https://*.googleusercontent.com/*",
 		"https://*.ggpht.com/*",
+		"https://play-music.gstatic.com/*",
 		"https://ws.audioscrobbler.com/2.0/*",
 		"https://*.google.com/*"
 	],
@@ -44,8 +45,8 @@
 			"js": [
 				"vendor/babel-polyfill/browser-polyfill.js",
 				"vendor/system.js/dist/system.src.js",
-				"js/misc/utils.raw.js",
-				"js/content/main.raw.js"
+				"js/config.raw.js",
+				"js/content.raw.js"
 			],
 			"run_at": "document_end"
 		}

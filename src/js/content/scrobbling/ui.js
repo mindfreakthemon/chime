@@ -1,7 +1,6 @@
-import templates from 'templates.js';
+import templates from 'templates/content.js';
 import 'styles/scrobbling.css!';
-
-let logger = getLogger('scrobbling/ui');
+import * as logger from 'utils/logger.js';
 
 let panel = document.createElement('div'),
 	wrapper = document.createElement('div');
@@ -31,5 +30,5 @@ window.addEventListener('load', () => {
 	wrapper.appendChild(panel);
 	wrapper.appendChild(rightWrapper);
 
-	logger('added ui');
+	logger.info('added ui');
 });

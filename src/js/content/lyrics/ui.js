@@ -1,15 +1,15 @@
-import templates from 'templates.js';
+import * as logger from 'utils/logger.js';
+import templates from 'templates/content.js';
 import 'styles/lyrics.css!';
 
-var logger = getLogger('lyrics/ui');
-
-var button = document.createElement('a'),
+let button = document.createElement('a'),
 	container = document.createElement('core-header-panel');
 
 button.innerHTML = templates.button({
 	icon: 'sj:music-note',
 	title: 'Lyrics'
 });
+button.setAttribute('data-type', 'none');
 button.setAttribute('id', 'chime-lyrics-button');
 button.classList.add('nav-item-container', 'tooltip', 'hidden');
 
@@ -18,24 +18,11 @@ container.setAttribute('mode', 'scroll');
 container.setAttribute('main', 'true');
 container.innerHTML = templates.lyrics();
 
-var chimeLyrics = container.querySelector('#chime-lyrics'),
+let chimeLyrics = container.querySelector('#chime-lyrics'),
 	chimeError = container.querySelector('#chime-error'),
 	chimeLoading = container.querySelector('#chime-loading'),
 	chimeSource = container.querySelector('#chime-source'),
 	chimeSourceLink = container.querySelector('#chime-source-link');
-
-if (document.readyState === 'complete') {
-	load();
-} else {
-	window.addEventListener('load', load);
-}
-
-function load() {
-	logger('lyrics button was added');
-
-	document.getElementById('nav_collections').appendChild(button);
-	document.getElementById('drawer-panel').appendChild(container);
-}
 
 function hideAll() {
 	chimeLyrics.classList.remove('visible');
@@ -43,6 +30,13 @@ function hideAll() {
 	chimeError.classList.remove('visible');
 	chimeSource.classList.remove('visible');
 }
+
+window.addEventListener('load', () => {
+	logger.info('lyrics button was added');
+
+	document.getElementById('nav_collections').appendChild(button);
+	document.getElementById('drawer-panel').appendChild(container);
+});
 
 export default {
 	container: container,

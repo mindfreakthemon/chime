@@ -1,4 +1,4 @@
-import templates from 'templates.js';
+import templates from 'templates/content.js';
 
 let menuItem = document.createElement('a');
 
@@ -6,7 +6,7 @@ menuItem.id = 'chime-options-button';
 menuItem.classList.add('nav-item-container', 'tooltip');
 menuItem.setAttribute('data-type', 'chimeoptions');
 menuItem.innerHTML = templates.button({
-	icon: 'settings',
+	icon: 'storage',
 	title: 'Chime Settings'
 });
 

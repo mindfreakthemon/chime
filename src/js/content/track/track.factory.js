@@ -1,4 +1,4 @@
-import Track from 'track/track.js';
+import Track from 'content/track/track.js';
 
 export default class TrackFactory {
 	static extract() {
@@ -15,8 +15,7 @@ export default class TrackFactory {
 			album: album ? album.innerText : null,
 			cover: cover ? cover.src : cover,
 			duration: +slider.getAttribute('aria-valuemax'),
-			position: +slider.getAttribute('aria-valuenow'),
-			id: document.querySelector('.song-row.currently-playing').dataset.id
+			position: +slider.getAttribute('aria-valuenow')
 		});
 	}
 }

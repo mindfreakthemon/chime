@@ -1,10 +1,10 @@
-import settings from 'settings.js';
+import storage from 'utils/storage.js';
 
 chrome.runtime.onInstalled.addListener(function (details) {
 	var providers;
 
 	if (details.reason === 'app_update') {
-		providers = settings.get('lyrics_providers');
+		providers = storage.get('lyrics_providers');
 
 		providers.forEach(function (data) {
 			if (data[0] === 'azlyrics.com') {
@@ -12,6 +12,6 @@ chrome.runtime.onInstalled.addListener(function (details) {
 			}
 		});
 
-		settings.set('lyrics_providers', providers);
+		storage.set('lyrics_providers', providers);
 	}
 });

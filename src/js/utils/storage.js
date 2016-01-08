@@ -1,5 +1,3 @@
-var logger = getLogger('settings');
-
 var defaults = {
 	notify_enabled: false,
 	notify_resumed: false,
@@ -31,12 +29,6 @@ var defaults = {
 	],
 	lyrics_filters: ['[\\(\\[](explicit|live|remastered)[^\\)]*[\\)\\]]'],
 
-	player_loaded: false,
-	player_enabled: true,
-	player_width: 400,
-	player_height: 220,
-	player_album_art_action: 'nothing',
-
 	theme_enabled: true,
 
 	debug: false
@@ -45,8 +37,6 @@ var defaults = {
 chrome.storage.onChanged.addListener(function (changes) {
 	Object.keys(changes)
 		.forEach(function (key) {
-			logger('%s key updated', key);
-
 			settings[key] = changes[key].newValue;
 		});
 
@@ -74,8 +64,6 @@ export default {
 
 	promise: new Promise(function (fulfill) {
 		chrome.storage.sync.get(defaults, function (overrided) {
-			logger('all settings synced');
-
 			settings = overrided;
 			fulfill();
 		});

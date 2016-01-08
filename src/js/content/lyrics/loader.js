@@ -1,9 +1,9 @@
-import settings from 'settings.js';
+import storage from 'utils/storage.js';
+import * as querystring from 'utils/querystring.js';
+import * as logger from 'utils/logger.js';
 
-var logger = getLogger('lyrics/loader');
-
-var filters = settings.get('lyrics_filters'),
-	providers = settings.get('lyrics_providers'),
+var filters = storage.get('lyrics_filters'),
+	providers = storage.get('lyrics_providers'),
 	providersHash = {},
 	providersKeys = [],
 	providersQuery = [];
@@ -25,7 +25,7 @@ function clearTitle(title) {
 	return title;
 }
 
-export default function (track, callback) {
+export default function (track) {
 	return new Promise((resolve, reject) => {
 		if (!track.title || !track.artist) {
 			reject(true);
@@ -37,26 +37,26 @@ export default function (track, callback) {
 			q: clearTitle(track.title) + ' ' + track.artist + ' Lyrics AND (' + providersQuery.join(' OR ') + ')'
 		};
 
-		logger('making request %s (timeout %s)', 'https://www.google.com/search?' + queryString(params));
+		logger.info('making request %s (timeout %s)', 'https://www.google.com/search?' + querystring.stringify(params));
 
-		return fetch('https://www.google.com/search?' + queryString(params))
+		return fetch('https://www.google.com/search?' + querystring.stringify(params))
 			.then((response) => response.text())
 			.then((text) => {
 				var url, host;
 
-				logger('got response from the search');
+				logger.info('got response from the search');
 
 				try {
 					url = text.split(' id="search"')[1].split('<a href="')[1].split('"')[0];
 					host = url.match(/^https?:\/\/(?:www\.)?([^\/]+)/i)[1];
 				} catch (e) {
-					logger('error parsing query results: %s', e.toString());
+					logger.info('error parsing query results: %s', e.toString());
 
 					reject(e.toString());
 					return;
 				}
 
-				logger('parsed host: %s', host);
+				logger.info('parsed host: %s', host);
 
 				chrome.runtime.sendMessage({
 					remote: {
@@ -65,7 +65,7 @@ export default function (track, callback) {
 					}
 				}, function (data) {
 					if (data.error) {
-						logger('error fetching lyrics on %s: %s', host, data.error);
+						logger.info('error fetching lyrics on %s: %s', host, data.error);
 
 						reject(data.error);
 						return;
@@ -80,7 +80,7 @@ export default function (track, callback) {
 						}
 					}, function (data) {
 						if (data.error) {
-							logger('error parsing lyrics on %s: %s', host, data.error);
+							logger.info('error parsing lyrics on %s: %s', host, data.error);
 
 							reject(data.error);
 							return;

@@ -3,7 +3,7 @@
  * @param form
  * @returns {object}
  */
-function objectify(form) {
+export function objectify(form) {
 	if (!form || form.nodeName !== 'FORM') {
 		return {};
 	}
@@ -97,7 +97,7 @@ function objectify(form) {
  * @param form
  * @param data
  */
-function deobjectify(form, data) {
+export function deobjectify(form, data) {
 	if (!form || form.nodeName !== 'FORM') {
 		return;
 	}
@@ -168,44 +168,4 @@ function deobjectify(form, data) {
 				break;
 		}
 	}
-}
-
-/**
- *
- * @param params
- * @returns {string}
- */
-function queryString(params) {
-	var x,
-		parts = [];
-
-	for (x in params) {
-		parts.push(x + '=' + encodeURIComponent(params[x]));
-	}
-
-	return parts.join('&');
-}
-
-
-/**
- *
- * @param label
- * @returns {*}
- */
-function getLogger(label) {
-	function converter(val) {
-		if (typeof val === 'string') {
-			return val;
-		}
-
-		return val.toString();
-	}
-
-	return function () {
-		var argv = Array.prototype.slice.call(arguments),
-			arg0 = argv.shift() || '',
-			args = [label + ':' + (arg0 ? ' ' + arg0 : '')].concat(argv);
-
-		return console.log.apply(console, args.map(converter));
-	};
 }

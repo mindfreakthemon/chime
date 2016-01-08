@@ -1,20 +1,11 @@
 export default class Track {
-	constructor({ id, title, artist, album, cover, duration, position }) {
-		this.id = id;
+	constructor({ title, artist, album, cover, duration, position }) {
 		this.title = title;
 		this.artist = artist;
 		this.album = album;
 		this.cover = cover;
 		this.duration = duration;
 		this.position = position;
-	}
-
-	get id() {
-		return this._id;
-	}
-
-	set id(value) {
-		this._id = value;
 	}
 
 	get title() {

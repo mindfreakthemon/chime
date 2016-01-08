@@ -1,9 +1,10 @@
-import settings from 'settings.js';
+import storage from 'utils/storage.js';
+import * as forms from 'utils/forms.js';
 
 var form = document.getElementById('form');
 
 form.addEventListener('change', function (e) {
-	var data = objectify(form);
+	var data = forms.objectify(form);
 
 	chrome.storage.sync.set(data, function () {
 		//notify('Chime Settings', 'All Settings were saved!', 1000);
@@ -18,4 +19,4 @@ document.getElementById('debug-reset')
 	});
 
 // set inputs according to current Settings
-deobjectify(form, settings.getAll());
+form.deobjectify(form, storage.getAll());

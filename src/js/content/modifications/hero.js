@@ -1,5 +1,12 @@
-import 'styles/hero.css!';
+import storage from 'utils/storage.js';
 
-var cc = document.getElementById('content-container');
+const HERO_HIDDEN = storage.get('hero_hidden');
 
-cc.classList.remove('has-hero-image');
+if (HERO_HIDDEN) {
+	System.import('styles/hero.css!');
+
+	var cc = document.getElementById('content-container');
+
+	cc.classList.remove('has-hero-image');
+}
+

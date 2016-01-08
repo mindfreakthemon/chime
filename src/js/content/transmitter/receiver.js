@@ -1,9 +1,7 @@
-import TrackFactory from 'track/track.factory.js';
-import StatusFactory from 'status/status.factory.js';
+import * as logger from 'utils/logger.js';
 
-var logger = getLogger('receiver');
-
-logger('received enabled');
+import TrackFactory from 'content/track/track.factory.js';
+import StatusFactory from 'content/status/status.factory.js';
 
 function click(id) {
 	// request.id in ['repeat', 'play-pause', 'forward', 'rewind', 'shuffle']
@@ -14,7 +12,7 @@ function click(id) {
 		el = player.querySelector('[data-id=' + id + ']');
 	el.dispatchEvent(event);
 
-	logger('executed click on %s', id);
+	logger.info('executed click on %s', id);
 }
 
 function setPosition(position) {
@@ -25,11 +23,11 @@ function setPosition(position) {
 		});
 	slider.dispatchEvent(event);
 
-	logger('executed setPosition on %d', position);
+	logger.info('executed setPosition on %d', position);
 }
 
 function receiver(request, sender, sendResponse) {
-	logger('received command %s', request.command);
+	logger.info('received command %s', request.command);
 
 	switch (request.command) {
 		case 'status':

@@ -1,5 +1,5 @@
-import settings from 'settings.js';
-import templates from 'templates.js';
+import storage from 'utils/storage.js';
+import templates from 'templates/options.js';
 
 var providersList = document.getElementById('lyrics-providers'),
 	host = document.getElementById('lyrics-host'),
@@ -7,7 +7,7 @@ var providersList = document.getElementById('lyrics-providers'),
 	add = document.getElementById('lyrics-button-add'),
 	defaults = document.getElementById('lyrics-default-list'),
 	clearPermissions = document.getElementById('lyrics-clear-permissions'),
-	providers = settings.get('lyrics_providers'),
+	providers = storage.get('lyrics_providers'),
 	providersOrigins = [];
 
 providers
@@ -35,7 +35,7 @@ function addHost(host, body) {
 }
 
 function saveHosts() {
-	settings.set('lyrics_providers', providers, function () {
+	storage.set('lyrics_providers', providers, function () {
 		location.reload();
 	});
 }
@@ -52,7 +52,7 @@ providersList.addEventListener('click', function (e) {
 });
 
 defaults.addEventListener('click', function () {
-	settings.remove('lyrics_providers', function () {
+	storage.remove('lyrics_providers', function () {
 		location.reload();
 	});
 });

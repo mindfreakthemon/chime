@@ -1,6 +1,6 @@
-import settings from 'settings.js';
-import * as lastfm from 'lastfm.js';
-import templates from 'templates.js';
+import storage from 'utils/storage.js';
+import * as lastfm from 'lastfm/api.js';
+import templates from 'templates/options.js';
 
 let loading = document.getElementById('last-fm-loading');
 

@@ -1,7 +1,7 @@
-import * as observer from 'player/observer.js';
-import * as clock from 'player/clock.js';
+import * as observer from 'content/player/observer.js';
+import * as clock from 'content/player/clock.js';
 
-import TrackFactory from 'track/track.factory.js';
+import TrackFactory from 'content/track/track.factory.js';
 
 export let onPlaying = new chrome.Event();
 export let onResumed = new chrome.Event();
