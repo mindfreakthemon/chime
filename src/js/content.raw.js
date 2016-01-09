@@ -25,7 +25,7 @@ Promise.all([
 			}
 
 			if (storage.get('theme_enabled')) {
-				System.import('content/theme/theme.js');
+				System.import('content/theme');
 			}
 		});
 	});
