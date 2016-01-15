@@ -107,7 +107,7 @@
 		"message": "scrobbling"
 	},
 	"includes_options_scrobbling_now_playing": {
-		"message": "now playing update"
+		"message": "now playing update (only when scrobbling enabled)"
 	},
 	"includes_options_scrobbling_min_percent": {
 		"message": "minimum scrobbling percent"
@@ -152,7 +152,7 @@
 		"message": "These miscellaneous options affect how the player looks & feels."
 	},
 	"includes_options_modifications_hero_hidden": {
-		"message": "Hide hero image (usually displaying artists photos)"
+		"message": "hide hero image (usually displaying artists photos)"
 	},
 	"includes_options_theme_header": {
 		"message": "Theme:"

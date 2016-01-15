@@ -4,7 +4,7 @@ var gulp = require('gulp'),
 
 gulp.task('crx', ['zip'], function () {
 	var crx = new ChromeExtension({
-		privateKey: fs.readFileSync('extension/key.pem')
+		privateKey: fs.readFileSync('key.pem')
 	});
 
 	crx.load('extension')
