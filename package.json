@@ -1,7 +1,7 @@
 {
   "name": "chime",
   "private": true,
-  "version": "0.2.3",
+  "version": "0.3.0",
   "devDependencies": {
     "babel-plugin-syntax-async-generators": "^6.3.13",
     "babel-plugin-transform-async-to-generator": "^6.3.13",
