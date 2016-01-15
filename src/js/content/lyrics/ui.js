@@ -30,9 +30,14 @@ function hideAll() {
 	chimeSource.classList.remove('visible');
 }
 
+container.querySelector('.lyrics-container')
+	.addEventListener('scroll', (e) => {
+		container.classList[e.target.scrollTop ? 'add' : 'remove']('shadowed');
+	});
+
 window.addEventListener('load', () => {
 	document.getElementById('nav_collections').appendChild(button);
-	document.getElementById('drawer-panel').appendChild(container);
+	document.querySelector('iron-selector [id=main]').parentNode.appendChild(container);
 });
 
 export default {
@@ -45,6 +50,7 @@ export default {
 		} else {
 			button.classList.add('hidden');
 			container.classList.remove('visible');
+			container.parentNode.classList.remove('chime-lyrics-visible');
 		}
 	},
 
@@ -53,6 +59,7 @@ export default {
 	},
 	toggleShown: function () {
 		container.classList.toggle('visible');
+		container.parentNode.classList.toggle('chime-lyrics-visible');
 	},
 
 	setLyrics: function (data) {

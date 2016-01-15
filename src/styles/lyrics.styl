@@ -1,14 +1,20 @@
+iron-selector.paper-drawer-panel {
+	&.chime-lyrics-visible > #main.paper-drawer-panel {
+		right: 340px;
+	}
+}
+
 #lyrics-container {
 	display: none;
 
-	position: absolute;
-	top: 120px;
+	position: fixed;
+	top: 0;
 	right: 0;
 	z-index: 100;
 
-	padding: 10px;
-	box-shadow: -1px 0 10px rgba(0, 0, 0, .5);
-	max-height: calc(100% - 200px);
+	padding: 0;
+	box-shadow: -1px 0 10px rgba(0, 0, 0, .2);
+	height: calc(100% - 90px);
 
 	background-color: #fff;
 
@@ -16,7 +22,7 @@
 		background-color: #ef6c00;
 	}
 
-	width: 300px;
+	width: 340px;
 	margin: 0;
 
 	flex-direction: column;
@@ -26,8 +32,32 @@
 	}
 
 	.music-banner-title {
-		margin-bottom: 10px;
+		margin: 0;
+		height: 64px;
+		line-height: 64px;
 		text-align: center;
+
+		&::after {
+			content: ' ';
+			position: absolute;
+			top: 64px;
+			left: 0;
+
+			width: 100%;
+			height: 6px;
+
+			box-shadow: inset 0 5px 6px -3px rgba(0, 0, 0, .4);
+
+			transition: opacity 500ms;
+
+			opacity: 0;
+		}
+	}
+
+	&.shadowed {
+		.music-banner-title::after {
+			opacity: 1;
+		}
 	}
 
 	.music-banner {
