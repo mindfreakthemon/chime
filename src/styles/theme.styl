@@ -98,7 +98,6 @@ html {
 			.song-indicator,
 			.title-right-items,
 			.content,
-			.column-content,
 			.song-indicator[data-playback-status="paused"],
 			.song-indicator[data-playback-status="loading"],
 			[data-col="index"] .hover-button[data-id="play"],
@@ -120,6 +119,7 @@ html {
 				[data-col="track"] .hover-button[data-id="play"],
 				td {
 					color: $color;
+					background-color: #eee !important;
 				}
 			}
 		}
@@ -144,6 +144,10 @@ html {
 
 	#nav_collections .nav-item-container:focus, .nav-item-container:focus, .nav-item-container:hover {
 		color: $color;
+	}
+
+	.song-row.selected-song-row .fade-out::after {
+		background: linear-gradient(to right,rgba(245,245,245,0),#eee);
 	}
 
 	.song-row .fade-out::after,

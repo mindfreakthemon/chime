@@ -2,5 +2,8 @@ doctype html
 html
 	body
 		iframe#sandbox(src='/pages/sandbox.html')
-		script(src='../js/misc/utils.js')
-		script(data-main='../js/background/main.js', src='../vendor/requirejs/require.js')
+		script(src='../vendor/babel-polyfill/browser-polyfill.js')
+		script(src='../vendor/system.js/dist/system-csp-production.js')
+		script(src='../js/config.raw.js')
+		script(src='../js/background.raw.js')
+

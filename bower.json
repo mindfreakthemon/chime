@@ -1,11 +1,11 @@
 {
   "name": "chime",
-  "version": "0.2.3",
+  "version": "0.3.0",
   "private": true,
   "dependencies": {
-    "requirejs": "~2.1.14",
     "blueimp-md5": "~1.1.0",
     "jade": "~1.5.0",
-    "bootstrap": "~3.3.1"
+    "babel-polyfill": "~0.0.1",
+    "system.js": "~0.19.10"
   }
 }

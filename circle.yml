@@ -12,5 +12,5 @@ test:
   override:
     - gulp lint
   post:
-    - echo $CHIME_KEY | sed 's/\\n/\n/g' > extension/key.pem
+    - echo $CHIME_KEY | sed 's/\\n/\n/g' > key.pem
     - gulp zip crx
