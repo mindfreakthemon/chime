@@ -1,3 +1,5 @@
+import { onLoad } from 'content/loader.js';
+
 import * as observer from 'content/player/observer.js';
 import * as clock from 'content/player/clock.js';
 
@@ -91,7 +93,7 @@ observer.onPausing.addListener(() => {
 	}
 });
 
-window.addEventListener('load', () => {
+onLoad(() => {
 	try {
 		// if track was playing while
 		// script was injected

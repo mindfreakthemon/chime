@@ -1,3 +1,5 @@
+import { onLoad } from 'content/loader.js';
+
 export let onPlaying = new chrome.Event();
 export let onPausing = new chrome.Event();
 export let onSeeking = new chrome.Event();
@@ -25,7 +27,7 @@ let observer = new MutationObserver(mutations => {
 	});
 });
 
-window.addEventListener('load', () => {
+onLoad(() => {
 	let player = document.getElementById('player'),
 		slider = document.getElementById('material-player-progress'),
 		buttons = player.querySelector('div.material-player-middle');
