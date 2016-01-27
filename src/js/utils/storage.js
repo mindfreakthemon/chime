@@ -34,11 +34,9 @@ var defaults = {
 	debug: false
 }, settings = {}, onUpdateEvent = new chrome.Event();
 
-chrome.storage.onChanged.addListener((changes) => {
+chrome.storage.onChanged.addListener(changes => {
 	Object.keys(changes)
-		.forEach(function (key) {
-			settings[key] = changes[key].newValue;
-		});
+		.forEach(key => settings[key] = changes[key].newValue);
 
 	onUpdateEvent.dispatch(changes);
 });
@@ -62,10 +60,10 @@ export default {
 
 	onUpdate: onUpdateEvent,
 
-	promise: new Promise((fulfill) => {
+	promise: new Promise(resolve => {
 		chrome.storage.sync.get(defaults, (overrided) => {
 			settings = overrided;
-			fulfill();
+			resolve();
 		});
 	})
 };
