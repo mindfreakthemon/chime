@@ -1,4 +1,5 @@
 import * as logger from 'utils/logger.js';
+import { onLoad } from 'content/loader.js';
 import templates from 'templates/content.js';
 import 'styles/lyrics.css!';
 
@@ -35,7 +36,7 @@ container.querySelector('.lyrics-container')
 		container.classList[e.target.scrollTop ? 'add' : 'remove']('shadowed');
 	});
 
-window.addEventListener('load', () => {
+onLoad(() => {
 	document.getElementById('nav_collections').appendChild(button);
 	document.querySelector('iron-selector [id=main]').parentNode.appendChild(container);
 });

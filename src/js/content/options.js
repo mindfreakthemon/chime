@@ -1,4 +1,5 @@
 import templates from 'templates/content.js';
+import { onLoad } from 'content/loader.js';
 
 let menuItem = document.createElement('a');
 
@@ -14,6 +15,6 @@ menuItem.addEventListener('click', () => {
 	window.open(chrome.runtime.getURL('/pages/options.html'));
 });
 
-window.addEventListener('load', () => {
+onLoad(() => {
 	setTimeout(() => document.querySelector('#nav .nav-section.material:last-child').appendChild(menuItem), 100);
 });

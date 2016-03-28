@@ -1,3 +1,5 @@
+import { onLoad } from 'content/loader.js';
+
 import * as observer from 'content/player/observer.js';
 import * as clock from 'content/player/clock.js';
 
@@ -26,8 +28,8 @@ observer.onPlaying.addListener(() => {
 	if (track.equals(playingTrack) && !playingTrackWasCleaned) {
 		// already was playing this track
 
-		// adjust clock so that it will count correctly
-		clock.adjust();
+		// stage clock's time so that it will count correctly
+		clock.stage();
 
 		// track was resumed
 		onResumed.dispatch(track);
@@ -53,7 +55,7 @@ observer.onPlaying.addListener(() => {
 
 observer.onPausing.addListener(() => {
 	// count played time
-	clock.count();
+	clock.commit();
 
 	try {
 		// trows exception if finished playing
@@ -84,20 +86,19 @@ observer.onPausing.addListener(() => {
 		// marking this so that onStopped
 		// won't be called twice
 		playingTrackWasCleaned = true;
-
 		playingTrack = null;
 
 		clock.reset();
 	}
 });
 
-window.addEventListener('load', () => {
+onLoad(() => {
 	try {
+		clock.reset();
+
 		// if track was playing while
 		// script was injected
 		playingTrack = TrackFactory.extract();
-
-		clock.reset();
 	} catch (e) {
 		// it's ok
 	}

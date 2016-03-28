@@ -1,3 +1,4 @@
+import { onLoad } from 'content/loader.js';
 import templates from 'templates/content.js';
 import 'styles/scrobbling.css!';
 import * as logger from 'utils/logger.js';
@@ -23,7 +24,7 @@ export function update(data) {
 	panel.innerHTML = templates.scrobbling(data);
 }
 
-window.addEventListener('load', () => {
+onLoad(() => {
 	var rightWrapper = document.getElementById('material-player-right-wrapper');
 
 	rightWrapper.parentNode.insertBefore(wrapper, rightWrapper);

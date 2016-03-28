@@ -10,11 +10,11 @@ export function reset() {
 	playingLastTimestamp = +new Date();
 }
 
-export function adjust() {
+export function stage() {
 	playingLastTimestamp = +new Date();
 }
 
-export function count() {
+export function commit() {
 	playedTime += +new Date() - playingLastTimestamp;
 }
 
