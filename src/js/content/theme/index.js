@@ -4,5 +4,7 @@ import 'styles/theme.css!';
 var doc = document.getElementById('doc');
 
 onLoad(() => {
-	doc.style.height = '';
+	if (doc) {
+		doc.style.height = '';
+	}
 });
