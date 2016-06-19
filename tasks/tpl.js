@@ -1,11 +1,13 @@
-var gulp = require('gulp'),
-	path = require('path'),
-	through = require('through2'),
-	jade = require('gulp-jade'),
-	plumber = require('gulp-plumber'),
-	concat = require('gulp-concat'),
-	insert = require('gulp-insert'),
-	wrap = require('gulp-wrap-amd');
+'use strict';
+
+let gulp = require('gulp');
+let path = require('path');
+let through = require('through2');
+let jade = require('gulp-jade');
+let plumber = require('gulp-plumber');
+let concat = require('gulp-concat');
+let insert = require('gulp-insert');
+let wrap = require('gulp-wrap-amd');
 
 function modify() {
 	function transform(file, enc, callback) {
@@ -47,7 +49,7 @@ function process(src, filename, dest) {
 		.pipe(gulp.dest(dest));
 }
 
-gulp.task('tpl', function () {
+gulp.task('tpl', () => {
 	process('src/templates/options/**/*.jade', 'options.js', 'extension/js/templates');
 	process('src/templates/content/**/*.jade', 'content.js', 'extension/js/templates');
 });

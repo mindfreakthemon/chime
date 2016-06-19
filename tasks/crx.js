@@ -1,16 +1,16 @@
-var gulp = require('gulp'),
-	ChromeExtension = require('crx'),
-	fs = require('fs');
+'use strict';
 
-gulp.task('crx', ['zip'], function () {
-	var crx = new ChromeExtension({
+let gulp = require('gulp');
+let ChromeExtension = require('crx');
+let fs = require('fs');
+
+gulp.task('crx', ['zip'], () => {
+	let crx = new ChromeExtension({
 		privateKey: fs.readFileSync('key.pem')
 	});
 
 	crx.load('extension')
-		.then(function () {
-			return crx.pack().then(function (crxBuffer) {
-				fs.writeFile('build/chime.crx', crxBuffer);
-			});
+		.then(() => {
+			return crx.pack().then(crxBuffer => fs.writeFile('build/chime.crx', crxBuffer));
 		});
 });

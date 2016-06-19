@@ -1,9 +1,11 @@
-var gulp = require('gulp'),
-	plumber = require('gulp-plumber'),
-	jade = require('gulp-jade'),
-	changed = require('gulp-changed');
+'use strict';
 
-gulp.task('jade', function () {
+let gulp = require('gulp');
+let plumber = require('gulp-plumber');
+let jade = require('gulp-jade');
+let changed = require('gulp-changed');
+
+gulp.task('jade', () => {
 	gulp.src('src/pages/**/*.jade')
 		.pipe(changed('extension/pages', { extension: '.html' }))
 		.pipe(plumber())

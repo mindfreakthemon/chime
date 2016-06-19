@@ -1,6 +1,6 @@
-var gulp = require('gulp'),
-	bower = require('gulp-bower');
+'use strict';
 
-gulp.task('bower', function() {
-	return bower();
-});
+let gulp = require('gulp');
+let bower = require('gulp-bower');
+
+gulp.task('bower', () => bower());

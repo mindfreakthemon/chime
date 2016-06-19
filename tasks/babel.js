@@ -1,9 +1,11 @@
-var gulp = require('gulp'),
-	plumber = require('gulp-plumber'),
-	sourcemaps = require('gulp-sourcemaps'),
-	babel = require('gulp-babel');
+'use strict';
 
-gulp.task('babel', function () {
+let gulp = require('gulp');
+let plumber = require('gulp-plumber');
+let sourcemaps = require('gulp-sourcemaps');
+let babel = require('gulp-babel');
+
+gulp.task('babel', () => {
 	gulp.src(['./src/js/**/*.js', '!./src/js/**/*.raw.js'])
 		.pipe(plumber())
 		.pipe(sourcemaps.init())

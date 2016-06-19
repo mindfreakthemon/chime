@@ -1,7 +1,9 @@
-var gulp = require('gulp'),
-	del = require('del');
+'use strict';
 
-gulp.task('clean', function (callback) {
+let gulp = require('gulp');
+let del = require('del');
+
+gulp.task('clean', callback => {
 	del([
 		'build',
 		'extension/pages',

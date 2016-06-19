@@ -1,7 +1,9 @@
-var gulp = require('gulp'),
-	jshint = require('gulp-jshint');
+'use strict';
 
-gulp.task('lint', function () {
+let gulp = require('gulp');
+let jshint = require('gulp-jshint');
+
+gulp.task('lint', () => {
 	return gulp.src([
 			'gulpfile.js',
 			'src/js/**/*.js',

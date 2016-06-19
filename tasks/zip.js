@@ -1,6 +1,8 @@
-var gulp = require('gulp'),
-	merge = require('merge2'),
-	zip = require('gulp-zip');
+'use strict';
+
+let gulp = require('gulp');
+let merge = require('merge2');
+let zip = require('gulp-zip');
 
 gulp.task('zip', function () {
 	return merge(

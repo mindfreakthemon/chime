@@ -1,6 +1,8 @@
-var gulp = require('gulp'),
-	bump = require('gulp-bump'),
-	argv = require('yargs').argv;
+'use strict';
+
+let gulp = require('gulp');
+let bump = require('gulp-bump');
+let argv = require('yargs').argv;
 
 function process(src, dest) {
 	return gulp.src(src)
@@ -10,7 +12,7 @@ function process(src, dest) {
 		.pipe(gulp.dest(dest));
 }
 
-gulp.task('bump', function () {
+gulp.task('bump', () => {
 	process('bower.json', '.');
 	process('package.json', '.');
 	process('extension/manifest.json', 'extension');

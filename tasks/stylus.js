@@ -1,7 +1,9 @@
-var gulp = require('gulp'),
-	stylus = require('gulp-stylus');
+'use strict';
 
-gulp.task('stylus', function () {
+let gulp = require('gulp');
+let stylus = require('gulp-stylus');
+
+gulp.task('stylus', () => {
 	gulp.src('src/styles/**/*.styl')
 		.pipe(stylus())
 		.pipe(gulp.dest('extension/styles'));
