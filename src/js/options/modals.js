@@ -1,4 +1,4 @@
-document.addEventListener('click', function (e) {
+document.addEventListener('click', e => {
 	var target = e.target,
 		modal;
 
