@@ -12,20 +12,17 @@ let wrap = require('gulp-wrap-amd');
 function modify() {
 	function transform(file, enc, callback) {
 		if (!file.isBuffer()) {
-			this.push(file);
-			callback();
+			callback(null, file);
 			return;
 		}
 
-		var funcName = path.basename(file.path, '.js'),
-			contents = file.contents.toString()
+		let funcName = path.basename(file.path, '.js');
+		let contents = file.contents.toString()
 				.replace('function template(locals) {', 'tpl.' + funcName + ' = decorate.default(function (locals) {') + ')';
 
 		file.contents = new Buffer(contents);
 
-		this.push(file);
-
-		callback();
+		callback(null, file);
 	}
 
 	return through.obj(transform);

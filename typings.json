@@ -1,0 +1,9 @@
+{
+  "ambientDependencies": {
+    "blueimp-md5": "registry:dt/blueimp-md5#1.1.0+20160316155526",
+    "chrome": "registry:dt/chrome#0.0.0+20160509083626",
+    "systemjs": "registry:dt/systemjs#0.19.29+20160619032039",
+    "webrtc/mediastream": "registry:dt/webrtc/mediastream#0.0.0+20160317120654",
+    "whatwg-fetch": "registry:dt/whatwg-fetch#0.0.0+20160524142046"
+  }
+}

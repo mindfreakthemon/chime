@@ -10,7 +10,8 @@ dependencies:
     - gulp assets
 test:
   override:
-    - gulp lint
+    - gulp jslint
+    - gulp tslint
   post:
     - echo $CHIME_KEY | sed 's/\\n/\n/g' > key.pem
     - gulp zip crx

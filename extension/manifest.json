@@ -43,10 +43,9 @@
 				"styles/content.css"
 			],
 			"js": [
-				"vendor/babel-polyfill/browser-polyfill.js",
 				"vendor/system.js/dist/system.src.js",
-				"js/config.raw.js",
-				"js/content.raw.js"
+				"js/config.js",
+				"js/content.js"
 			],
 			"run_at": "document_end"
 		}
